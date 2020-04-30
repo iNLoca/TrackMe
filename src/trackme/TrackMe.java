@@ -27,7 +27,7 @@ public class TrackMe extends Application {
     public void start(Stage stage)throws Exception {
 
       
-        Parent root = FXMLLoader.load(getClass().getResource("gui/view/UserMainPage.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("gui/view/Login.fxml"));
         
         Scene scene = new Scene(root);
         
