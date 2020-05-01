@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package trackme.bll;
+package trackme.dal;
 
 /**
  *
- * @author mac
+ * @author WøbbePC
  */
-public class BLLManager implements IBLLFacade{
+public class ProjectDAO {
     
 }

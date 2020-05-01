@@ -7,8 +7,8 @@ package trackme.bll;
 
 /**
  *
- * @author mac
+ * @author WøbbePC
  */
-public class BLLManager implements IBLLFacade{
+public interface IBLLFacade {
     
 }
