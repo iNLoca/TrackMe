@@ -5,9 +5,8 @@
  */
 package trackme.dal;
 
-import trackme.be.Project;
-import trackme.dal.DBConnectionProvider;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
+import trackme.be.Task;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,37 +15,48 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import trackme.be.Project;
+
 /**
  *
  * @author WøbbePC
  */
-public class ProjectDAO {
+public class TaskDAO {
     
     private final DBConnectionProvider connection;
     
-    public ProjectDAO(){
+    public TaskDAO(){
         connection = new DBConnectionProvider();
     }
     
-    public List getProjectsForUser(int userId) throws SQLException{
-    String sql = "SELECT * FROM [Projects] WHERE id = ?";
-    List<Project> projects = new ArrayList<>();
+    public void addNewTask(Project project) throws SQLServerException{
+    String sql = ""; 
+    //needs to get inserted to task but also into connection table between projects and task
+    //need transaction?
+    }
+    
+    
+    
+    
+    public List<Task> getTasksForProject(Project project) throws SQLServerException{
+    String sql = "SELECT * FROM [Task] join TaskForProject ON TaskForProject.taskId = Task.id WHERE projectId = ?";
+    List<Task> tasks = new ArrayList<>();
     
     try(Connection con = connection.getConnection()){
         PreparedStatement pstmt = con.prepareStatement(sql);
-        pstmt.setInt(1, userId);
+        pstmt.setInt(1, project.getId());
         
         ResultSet rs = pstmt.executeQuery();
         while(rs.next()){
         int id = rs.getInt("id");
-        String name = rs.getString("name");
-        String client = rs.getString("client");
-        int cost = rs.getInt("cost");
-        projects.add(new Project(id, name, client, cost));
+        String description = rs.getString("description");
+        tasks.add(new Task(id, description));
         
         }     
+    }   catch (SQLException ex) {
+            Logger.getLogger(TaskDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return tasks;
     }
-        return projects;
-    }
-
+    
 }
