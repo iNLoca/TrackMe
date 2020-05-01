@@ -12,9 +12,10 @@ package trackme.be;
 public class Task {
     
     private int id;
+    private String name;
     private String description;
 
-    public Task(int id, String description) {
+    public Task(int id, String name, String description) {
         this.id = id;
         this.description = description;
     }
@@ -26,6 +27,14 @@ public class Task {
 
     public void setId(int id) {
         this.id = id;
+    }
+    
+    public String getName(){
+        return name;
+    }
+    
+    public void setName(String name){
+        this.name = name;
     }
 
     public String getDescription() {

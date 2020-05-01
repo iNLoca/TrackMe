@@ -49,8 +49,9 @@ public class TaskDAO {
         ResultSet rs = pstmt.executeQuery();
         while(rs.next()){
         int id = rs.getInt("id");
+        String name = rs.getString("name");
         String description = rs.getString("description");
-        tasks.add(new Task(id, description));
+        tasks.add(new Task(id, name, description));
         
         }     
     }   catch (SQLException ex) {
