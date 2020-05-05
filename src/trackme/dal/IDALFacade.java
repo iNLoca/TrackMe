@@ -3,12 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package trackme.bll;
+package trackme.dal;
+
+import java.sql.SQLException;
+import trackme.be.User;
 
 /**
  *
- * @author mac
+ * @author WøbbePC
  */
-public class BLLManager implements IBLLFacade{
+public interface IDALFacade {
+    
+    User getUser(String email, String password) throws SQLException;
     
 }
