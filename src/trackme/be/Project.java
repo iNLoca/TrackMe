@@ -20,6 +20,10 @@ public class Project {
     private String client;
     private int cost;
     private List<TimeLog> projectTime;
+    private List<Task> taskForProject;
+    private int hours;
+    private int minutes;
+    private int seconds;
 
     public Project(int id, String name, String client, int cost) {
         this.id = id;
@@ -61,18 +65,53 @@ public class Project {
         this.cost = cost;
     }
 
-    public List<TimeLog> getTime() {
-        return projectTime;
-    }
-
-    public void setTime(List<TimeLog> time) {
-        this.projectTime = time;
-    }
-    
     public void addTime(TimeLog time){
         projectTime.add(time);
     }
+
+    public List<TimeLog> getProjectTime() {
+        return projectTime;
+    }
+
+    public void setProjectTime(List<TimeLog> projectTime) {
+        this.projectTime = projectTime;
+    }
+
+    public List<Task> getTaskForProject() {
+        return taskForProject;
+    }
+
+    public void setTaskForProject(List<Task> taskForProject) {
+        this.taskForProject = taskForProject;
+    }
     
+    public void addTasks(Task task){
+        taskForProject.add(task);
+    }
+
+    public int getHours() {
+        return hours;
+    }
+
+    public void setHours(int hours) {
+        this.hours = hours;
+    }
+
+    public int getMinutes() {
+        return minutes;
+    }
+
+    public void setMinutes(int minutes) {
+        this.minutes = minutes;
+    }
+
+    public int getSeconds() {
+        return seconds;
+    }
+
+    public void setSeconds(int seconds) {
+        this.seconds = seconds;
+    }
     
     
 }
