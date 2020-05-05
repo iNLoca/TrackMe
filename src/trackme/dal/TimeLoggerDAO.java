@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import trackme.be.Task;
 import trackme.be.TimeLog;
 import trackme.be.User;
 
@@ -58,7 +59,7 @@ public class TimeLoggerDAO {
 
     public List<Project> getUserProjectTime(User user) throws SQLServerException {
         List<Project> projects = new ArrayList<>();
-        String sql = "SELECT * FROM TimeLog JOIN Projects ON Projects.id = TimeLog.projectId WHERE userId = ?";
+        String sql = "SELECT * FROM TimeLog JOIN Projects ON Projects.id = TimeLog.projectId JOIN Task ON Task.id = TimeLog.taskId WHERE userId = ?";
 
         try ( Connection con = connection.getConnection()) {
             PreparedStatement pstmt = con.prepareStatement(sql);
@@ -70,11 +71,21 @@ public class TimeLoggerDAO {
                 String projectName = rs.getString("name");
                 String clientName = rs.getString("clientName");
                 int cost = rs.getInt("cost");
+                int taskId = rs.getInt("taskId");
+                String taskDescription = rs.getString("description");
+                String taskName = rs.getString("taskName");
                 LocalDateTime start = rs.getTimestamp("startTime").toLocalDateTime();
                 LocalDateTime stop = rs.getTimestamp("endTime").toLocalDateTime();
                 LocalDateTime pause = rs.getTimestamp("pauseTime").toLocalDateTime();
                 projects.add(new Project(id, projectName, clientName, cost));
 
+                for (Project project : projects) {
+                    if(project.getId() == id){
+                    project.addTasks(new Task(taskId, taskName, taskDescription));
+                    break;
+                    }
+                }
+                
                 if (start != null) {
                     for (Project project : projects) {
                         if (project.getId() == id) {
@@ -104,6 +115,13 @@ public class TimeLoggerDAO {
         } catch (SQLException ex) {
             Logger.getLogger(TimeLoggerDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return null;
+    }
+    
+    public List<Task> getTaskForUser(User user){
+        List<Task> tasks = new ArrayList<>();
+        String sql = "SELECT * FROM ";
+        
         return null;
     }
 }
