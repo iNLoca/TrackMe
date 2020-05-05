@@ -26,13 +26,13 @@ public class DBConnectionProvider {
     
     public DBConnectionProvider(){
     try{
-        Properties databaseProperties = new Properties();
-        databaseProperties.load(new FileInputStream(PROP_FILE));
-        ds = new SQLServerDataSource();
-        ds.setServerName("Server");
-        ds.setDatabaseName("Database");
-        ds.setUser("User");
-        ds.setPassword("Password");
+      Properties databaseProperties = new Properties();
+            databaseProperties.load(new FileInputStream(PROP_FILE));
+            ds = new SQLServerDataSource();
+            ds.setServerName(databaseProperties.getProperty("Server"));
+            ds.setDatabaseName(databaseProperties.getProperty("Database"));
+            ds.setUser(databaseProperties.getProperty("User"));
+            ds.setPassword(databaseProperties.getProperty("Password"));
     }   catch (FileNotFoundException ex) {
             Logger.getLogger(DBConnectionProvider.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {

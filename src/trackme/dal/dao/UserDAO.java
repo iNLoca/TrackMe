@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package trackme.dal;
+package trackme.dal.dao;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import trackme.be.User;
@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import trackme.dal.DBConnectionProvider;
 
 /**
  *
@@ -38,9 +39,9 @@ public class UserDAO {
         rs.next();
         int id = rs.getInt("id");
         String name = rs.getString("name");
-        Integer type = rs.getInt("isAdmin");
+        Boolean isAdmin = rs.getBoolean("isAdmin");
         
-        if(type.equals(1)){
+        if(isAdmin=true){
             return new User(id, name, User.UserType.ADMIN);
         }
         else {

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package trackme.dal;
+package trackme.dal.dao;
 
 import trackme.be.Project;
 import trackme.dal.DBConnectionProvider;
@@ -19,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import trackme.be.TimeLog;
 import trackme.be.User;
+import trackme.dal.DBConnectionProvider;
 
 /**
  *

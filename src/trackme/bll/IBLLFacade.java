@@ -5,10 +5,14 @@
  */
 package trackme.bll;
 
+import trackme.be.User;
+
 /**
  *
  * @author WøbbePC
  */
 public interface IBLLFacade {
-    
+
+    public User loginUser(String username, String password);
+
 }

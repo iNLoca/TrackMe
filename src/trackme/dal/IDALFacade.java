@@ -14,6 +14,6 @@ import trackme.be.User;
  */
 public interface IDALFacade {
     
-    User getUser(String email, String password) throws SQLException;
+    User getUser(String email, String password);
     
 }

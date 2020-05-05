@@ -25,6 +25,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import trackme.be.User;
+import trackme.gui.model.UserModel;
 
 /**
  * FXML Controller class
@@ -67,9 +69,12 @@ public class UserMainPageController implements Initializable {
      * Initializes the controller class.
      */
     
+    private UserModel userModel;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        userModel= UserModel.getInstance();
+        User us = userModel.getLoggedInUser();
     }    
 
     @FXML

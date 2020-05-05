@@ -4,3 +4,8 @@ nbproject/private/private.properties
 *.xml
 /build/
 /dist/
+*.xml
+*.properties
+.DS_Store
+*.xml
+*.xml

@@ -86,6 +86,7 @@ public class UserOverviewController implements Initializable {
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
+        
     }
 
   

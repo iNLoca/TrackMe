@@ -65,7 +65,7 @@
                   <Image url="@../icons/user1.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="40.0" fitWidth="27.0" layoutX="186.0" layoutY="253.0" onMouseClicked="#setCloseMenubar" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="40.0" fitWidth="27.0" layoutX="165.0" layoutY="473.0" nodeOrientation="RIGHT_TO_LEFT" onMouseClicked="#setCloseMenubar" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../icons/next-arrow-icon-18.png" />
                </image>

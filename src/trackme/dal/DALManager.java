@@ -5,8 +5,10 @@
  */
 package trackme.dal;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import trackme.be.User;
-import trackme.dal.UserDAO;
+import trackme.dal.dao.UserDAO;
         
 /**
  *
@@ -16,12 +18,18 @@ public class DALManager implements IDALFacade {
     
     private final UserDAO userDAO;
 
-    public DALManager(UserDAO userDAO) {
+    public DALManager() {
         this.userDAO = new UserDAO();
     }
     
-    public User getUser(String email, String password) throws SQLException{
-        return userDAO.getUser(email, password);
+    public User getUser(String email, String password) {
+        try {
+            return userDAO.getUser(email, password);
+        } catch (SQLException ex) {
+            Logger.getLogger(DALManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
+  
     
 }
