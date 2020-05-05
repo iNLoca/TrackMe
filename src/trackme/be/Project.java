@@ -5,6 +5,10 @@
  */
 package trackme.be;
 
+import java.sql.Time;
+import java.util.List;
+import trackme.be.TimeLog;
+
 /**
  *
  * @author WøbbePC
@@ -15,6 +19,7 @@ public class Project {
     private String name;
     private String client;
     private int cost;
+    private List<TimeLog> projectTime;
 
     public Project(int id, String name, String client, int cost) {
         this.id = id;
@@ -54,6 +59,18 @@ public class Project {
 
     public void setCost(int cost) {
         this.cost = cost;
+    }
+
+    public List<TimeLog> getTime() {
+        return projectTime;
+    }
+
+    public void setTime(List<TimeLog> time) {
+        this.projectTime = time;
+    }
+    
+    public void addTime(TimeLog time){
+        projectTime.add(time);
     }
     
     

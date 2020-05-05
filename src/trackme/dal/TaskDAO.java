@@ -39,7 +39,7 @@ public class TaskDAO {
     
     
     public List<Task> getTasksForProject(Project project) throws SQLServerException{
-    String sql = "SELECT * FROM [Task] join TaskForProject ON TaskForProject.taskId = Task.id WHERE projectId = ?";
+    String sql = "SELECT * FROM [Task] JOIN TaskForProject ON TaskForProject.taskId = Task.id WHERE projectId = ?";
     List<Task> tasks = new ArrayList<>();
     
     try(Connection con = connection.getConnection()){
