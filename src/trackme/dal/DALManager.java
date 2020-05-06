@@ -4,12 +4,15 @@
  * and open the template in the editor.
  */
 package trackme.dal;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import trackme.be.Project;
+import trackme.be.Task;
 import trackme.be.User;
+import trackme.dal.dao.TaskDAO;
 import trackme.dal.dao.UserDAO;
 import trackme.dal.dao.TimeLoggerDAO;
         
@@ -24,6 +27,11 @@ public class DALManager implements IDALFacade {
     public DALManager() {
         this.userDAO = new UserDAO();
         this.timedocF= new TimeLoggerDAO();
+    private final TaskDAO taskDAO;
+
+    public DALManager() {
+        this.userDAO = new UserDAO();
+        this.taskDAO = new TaskDAO();
     }
     
     public User getUser(String email, String password) {
@@ -44,6 +52,10 @@ public class DALManager implements IDALFacade {
             Logger.getLogger(DALManager.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
+    public List<Task> getTasksForProject(Project project) throws SQLServerException{
+        
+            return taskDAO.getTasksForProject(project);
+        
     }
   
     

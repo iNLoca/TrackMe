@@ -7,10 +7,17 @@ package trackme.gui.controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,12 +27,19 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import trackme.be.Project;
+import trackme.be.Task;
 import trackme.be.User;
+import trackme.gui.model.ProjectModel;
+import trackme.gui.model.TaskModel;
 import trackme.gui.model.UserModel;
 
 /**
@@ -48,11 +62,13 @@ public class UserMainPageController implements Initializable {
     @FXML
     private Label timecountlbl;
     @FXML
-    private JFXComboBox<?> projectbox;
+    private JFXComboBox<Project> projectbox;
     @FXML
     private JFXButton addtaskbtn;
     @FXML
-    private TableColumn<?, ?> tasktableview;
+    private TableView<Task> tasktableview;
+    @FXML
+    private TableColumn<Task, String> taskcolmn;
     @FXML
     private Button logoutbtn;
     @FXML
@@ -60,112 +76,134 @@ public class UserMainPageController implements Initializable {
     @FXML
     private JFXButton trackerbtn;
 
-    
     private final String LoginScene = "/trackme/gui/view/Login.fxml";
     private final String OverviewScene = "/trackme/gui/view/UserOverview.fxml";
     private final String AddTask = "/trackme/gui/view/AddTaskPopUp.fxml";
-   
+
+    private ScheduledExecutorService absenceThreadExecutor;
     /**
      * Initializes the controller class.
      */
-    
     private UserModel userModel;
-    
+    private TaskModel taskModel;
+    private ProjectModel projectModel;
+    @FXML
+    private ImageView imgbtnplaypause;
+    @FXML
+    private Label usrnamelbl;
+  
+    private User user;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        userModel= UserModel.getInstance();
+        userModel = UserModel.getInstance();
         User us = userModel.getLoggedInUser();
-    }    
-
+        usrnamelbl.setText(us.getName());
+        
+       // setProjectsInCombobox();
+      //  setTaskTableView();
+       
+       
+    }
+     
+    
     @FXML
     private void setMenuPopUp(MouseEvent event) {
-        
-        userfrontPane.hoverProperty().addListener((ChangeListener<Boolean>)(observable,OldValue,newValue)->{
-          if(newValue){
-            usrmenubar.setVisible(true);
-          } else{
-            usrmenubar.setVisible(false);
-          }
-        });
-        
+        usrmenubar.setVisible(true);   
         
     }
 
     @FXML
     private void setCloseMenubar(MouseEvent event) {
-        
-       userfrontPane.hoverProperty().addListener((ChangeListener<Boolean>)(observable, OldValue,newValue)->{
-           if(newValue){
-             usrmenubar.setVisible(false);
-           }else{
-            usrmenubar.setVisible(false);
-           }
-       
-       });
-        
+
+        usrmenubar.setVisible(false);
+
     }
 
     @FXML
     private void setProjectComboBox(ActionEvent event) {
+        
+        
+    }
+    
+    private void setProjectsInCombobox(){
+        projectbox.getItems().clear();
+       //projectbox.getItems().addAll(taskModel.getTasksForProject(project));
+       // projectbox.getSelectionModel().select();
+    }
+    
+    
+    @FXML
+    private void setSelectTask(MouseEvent event) {
+        
+    }
+
+    private void setTaskTableView(Project project) throws SQLServerException{
+    ObservableList<Task> taskList =FXCollections.observableArrayList(taskModel.getTasksForProject(project)) ;
+            
+    taskcolmn.setCellValueFactory(new PropertyValueFactory<>("name"));
+    tasktableview.setItems(taskList);
+    
     }
 
     @FXML
     private void setAddNewTask(ActionEvent event) throws IOException {
-        
-        
-        
+
         FXMLLoader fxmll = new FXMLLoader(getClass().getResource(AddTask));
         Parent root = fxmll.load();
-        
+
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
-        
+
     }
 
     @FXML
     private void setOverview(ActionEvent event) throws IOException {
-        Stage closePreviousScene;
-        closePreviousScene = (Stage)overviewbtn.getScene().getWindow();
-        closePreviousScene.close();
-        
+
         FXMLLoader fxloader = new FXMLLoader(getClass().getResource(OverviewScene));
-        Parent root =fxloader.load();
-        
+        Parent root = fxloader.load();
+
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
-        
-        
+
+        Stage closePreviousScene;
+        closePreviousScene = (Stage) overviewbtn.getScene().getWindow();
+        closePreviousScene.close();
+
     }
 
     @FXML
     private void setFrontPage(ActionEvent event) throws IOException {
-       
-        Stage closePreviousScene;
-        closePreviousScene = (Stage)trackerbtn.getScene().getWindow();
-        closePreviousScene.close();
-        
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/trackme/gui/view/UserMainPage.fxml"));
         Parent root = loader.load();
         UserMainPageController ctrl = loader.getController();
-        
 
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.setResizable(false);
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
+
+        Stage closePreviousScene;
+        closePreviousScene = (Stage) trackerbtn.getScene().getWindow();
+        closePreviousScene.close();
     }
 
     @FXML
     private void setLogOutusr(ActionEvent event) throws IOException {
-       
+
         Stage logOutUser;
-        logOutUser = (Stage)logoutbtn.getScene().getWindow();
+        logOutUser = (Stage) logoutbtn.getScene().getWindow();
         logOutUser.close();
-        
+
         URL url = getClass().getResource(LoginScene);
         FXMLLoader fxmlload = new FXMLLoader();
         fxmlload.setLocation(url);
@@ -174,9 +212,72 @@ public class UserMainPageController implements Initializable {
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
+
+    }
+private boolean LOl= false;
+    @FXML
+    private void PressStartPause(ActionEvent event) throws InterruptedException {
+        String imageSource;
+        if (startbtn != null && !LOl) {
+            LOl=true;
+            long startTime = System.currentTimeMillis();
+            absenceThreadExecutor = Executors.newSingleThreadScheduledExecutor();
+            absenceThreadExecutor.scheduleAtFixedRate(() -> {
+                Platform.runLater(() -> {
+
+                    long elapsedTime = System.currentTimeMillis() - startTime;
+                    long elapsedSeconds = (elapsedTime / 1000) % 60;
+                    long elapsedMinutes = ((elapsedTime / 1000) / 60) % 60;
+                    long elapsedHours = (((elapsedTime / 1000) / 60) / 60) % 24;
+
+                    timecountlbl.setText(elapsedHours + " : " + elapsedMinutes + " : " + elapsedSeconds);                
+                });
+            }, 1, 1, TimeUnit.SECONDS);
+             
+            imageSource = "/trackme/gui/icons/pause.png";
+            }else{
+            
+            imageSource = "/trackme/gui/icons/play.png";
+            //LOl = false;
+           // ThreadSleep();
+        }
+          startbtn.setGraphic(new ImageView(new Image(imageSource)));
         
+  //       absenceThreadExecutor.schedule((Runnable) startbtn, 4, TimeUnit.SECONDS);
+        
+      
+        }
+    
+
+    @FXML
+    private void PressStop(ActionEvent event) {
+        LOl=false;
+        absenceThreadExecutor.shutdown();
+    }
+    
+    /*
+    private void PressPause(){
+        if(LOl=true && startbtn!=null){
+        LOl=false;       
+        absenceThreadExecutor.schedule(() -> {
+        }, 0, TimeUnit.HOURS);
+    
+        }
+    }
+*/
+
+    private void ThreadSleep() throws InterruptedException {
+        
+        long startTime = System.currentTimeMillis();
+        Thread.interrupted();
+        Thread.currentThread().getState();
+        
+      
+        Thread.currentThread().isAlive();
+      
+        System.out.println("Sleep time in ms = "+(System.currentTimeMillis()-startTime));
         
         
     }
-    
+
 }

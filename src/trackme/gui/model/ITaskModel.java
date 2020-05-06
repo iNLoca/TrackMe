@@ -3,22 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package trackme.bll;
+package trackme.gui.model;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.util.List;
+import javafx.collections.ObservableList;
 import trackme.be.Project;
 import trackme.be.Task;
 import trackme.be.User;
 
 /**
  *
- * @author WøbbePC
+ * @author mac
  */
-public interface IBLLFacade {
-
-    public User loginUser(String username, String password);
-
-    public List<Task> getTasksForProject(Project project)throws SQLServerException;
-
+interface ITaskModel {
+    
+   public List<Task> getTasksForProject(Project project)throws SQLServerException;
+   
+   public ObservableList<Task> getTaskList();
+   
 }

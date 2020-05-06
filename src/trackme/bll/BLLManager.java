@@ -5,11 +5,13 @@
  */
 package trackme.bll;
 
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import trackme.be.Project;
+import trackme.be.Task;
 import trackme.be.User;
 import trackme.dal.DALManager;
 import trackme.dal.IDALFacade;
@@ -33,6 +35,11 @@ public class BLLManager implements IBLLFacade {
     @Override
     public User loginUser(String username, String password) {
         return dalFacade.getUser(username, password);
+    }
+
+    @Override
+    public List<Task> getTasksForProject(Project project) throws SQLServerException{
+        return dalFacade.getTasksForProject(project);
     }
 
 }

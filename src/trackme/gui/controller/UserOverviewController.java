@@ -5,6 +5,7 @@
  */
 package trackme.gui.controller;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import java.io.IOException;
 import java.net.URL;
@@ -17,6 +18,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.image.ImageView;
@@ -24,6 +26,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import trackme.be.User;
+import trackme.gui.model.UserModel;
 
 /**
  * FXML Controller class
@@ -54,13 +58,24 @@ public class UserOverviewController implements Initializable {
     private final String Tracker = "/trackme/gui/view/UserMainPage.fxml";
     @FXML
     private ImageView menubar;
+    @FXML
+    private JFXButton overviewbtn;
+    @FXML
+    private JFXButton trackerbtn;
+
     /**
      * Initializes the controller class.
      */
+    private UserModel userModel;
+    @FXML
+    private Label usrnamelbl;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+       userModel = UserModel.getInstance();
+        User us = userModel.getLoggedInUser();
+        usrnamelbl.setText(us.getName());
+    }
 
     @FXML
     private void setSortComboBox(ActionEvent event) {
@@ -69,57 +84,53 @@ public class UserOverviewController implements Initializable {
     @FXML
     private void setOverview(ActionEvent event) throws IOException {
         FXMLLoader fxloader = new FXMLLoader(getClass().getResource(OverviewScene));
-        Parent root =fxloader.load();
-        
+        Parent root = fxloader.load();
+
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
+
+        Stage closePreviousScene;
+        closePreviousScene = (Stage) overviewbtn.getScene().getWindow();
+        closePreviousScene.close();
     }
 
     @FXML
     private void setFrontPage(ActionEvent event) throws IOException {
         FXMLLoader fxloader = new FXMLLoader(getClass().getResource(Tracker));
-        Parent root =fxloader.load();
-        
+        Parent root = fxloader.load();
+
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
-        
+
+        Stage closePreviousScene;
+        closePreviousScene = (Stage) trackerbtn.getScene().getWindow();
+        closePreviousScene.close();
     }
 
-  
     @FXML
     private void setShowMenubar(MouseEvent event) {
-        OverviewUser.hoverProperty().addListener((ChangeListener<Boolean>)(observable,OldValue,newValue)->{
-          if(newValue){
-            usrmenubar.setVisible(true);
-          } else{
-            usrmenubar.setVisible(false);
-          }
-        });
-        
-        
+        usrmenubar.setVisible(true);
+
     }
-      @FXML
+
+    @FXML
     private void setCloseMenubar(MouseEvent event) {
-        OverviewUser.hoverProperty().addListener((ChangeListener<Boolean>)(observable, OldValue,newValue)->{
-           if(newValue){
-             usrmenubar.setVisible(false);
-           }else{
-            usrmenubar.setVisible(false);
-           }
-       
-       });
-        
+        usrmenubar.setVisible(false);
+
     }
+
     @FXML
     private void setLogOutusr(ActionEvent event) throws IOException {
-         Stage logOutUser;
-        logOutUser = (Stage)logoutbtn.getScene().getWindow();
+        Stage logOutUser;
+        logOutUser = (Stage) logoutbtn.getScene().getWindow();
         logOutUser.close();
-        
+
         URL url = getClass().getResource(LoginScene);
         FXMLLoader fxmlload = new FXMLLoader();
         fxmlload.setLocation(url);
@@ -130,6 +141,4 @@ public class UserOverviewController implements Initializable {
         stage.show();
     }
 
-   
-    
 }
