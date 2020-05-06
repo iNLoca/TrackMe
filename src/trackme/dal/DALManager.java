@@ -23,16 +23,15 @@ import trackme.dal.dao.TimeLoggerDAO;
 public class DALManager implements IDALFacade {
     
     private final UserDAO userDAO;
- private final TimeLoggerDAO timedocF;
+     private final TimeLoggerDAO timedocF;
+    private final TaskDAO taskDAO;
+    
     public DALManager() {
         this.userDAO = new UserDAO();
         this.timedocF= new TimeLoggerDAO();
-    private final TaskDAO taskDAO;
-
-    public DALManager() {
-        this.userDAO = new UserDAO();
         this.taskDAO = new TaskDAO();
     }
+        
     
     public User getUser(String email, String password) {
         try {
@@ -52,8 +51,9 @@ public class DALManager implements IDALFacade {
             Logger.getLogger(DALManager.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
+    }
+    
     public List<Task> getTasksForProject(Project project) throws SQLServerException{
-        
             return taskDAO.getTasksForProject(project);
         
     }
