@@ -20,18 +20,21 @@ import trackme.dal.IDALFacade;
  *
  * @author mac
  */
-public class BLLManager implements IBLLFacade{
-    
+public class BLLManager implements IBLLFacade {
+
     private IDALFacade dalFacade;
+    private TimeConverter conv;
 
     public BLLManager() {
-        dalFacade= new DALManager();
+        dalFacade = new DALManager();
+        List<Project> pros = dalFacade.getAllProjects();
+        conv = new TimeConverter();
+        conv.getProjectTime(pros);
     }
 
-    
     @Override
     public User loginUser(String username, String password) {
-       return dalFacade.getUser(username,password);
+        return dalFacade.getUser(username, password);
     }
 
     @Override

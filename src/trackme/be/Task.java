@@ -5,6 +5,8 @@
  */
 package trackme.be;
 
+import java.time.LocalDateTime;
+
 /**
  *
  * @author WøbbePC
@@ -14,9 +16,7 @@ public class Task {
     private int id;
     private String name;
     private String description;
-    private int hours;
-    private int minutes;
-    private int seconds;
+    private LocalDateTime overallTime;
 
     public Task(int id, String name, String description) {
         this.id = id;
@@ -48,28 +48,12 @@ public class Task {
         this.description = description;
     }
 
-    public int getHours() {
-        return hours;
+    public LocalDateTime getTime() {
+        return overallTime;
     }
 
-    public void setHours(int hours) {
-        this.hours = hours;
-    }
-
-    public int getMinutes() {
-        return minutes;
-    }
-
-    public void setMinutes(int minutes) {
-        this.minutes = minutes;
-    }
-
-    public int getSeconds() {
-        return seconds;
-    }
-
-    public void setSeconds(int seconds) {
-        this.seconds = seconds;
+    public void setTime(LocalDateTime time) {
+        this.overallTime = time;
     }
 
 }

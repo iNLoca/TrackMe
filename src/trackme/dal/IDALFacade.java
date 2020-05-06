@@ -20,6 +20,9 @@ public interface IDALFacade {
     
     User getUser(String email, String password);
 
+
+    public List<Project> getAllProjects();
     public List<Task> getTasksForProject(Project project) throws SQLServerException;
+
     
 }
