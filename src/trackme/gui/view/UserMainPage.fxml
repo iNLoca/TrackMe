@@ -14,16 +14,16 @@
 
 <AnchorPane id="AnchorPane" fx:id="userfrontPane" prefHeight="514.0" prefWidth="469.0" style="-fx-background-color: #6f80b1#6f80b1 #6f80b1#6f80b1;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trackme.gui.controller.UserMainPageController">
    <children>
-      <Button fx:id="startbtn" layoutX="365.0" layoutY="21.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="56.0" style="-fx-background-color: #435a9a#435a9a;" textFill="#4387c5">
+      <Button fx:id="startbtn" layoutX="365.0" layoutY="21.0" mnemonicParsing="false" onAction="#PressStartPause" prefHeight="43.0" prefWidth="56.0" style="-fx-background-color: #435a9a#435a9a;" textFill="#4387c5">
          <graphic>
-            <ImageView fitHeight="32.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imgbtnplaypause" fitHeight="32.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../icons/img_151606.png" />
                </image>
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="stopbtn" layoutX="415.0" layoutY="21.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="47.0" style="-fx-background-color: #435a9a#435a9a;">
+      <Button fx:id="stopbtn" layoutX="415.0" layoutY="21.0" mnemonicParsing="false" onAction="#PressStop" prefHeight="42.0" prefWidth="47.0" style="-fx-background-color: #435a9a#435a9a;">
          <graphic>
             <ImageView fitHeight="34.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -32,9 +32,9 @@
             </ImageView>
          </graphic>
       </Button>
-      <Label fx:id="timecountlbl" layoutX="300.0" layoutY="34.0" prefHeight="13.0" prefWidth="59.0" text="1:00:30" />
+      <Label fx:id="timecountlbl" layoutX="255.0" layoutY="34.0" prefHeight="17.0" prefWidth="104.0" />
       <JFXComboBox fx:id="projectbox" layoutX="54.0" layoutY="71.0" onAction="#setProjectComboBox" prefHeight="27.0" prefWidth="120.0" promptText="Projects" />
-      <Pane layoutX="78.0" layoutY="281.0" prefHeight="141.0" prefWidth="377.0" style="-fx-background-color: white; -fx-border-color: black;">
+      <Pane layoutX="78.0" layoutY="293.0" prefHeight="141.0" prefWidth="377.0" style="-fx-background-color: white; -fx-border-color: black;">
          <children>
             <Label layoutX="24.0" layoutY="21.0" prefHeight="17.0" prefWidth="44.0" text="Task" />
             <Label layoutX="24.0" layoutY="49.0" prefHeight="63.0" prefWidth="190.0" text="Description" />
@@ -62,9 +62,9 @@
             <Image url="@../icons/next-arrow-icon-18.png" />
          </image>
       </ImageView>
-      <TableView layoutX="76.0" layoutY="111.0" prefHeight="154.0" prefWidth="377.0">
+      <TableView fx:id="tasktableview" layoutX="76.0" layoutY="117.0" onMouseClicked="#setSelectTask" prefHeight="154.0" prefWidth="377.0">
         <columns>
-          <TableColumn fx:id="tasktableview" prefWidth="376.0" text="Tasks" />
+          <TableColumn fx:id="taskcolmn" prefWidth="376.0" text="Tasks" />
         </columns>
       </TableView>
       <ImageView fitHeight="27.0" fitWidth="74.0" layoutX="393.0" layoutY="477.0" pickOnBounds="true" preserveRatio="true">
@@ -74,7 +74,7 @@
       </ImageView>
       <Pane fx:id="usrmenubar" layoutX="-7.0" prefHeight="514.0" prefWidth="200.0" style="-fx-background-color: #cddaf8#cddaf8;" visible="false">
          <children>
-            <Label layoutX="78.0" layoutY="42.0" prefHeight="27.0" prefWidth="59.0" text=" UserDev" />
+            <Label fx:id="usrnamelbl" layoutX="17.0" layoutY="42.0" prefHeight="27.0" prefWidth="120.0" />
             <JFXButton fx:id="overviewbtn" buttonType="RAISED" layoutX="5.0" layoutY="202.0" onAction="#setOverview" prefHeight="27.0" prefWidth="190.0" ripplerFill="#5792eb" style="-fx-background-color: #719cdd#719cdd;" text="Overview" />
             <JFXButton fx:id="trackerbtn" buttonType="RAISED" layoutX="5.0" layoutY="143.0" onAction="#setFrontPage" prefHeight="27.0" prefWidth="190.0" ripplerFill="#5792eb" style="-fx-background-color: #719cdd#719cdd;" text="Tracker" />
             <ImageView fitHeight="56.0" fitWidth="74.0" layoutX="137.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
