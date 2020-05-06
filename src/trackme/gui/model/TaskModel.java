@@ -5,6 +5,7 @@
  */
 package trackme.gui.model;
 
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,9 +33,10 @@ public class TaskModel implements ITaskModel {
     }
 
     @Override
-    public void getTasksForProject(Project project) { //loadTasks
-  //       List<Task> allTasks = BLLManager.getTasksForProject(project);
+    public List<Task> getTasksForProject(Project project) throws SQLServerException{ //loadTasks
+        List<Task> allTasks = BLLManager.getTasksForProject(project);
         taskList.clear();
-  //      taskList.addAll(allTasks);
+      taskList.addAll(allTasks);
+      return allTasks;
     }
 }

@@ -7,6 +7,7 @@ package trackme.gui.controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -15,6 +16,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,6 +29,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -134,10 +138,11 @@ public class UserMainPageController implements Initializable {
         
     }
 
-    private void setTaskTableView(){
-    
+    private void setTaskTableView(Project project) throws SQLServerException{
+    ObservableList<Task> taskList =FXCollections.observableArrayList(taskModel.getTasksForProject(project)) ;
+            
     taskcolmn.setCellValueFactory(new PropertyValueFactory<>("name"));
-    tasktableview.setItems(taskModel.getTaskList());
+    tasktableview.setItems(taskList);
     
     }
 
@@ -211,7 +216,8 @@ public class UserMainPageController implements Initializable {
     }
 private boolean LOl= false;
     @FXML
-    private void PressStartPause(ActionEvent event) {
+    private void PressStartPause(ActionEvent event) throws InterruptedException {
+        String imageSource;
         if (startbtn != null && !LOl) {
             LOl=true;
             long startTime = System.currentTimeMillis();
@@ -224,17 +230,54 @@ private boolean LOl= false;
                     long elapsedMinutes = ((elapsedTime / 1000) / 60) % 60;
                     long elapsedHours = (((elapsedTime / 1000) / 60) / 60) % 24;
 
-                    timecountlbl.setText(elapsedHours + " : " + elapsedMinutes + " : " + elapsedSeconds);
+                    timecountlbl.setText(elapsedHours + " : " + elapsedMinutes + " : " + elapsedSeconds);                
                 });
             }, 1, 1, TimeUnit.SECONDS);
-
+             
+            imageSource = "/trackme/gui/icons/pause.png";
+            }else{
+            
+            imageSource = "/trackme/gui/icons/play.png";
+            //LOl = false;
+           // ThreadSleep();
         }
-    }
+          startbtn.setGraphic(new ImageView(new Image(imageSource)));
+        
+  //       absenceThreadExecutor.schedule((Runnable) startbtn, 4, TimeUnit.SECONDS);
+        
+      
+        }
+    
 
     @FXML
     private void PressStop(ActionEvent event) {
         LOl=false;
         absenceThreadExecutor.shutdown();
+    }
+    
+    /*
+    private void PressPause(){
+        if(LOl=true && startbtn!=null){
+        LOl=false;       
+        absenceThreadExecutor.schedule(() -> {
+        }, 0, TimeUnit.HOURS);
+    
+        }
+    }
+*/
+
+    private void ThreadSleep() throws InterruptedException {
+        
+        long startTime = System.currentTimeMillis();
+        Thread.interrupted();
+        Thread.currentThread().getState();
+        
+      
+        Thread.currentThread().isAlive();
+      
+        System.out.println("Sleep time in ms = "+(System.currentTimeMillis()-startTime));
+        
+        
     }
 
 }

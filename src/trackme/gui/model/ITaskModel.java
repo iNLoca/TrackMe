@@ -5,6 +5,8 @@
  */
 package trackme.gui.model;
 
+import com.microsoft.sqlserver.jdbc.SQLServerException;
+import java.util.List;
 import javafx.collections.ObservableList;
 import trackme.be.Project;
 import trackme.be.Task;
@@ -16,7 +18,7 @@ import trackme.be.User;
  */
 interface ITaskModel {
     
-   public void getTasksForProject(Project project);
+   public List<Task> getTasksForProject(Project project)throws SQLServerException;
    
    public ObservableList<Task> getTaskList();
    

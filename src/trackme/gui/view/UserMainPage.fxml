@@ -16,11 +16,7 @@
    <children>
       <Button fx:id="startbtn" layoutX="365.0" layoutY="21.0" mnemonicParsing="false" onAction="#PressStartPause" prefHeight="43.0" prefWidth="56.0" style="-fx-background-color: #435a9a#435a9a;" textFill="#4387c5">
          <graphic>
-            <ImageView fx:id="imgbtnplaypause" fitHeight="32.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../icons/img_151606.png" />
-               </image>
-            </ImageView>
+            <ImageView fx:id="imgbtnplaypause" fitHeight="32.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
          </graphic>
       </Button>
       <Button fx:id="stopbtn" layoutX="415.0" layoutY="21.0" mnemonicParsing="false" onAction="#PressStop" prefHeight="42.0" prefWidth="47.0" style="-fx-background-color: #435a9a#435a9a;">
@@ -32,7 +28,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Label fx:id="timecountlbl" layoutX="255.0" layoutY="34.0" prefHeight="17.0" prefWidth="104.0" />
+      <Label fx:id="timecountlbl" alignment="CENTER_RIGHT" layoutX="266.0" layoutY="34.0" prefHeight="23.0" prefWidth="97.0" />
       <JFXComboBox fx:id="projectbox" layoutX="54.0" layoutY="71.0" onAction="#setProjectComboBox" prefHeight="27.0" prefWidth="120.0" promptText="Projects" />
       <Pane layoutX="78.0" layoutY="293.0" prefHeight="141.0" prefWidth="377.0" style="-fx-background-color: white; -fx-border-color: black;">
          <children>
@@ -74,7 +70,7 @@
       </ImageView>
       <Pane fx:id="usrmenubar" layoutX="-7.0" prefHeight="514.0" prefWidth="200.0" style="-fx-background-color: #cddaf8#cddaf8;" visible="false">
          <children>
-            <Label fx:id="usrnamelbl" layoutX="17.0" layoutY="42.0" prefHeight="27.0" prefWidth="120.0" />
+            <Label fx:id="usrnamelbl" alignment="CENTER" layoutX="33.0" layoutY="42.0" prefHeight="27.0" prefWidth="104.0" />
             <JFXButton fx:id="overviewbtn" buttonType="RAISED" layoutX="5.0" layoutY="202.0" onAction="#setOverview" prefHeight="27.0" prefWidth="190.0" ripplerFill="#5792eb" style="-fx-background-color: #719cdd#719cdd;" text="Overview" />
             <JFXButton fx:id="trackerbtn" buttonType="RAISED" layoutX="5.0" layoutY="143.0" onAction="#setFrontPage" prefHeight="27.0" prefWidth="190.0" ripplerFill="#5792eb" style="-fx-background-color: #719cdd#719cdd;" text="Tracker" />
             <ImageView fitHeight="56.0" fitWidth="74.0" layoutX="137.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">

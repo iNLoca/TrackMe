@@ -5,6 +5,10 @@
  */
 package trackme.bll;
 
+import com.microsoft.sqlserver.jdbc.SQLServerException;
+import java.util.List;
+import trackme.be.Project;
+import trackme.be.Task;
 import trackme.be.User;
 
 /**
@@ -14,5 +18,7 @@ import trackme.be.User;
 public interface IBLLFacade {
 
     public User loginUser(String username, String password);
+
+    public List<Task> getTasksForProject(Project project)throws SQLServerException;
 
 }
