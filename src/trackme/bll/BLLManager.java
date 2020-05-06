@@ -6,8 +6,10 @@
 package trackme.bll;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import trackme.be.Project;
 import trackme.be.User;
 import trackme.dal.DALManager;
 import trackme.dal.IDALFacade;
@@ -16,18 +18,21 @@ import trackme.dal.IDALFacade;
  *
  * @author mac
  */
-public class BLLManager implements IBLLFacade{
-    
+public class BLLManager implements IBLLFacade {
+
     private IDALFacade dalFacade;
+    private TimeConverter conv;
 
     public BLLManager() {
-        dalFacade= new DALManager();
+        dalFacade = new DALManager();
+        List<Project> pros = dalFacade.getAllProjects();
+        conv = new TimeConverter();
+        conv.getProjectTime(pros);
     }
 
-    
     @Override
     public User loginUser(String username, String password) {
-       return dalFacade.getUser(username,password);
+        return dalFacade.getUser(username, password);
     }
 
 }

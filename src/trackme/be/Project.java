@@ -5,7 +5,7 @@
  */
 package trackme.be;
 
-import java.sql.Time;
+import java.util.ArrayList;
 import java.util.List;
 import trackme.be.TimeLog;
 
@@ -19,11 +19,9 @@ public class Project {
     private String name;
     private String client;
     private int cost;
-    private List<TimeLog> projectTime;
-    private List<Task> taskForProject;
-    private int hours;
-    private int minutes;
-    private int seconds;
+    private List<TimeLog> projectTime = new ArrayList<>();
+    private List<Task> tasksForProject = new ArrayList<>();
+    private long totalTimeInSeconds;
 
     public Project(int id, String name, String client, int cost) {
         this.id = id;
@@ -78,40 +76,22 @@ public class Project {
     }
 
     public List<Task> getTaskForProject() {
-        return taskForProject;
+        return tasksForProject;
     }
 
-    public void setTaskForProject(List<Task> taskForProject) {
-        this.taskForProject = taskForProject;
+    public void setTaskForProject(List<Task> tasksForProject) {
+        this.tasksForProject = tasksForProject;
     }
     
     public void addTasks(Task task){
-        taskForProject.add(task);
+        tasksForProject.add(task);
     }
 
-    public int getHours() {
-        return hours;
+    public long getTotalTimeInSeconds() {
+        return totalTimeInSeconds;
     }
 
-    public void setHours(int hours) {
-        this.hours = hours;
+    public void setTotalTimeInSeconds(long totalTimeInSeconds) {
+        this.totalTimeInSeconds = totalTimeInSeconds;
     }
-
-    public int getMinutes() {
-        return minutes;
-    }
-
-    public void setMinutes(int minutes) {
-        this.minutes = minutes;
-    }
-
-    public int getSeconds() {
-        return seconds;
-    }
-
-    public void setSeconds(int seconds) {
-        this.seconds = seconds;
-    }
-    
-    
 }
