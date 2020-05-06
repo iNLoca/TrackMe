@@ -23,12 +23,12 @@ import trackme.dal.dao.TimeLoggerDAO;
 public class DALManager implements IDALFacade {
     
     private final UserDAO userDAO;
-     private final TimeLoggerDAO timedocF;
+     private final TimeLoggerDAO timeLoggerDAO;
     private final TaskDAO taskDAO;
     
     public DALManager() {
         this.userDAO = new UserDAO();
-        this.timedocF= new TimeLoggerDAO();
+        this.timeLoggerDAO= new TimeLoggerDAO();
         this.taskDAO = new TaskDAO();
     }
         
@@ -46,7 +46,7 @@ public class DALManager implements IDALFacade {
     public List<Project> getAllProjects() {
         try {
             User us = userDAO.getUser("martinwobbe@email.com", "password");;
-            return timedocF.getUserProjectTime(us);
+            return timeLoggerDAO.getUserProjectTime(us);
                     } catch (SQLException ex) {
             Logger.getLogger(DALManager.class.getName()).log(Level.SEVERE, null, ex);
             return null;
@@ -56,6 +56,11 @@ public class DALManager implements IDALFacade {
     public List<Task> getTasksForProject(Project project) throws SQLServerException{
             return taskDAO.getTasksForProject(project);
         
+    }
+
+    @Override
+    public List<Project> getUserProjectTime(User user) throws SQLServerException {
+        return timeLoggerDAO.getUserProjectTime(user);
     }
   
     

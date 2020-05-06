@@ -14,6 +14,8 @@ import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
@@ -93,15 +95,27 @@ public class UserMainPageController implements Initializable {
     private Label usrnamelbl;
   
     private User user;
+    private Project project;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         userModel = UserModel.getInstance();
-        User us = userModel.getLoggedInUser();
-        usrnamelbl.setText(us.getName());
+        user = userModel.getLoggedInUser();
+        usrnamelbl.setText(user.getName());
         
-       // setProjectsInCombobox();
-      //  setTaskTableView();
+        
+       // try {
+            //projectModel.getUserProjectTime(us);
+        //} catch (SQLServerException ex) {
+            //Logger.getLogger(UserMainPageController.class.getName()).log(Level.SEVERE, null, ex);
+        //}
+        try {
+            setProjectsInCombobox(user);
+              //setTaskTableView(project);
+        } catch (SQLServerException ex) {
+            Logger.getLogger(UserMainPageController.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("not working");
+        }
        
        
     }
@@ -120,16 +134,12 @@ public class UserMainPageController implements Initializable {
 
     }
 
-    @FXML
-    private void setProjectComboBox(ActionEvent event) {
-        
-        
-    }
     
-    private void setProjectsInCombobox(){
+    private void setProjectsInCombobox(User user) throws SQLServerException{
+        ObservableList<Project> projectList =FXCollections.observableArrayList(projectModel.getUserProjectTime(user));
         projectbox.getItems().clear();
-       //projectbox.getItems().addAll(taskModel.getTasksForProject(project));
-       // projectbox.getSelectionModel().select();
+        projectbox.getItems().addAll(projectList);
+        //projectbox.getSelectionModel().select(projectbox.getValue());
     }
     
     
@@ -269,11 +279,7 @@ private boolean LOl= false;
     private void ThreadSleep() throws InterruptedException {
         
         long startTime = System.currentTimeMillis();
-        Thread.interrupted();
-        Thread.currentThread().getState();
         
-      
-        Thread.currentThread().isAlive();
       
         System.out.println("Sleep time in ms = "+(System.currentTimeMillis()-startTime));
         

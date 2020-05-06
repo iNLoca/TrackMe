@@ -42,4 +42,9 @@ public class BLLManager implements IBLLFacade {
         return dalFacade.getTasksForProject(project);
     }
 
+    @Override
+    public List<Project> getUserProjectTime(User user) throws SQLServerException {
+        return dalFacade.getUserProjectTime(user);
+    }
+
 }

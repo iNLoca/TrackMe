@@ -23,6 +23,6 @@ public interface IDALFacade {
 
     public List<Project> getAllProjects();
     public List<Task> getTasksForProject(Project project) throws SQLServerException;
-
+    public List<Project> getUserProjectTime(User user) throws SQLServerException;
     
 }

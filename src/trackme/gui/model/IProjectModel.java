@@ -5,12 +5,17 @@
  */
 package trackme.gui.model;
 
+import com.microsoft.sqlserver.jdbc.SQLServerException;
+import java.util.List;
+import trackme.be.Project;
+import trackme.be.User;
+
 /**
  *
  * @author mac
  */
 public interface IProjectModel {
     
-    
+    public List<Project> getUserProjectTime(User user) throws SQLServerException;
     
 }
