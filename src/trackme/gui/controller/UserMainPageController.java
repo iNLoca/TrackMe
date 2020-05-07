@@ -10,6 +10,8 @@ import com.jfoenix.controls.JFXComboBox;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -40,6 +42,7 @@ import javafx.stage.Stage;
 import trackme.be.Project;
 import trackme.be.Task;
 import trackme.be.User;
+import trackme.bll.BLLManager;
 import trackme.gui.model.ProjectModel;
 import trackme.gui.model.TaskModel;
 import trackme.gui.model.UserModel;
@@ -96,13 +99,15 @@ public class UserMainPageController implements Initializable {
   
     private User user;
     private Project project;
-
+    
+    private BLLManager bllManager;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         userModel = UserModel.getInstance();
         user = userModel.getLoggedInUser();
         usrnamelbl.setText(user.getName());
-        
+        this.bllManager = new BLLManager();
         
        // try {
             //projectModel.getUserProjectTime(us);
@@ -115,6 +120,8 @@ public class UserMainPageController implements Initializable {
         } catch (SQLServerException ex) {
             Logger.getLogger(UserMainPageController.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("not working");
+        } catch (SQLException ex) {
+            Logger.getLogger(UserMainPageController.class.getName()).log(Level.SEVERE, null, ex);
         }
        
        
@@ -135,11 +142,11 @@ public class UserMainPageController implements Initializable {
     }
 
     
-    private void setProjectsInCombobox(User user) throws SQLServerException{
-        ObservableList<Project> projectList =FXCollections.observableArrayList(projectModel.getUserProjectTime(user));
+    private void setProjectsInCombobox(User user) throws SQLServerException, SQLException{
+        ObservableList<Project> projectList =FXCollections.observableArrayList(bllManager.getUserProjectTime(user));
         projectbox.getItems().clear();
         projectbox.getItems().addAll(projectList);
-        //projectbox.getSelectionModel().select(projectbox.getValue());
+        projectbox.getSelectionModel().select(projectbox.getValue());
     }
     
     

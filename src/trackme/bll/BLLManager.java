@@ -22,29 +22,32 @@ import trackme.dal.IDALFacade;
  */
 public class BLLManager implements IBLLFacade {
 
-    private IDALFacade dalFacade;
-    private TimeConverter conv;
+    private DALManager dalManager;
 
     public BLLManager() {
-        dalFacade = new DALManager();
-        List<Project> pros = dalFacade.getAllProjects();
-        conv = new TimeConverter();
-        conv.getProjectTime(pros);
+        dalManager = new DALManager();
+        List<Project> pros = dalManager.getAllProjects();
+
     }
 
     @Override
     public User loginUser(String username, String password) {
-        return dalFacade.getUser(username, password);
+        return dalManager.getUser(username, password);
     }
 
     @Override
     public List<Task> getTasksForProject(Project project) throws SQLServerException{
-        return dalFacade.getTasksForProject(project);
+        return dalManager.getTasksForProject(project);
     }
 
     @Override
     public List<Project> getUserProjectTime(User user) throws SQLServerException {
-        return dalFacade.getUserProjectTime(user);
+        return dalManager.getUserProjectTime(user);
+    }
+
+    @Override
+    public List<Project> getProjectsForUser(User user) throws SQLException {
+        return dalManager.getProjectsForUser(user);
     }
 
 }

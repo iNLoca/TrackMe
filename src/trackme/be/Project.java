@@ -30,6 +30,12 @@ public class Project {
         this.cost = cost;
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
+
+    
     
     public int getId() {
         return id;
@@ -85,6 +91,10 @@ public class Project {
     
     public void addTasks(Task task){
         tasksForProject.add(task);
+    }
+    
+    public List<Task> getTasks(Task task){
+        return tasksForProject;
     }
 
     public long getTotalTimeInSeconds() {
