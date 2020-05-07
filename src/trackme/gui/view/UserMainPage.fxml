@@ -32,7 +32,7 @@
          </graphic>
       </Button>
       <Label fx:id="timecountlbl" alignment="CENTER_RIGHT" layoutX="266.0" layoutY="34.0" prefHeight="23.0" prefWidth="97.0" />
-      <JFXComboBox fx:id="projectbox" layoutX="54.0" layoutY="71.0" prefHeight="27.0" prefWidth="120.0" />
+      <JFXComboBox fx:id="projectbox" layoutX="54.0" layoutY="71.0" onAction="#setSelectedProjects" prefHeight="27.0" prefWidth="120.0" promptText="Projects" />
       <Pane layoutX="78.0" layoutY="293.0" prefHeight="141.0" prefWidth="377.0" style="-fx-background-color: white; -fx-border-color: black;">
          <children>
             <Label layoutX="24.0" layoutY="21.0" prefHeight="17.0" prefWidth="44.0" text="Task" />

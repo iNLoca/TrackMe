@@ -96,42 +96,40 @@ public class UserMainPageController implements Initializable {
     private ImageView imgbtnplaypause;
     @FXML
     private Label usrnamelbl;
-  
+
     private User user;
     private Project project;
-    
+
     private BLLManager bllManager;
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         userModel = UserModel.getInstance();
         user = userModel.getLoggedInUser();
         usrnamelbl.setText(user.getName());
         this.bllManager = new BLLManager();
-        
-       // try {
-            //projectModel.getUserProjectTime(us);
+
+        // try {
+        //projectModel.getUserProjectTime(us);
         //} catch (SQLServerException ex) {
-            //Logger.getLogger(UserMainPageController.class.getName()).log(Level.SEVERE, null, ex);
+        //Logger.getLogger(UserMainPageController.class.getName()).log(Level.SEVERE, null, ex);
         //}
         try {
             setProjectsInCombobox(user);
-              //setTaskTableView(project);
+            //setTaskTableView(project);
         } catch (SQLServerException ex) {
             Logger.getLogger(UserMainPageController.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("not working");
         } catch (SQLException ex) {
             Logger.getLogger(UserMainPageController.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
-       
+
     }
-     
-    
+
     @FXML
     private void setMenuPopUp(MouseEvent event) {
-        usrmenubar.setVisible(true);   
-        
+        usrmenubar.setVisible(true);
+
     }
 
     @FXML
@@ -141,26 +139,31 @@ public class UserMainPageController implements Initializable {
 
     }
 
-    
-    private void setProjectsInCombobox(User user) throws SQLServerException, SQLException{
-        ObservableList<Project> projectList =FXCollections.observableArrayList(bllManager.getUserProjectTime(user));
+    private void setProjectsInCombobox(User user) throws SQLServerException, SQLException {
+        ObservableList<Project> projectList = FXCollections.observableArrayList(bllManager.getUserProjectTime(user));
         projectbox.getItems().clear();
         projectbox.getItems().addAll(projectList);
         projectbox.getSelectionModel().select(projectbox.getValue());
     }
-    
-    
+
     @FXML
-    private void setSelectTask(MouseEvent event) {
+    private void setSelectedProjects(ActionEvent event) {
         
+
     }
 
-    private void setTaskTableView(Project project) throws SQLServerException{
-    ObservableList<Task> taskList =FXCollections.observableArrayList(taskModel.getTasksForProject(project)) ;
-            
-    taskcolmn.setCellValueFactory(new PropertyValueFactory<>("name"));
-    tasktableview.setItems(taskList);
-    
+    private void setTaskTableView(Project project) throws SQLServerException {
+        ObservableList<Task> taskList = FXCollections.observableArrayList(taskModel.getTasksForProject(project));
+
+        taskcolmn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        tasktableview.setItems(taskList);
+
+    }
+
+    @FXML
+    private void setSelectTask(MouseEvent event) {
+        //TODO - Fetch data for Pane / Visible (true) else false;
+
     }
 
     @FXML
@@ -231,12 +234,13 @@ public class UserMainPageController implements Initializable {
         stage.show();
 
     }
-private boolean LOl= false;
+    private boolean LOl = false;
+
     @FXML
     private void PressStartPause(ActionEvent event) throws InterruptedException {
         String imageSource;
         if (startbtn != null && !LOl) {
-            LOl=true;
+            LOl = true;
             long startTime = System.currentTimeMillis();
             absenceThreadExecutor = Executors.newSingleThreadScheduledExecutor();
             absenceThreadExecutor.scheduleAtFixedRate(() -> {
@@ -247,31 +251,28 @@ private boolean LOl= false;
                     long elapsedMinutes = ((elapsedTime / 1000) / 60) % 60;
                     long elapsedHours = (((elapsedTime / 1000) / 60) / 60) % 24;
 
-                    timecountlbl.setText(elapsedHours + " : " + elapsedMinutes + " : " + elapsedSeconds);                
+                    timecountlbl.setText(elapsedHours + " : " + elapsedMinutes + " : " + elapsedSeconds);
                 });
             }, 1, 1, TimeUnit.SECONDS);
-             
+
             imageSource = "/trackme/gui/icons/pause.png";
-            }else{
-            
+        } else {
+
             imageSource = "/trackme/gui/icons/play.png";
             //LOl = false;
-           // ThreadSleep();
+            // ThreadSleep();
         }
-          startbtn.setGraphic(new ImageView(new Image(imageSource)));
-        
-  //       absenceThreadExecutor.schedule((Runnable) startbtn, 4, TimeUnit.SECONDS);
-        
-      
-        }
-    
+        startbtn.setGraphic(new ImageView(new Image(imageSource)));
+
+        //       absenceThreadExecutor.schedule((Runnable) startbtn, 4, TimeUnit.SECONDS);
+    }
 
     @FXML
     private void PressStop(ActionEvent event) {
-        LOl=false;
+        LOl = false;
         absenceThreadExecutor.shutdown();
     }
-    
+
     /*
     private void PressPause(){
         if(LOl=true && startbtn!=null){
@@ -281,16 +282,13 @@ private boolean LOl= false;
     
         }
     }
-*/
-
+     */
     private void ThreadSleep() throws InterruptedException {
-        
+
         long startTime = System.currentTimeMillis();
-        
-      
-        System.out.println("Sleep time in ms = "+(System.currentTimeMillis()-startTime));
-        
-        
+       // Thread.sleep(5000);
+        System.out.println("Sleep time in ms = " + (System.currentTimeMillis() - startTime));
+
     }
 
 }
