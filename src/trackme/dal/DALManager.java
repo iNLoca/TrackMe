@@ -70,6 +70,11 @@ public class DALManager implements IDALFacade {
     public List<Project> getProjectsForUser(User user) throws SQLException {
         return projectDAO.getProjectsForUser(user);
     }
+
+    @Override
+    public void insertTaskForProject(Project project, String name, String description) throws SQLServerException {
+        taskDAO.insertTaskForProject(project, name, description);
+    }
   
     
 }

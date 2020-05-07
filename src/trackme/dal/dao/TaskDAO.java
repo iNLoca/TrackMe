@@ -30,12 +30,21 @@ public class TaskDAO {
         connection = new DBConnectionProvider();
     }
     
-    public void addNewTask(Project project) throws SQLServerException{
-    String sql = ""; 
-    //needs to get inserted to task but also into connection table between projects and task
-    //need transaction?
-    }
     
+    public void insertTaskForProject(Project project, String name, String description) throws SQLServerException{
+    String sql = "INSERT INTO [Task] (taskName, description) VALUES (?,?)";
+    
+    try(Connection con = connection.getConnection()){
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, name);
+            pstmt.setString(2, description);
+            pstmt.executeUpdate();
+    }    
+    catch (SQLException ex) {
+            Logger.getLogger(TaskDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+    }
     
     
     

@@ -23,4 +23,5 @@ public interface IBLLFacade {
     public List<Task> getTasksForProject(Project project)throws SQLServerException;
     public List<Project> getUserProjectTime(User user) throws SQLServerException;
     public List<Project> getProjectsForUser(User user) throws SQLException;
+    public void insertTaskForProject(Project project, String name, String description) throws SQLServerException;
 }
