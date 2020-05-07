@@ -37,7 +37,7 @@ public class TimeLoggerDAO {
         connection = new DBConnectionProvider();
     }
 
-    public void insertTimeLog(User user, Project project, Task task, TimeLog timeLog) throws SQLServerException {
+    public void insertTimeLog(User user, Project project, Task task, int timeType) throws SQLServerException {
         String sql = "INSERT INTO [TimeLog] (userId, projectId, taskId, time, typeOfTime)VALUES (?,?,?,CURRENT_TIMESTAMP,?)";
 
         try ( Connection con = connection.getConnection()) {
@@ -45,14 +45,15 @@ public class TimeLoggerDAO {
             pstmt.setInt(1, user.getId());
             pstmt.setInt(2, project.getId());
             pstmt.setInt(3, task.getId());
+            pstmt.setInt(4, timeType);
 
-            if (timeLog.getType() == TimeLog.TimeType.PLAY) {
-                pstmt.setInt(4, 1);
-            } else if (timeLog.getType() == TimeLog.TimeType.STOP) {
-                pstmt.setInt(4, 2);
-            } else {
-                pstmt.setInt(4, 3);
-            }
+//            if (timeLog.getType() == TimeLog.TimeType.PLAY) {
+//                pstmt.setInt(4, 1);
+//            } else if (timeLog.getType() == TimeLog.TimeType.STOP) {
+//                pstmt.setInt(4, 2);
+//            } else {
+//                pstmt.setInt(4, 3);
+//            }
 
             pstmt.executeUpdate();
 

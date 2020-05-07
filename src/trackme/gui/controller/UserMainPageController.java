@@ -168,8 +168,7 @@ public class UserMainPageController implements Initializable {
 
     @FXML
     private void setSelectTask(MouseEvent event) {
-        
-         
+
         tasknamelbl.setText(tasktableview.getSelectionModel().getSelectedItem().getName());
         descriptionlbl.setText(tasktableview.getSelectionModel().getSelectedItem().getDescription());
         
