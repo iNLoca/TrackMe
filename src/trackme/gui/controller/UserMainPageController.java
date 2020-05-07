@@ -105,6 +105,10 @@ public class UserMainPageController implements Initializable {
     private Label tasknamelbl;
     @FXML
     private Label descriptionlbl;
+    @FXML
+    private Label introtasklbl;
+    @FXML
+    private Label introdeslbl;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -154,7 +158,7 @@ public class UserMainPageController implements Initializable {
     private void setSelectedProjects(ActionEvent event) throws SQLServerException {
         project = projectbox.getSelectionModel().getSelectedItem();
         setTaskTableView(project);
-        
+
     }
 
     private void setTaskTableView(Project project) throws SQLServerException {
@@ -162,16 +166,17 @@ public class UserMainPageController implements Initializable {
         ObservableList<Task> taskList = FXCollections.observableArrayList(bllManager.getTasksForProject(project));
         taskcolmn.setCellValueFactory(new PropertyValueFactory<>("name"));
         tasktableview.setItems(taskList);
-        
 
     }
 
     @FXML
     private void setSelectTask(MouseEvent event) {
+        
+        introtasklbl.setVisible(true);
+        introdeslbl.setVisible(true);
 
         tasknamelbl.setText(tasktableview.getSelectionModel().getSelectedItem().getName());
         descriptionlbl.setText(tasktableview.getSelectionModel().getSelectedItem().getDescription());
-        
 
     }
 
@@ -244,10 +249,14 @@ public class UserMainPageController implements Initializable {
 
     }
     private boolean LOl = false;
+    private Object lock = new Object();
+    private volatile boolean paused = true;
 
     @FXML
     private void PressStartPause(ActionEvent event) throws InterruptedException {
         String imageSource;
+        //selcted task 
+        //
         if (startbtn != null && !LOl) {
             LOl = true;
             long startTime = System.currentTimeMillis();
@@ -265,12 +274,16 @@ public class UserMainPageController implements Initializable {
             }, 1, 1, TimeUnit.SECONDS);
 
             imageSource = "/trackme/gui/icons/pause.png";
+
+            //setResume();
         } else {
 
             imageSource = "/trackme/gui/icons/play.png";
             //LOl = false;
             // ThreadSleep();
+            //setPause();
         }
+
         startbtn.setGraphic(new ImageView(new Image(imageSource)));
 
         //       absenceThreadExecutor.schedule((Runnable) startbtn, 4, TimeUnit.SECONDS);
@@ -280,6 +293,31 @@ public class UserMainPageController implements Initializable {
     private void PressStop(ActionEvent event) {
         LOl = false;
         absenceThreadExecutor.shutdown();
+
+    }
+
+    private void setPause() {
+
+        synchronized (lock) {
+            while (paused) {
+                try {
+                    lock.wait();
+                } catch (InterruptedException e) {
+
+                }
+            }
+
+        }
+    }
+
+    private void setResume() {
+        if (paused = !paused) {
+            synchronized (lock) {
+                lock.notifyAll();
+            }
+
+        }
+
     }
 
     /*
@@ -295,7 +333,7 @@ public class UserMainPageController implements Initializable {
     private void ThreadSleep() throws InterruptedException {
 
         long startTime = System.currentTimeMillis();
-       // Thread.sleep(5000);
+        // Thread.sleep(5000);
         System.out.println("Sleep time in ms = " + (System.currentTimeMillis() - startTime));
 
     }

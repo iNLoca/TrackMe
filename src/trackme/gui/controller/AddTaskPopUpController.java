@@ -39,20 +39,19 @@ public class AddTaskPopUpController implements Initializable {
     @FXML
     private TextField taskname;
     @FXML
-    private TextField descriptionField;
-    @FXML
     private JFXComboBox<Project> combox;
 
     private String name;
-    private String description;
+    @FXML
+    private TextField description;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        this.bllManager = new BLLManager();
-        this.userModel = new UserModel();
-        user = userModel.getLoggedInUser();
+       // this.bllManager = new BLLManager();
+      //  this.userModel = new UserModel();
+     //   user = userModel.getLoggedInUser();
     }    
 
     @FXML
@@ -86,5 +85,9 @@ public class AddTaskPopUpController implements Initializable {
 //        combox.getItems().addAll(projectList);
 //        combox.getSelectionModel().select(combox.getValue());
 //    }
+
+    @FXML
+    private void addNewTask(ActionEvent event) {
+    }
     
 }
