@@ -147,16 +147,18 @@ public class UserMainPageController implements Initializable {
     }
 
     @FXML
-    private void setSelectedProjects(ActionEvent event) {
+    private void setSelectedProjects(ActionEvent event) throws SQLServerException {
+        project = projectbox.getSelectionModel().getSelectedItem();
+        setTaskTableView(project);
         
-
     }
 
     private void setTaskTableView(Project project) throws SQLServerException {
-        ObservableList<Task> taskList = FXCollections.observableArrayList(taskModel.getTasksForProject(project));
 
+        ObservableList<Task> taskList = FXCollections.observableArrayList(bllManager.getTasksForProject(project));
         taskcolmn.setCellValueFactory(new PropertyValueFactory<>("name"));
         tasktableview.setItems(taskList);
+        
 
     }
 
