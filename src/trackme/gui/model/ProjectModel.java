@@ -25,6 +25,7 @@ public class ProjectModel implements IProjectModel {
         this.BLLManager = BLLManager;
     } 
 
+    @Override
     public List<Project> getUserProjectTime(User user) throws SQLServerException {
         return BLLManager.getUserProjectTime(user);
     }
