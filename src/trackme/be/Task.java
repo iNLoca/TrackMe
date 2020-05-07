@@ -6,6 +6,8 @@
 package trackme.be;
 
 import java.time.LocalDateTime;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 /**
  *
@@ -14,13 +16,33 @@ import java.time.LocalDateTime;
 public class Task {
     
     private int id;
-    private String name;
+//    private String name;
     private String description;
     private LocalDateTime overallTime;
+    private final StringProperty name =  new SimpleStringProperty();
 
     public Task(int id, String name, String description) {
         this.id = id;
         this.description = description;
+        this.name.set(name);
+
+    }
+    
+    public String getName() {
+        return name.get();
+    }
+
+    public void setName(String value) {
+        name.set(value);
+    }
+
+    public StringProperty nameProperty() {
+        return name;
+    }
+
+    @Override
+    public String toString() {
+        return getName();
     }
 
     
@@ -30,14 +52,6 @@ public class Task {
 
     public void setId(int id) {
         this.id = id;
-    }
-    
-    public String getName(){
-        return name;
-    }
-    
-    public void setName(String name){
-        this.name = name;
     }
 
     public String getDescription() {
