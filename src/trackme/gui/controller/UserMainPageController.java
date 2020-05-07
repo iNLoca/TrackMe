@@ -101,6 +101,10 @@ public class UserMainPageController implements Initializable {
     private Project project;
 
     private BLLManager bllManager;
+    @FXML
+    private Label tasknamelbl;
+    @FXML
+    private Label descriptionlbl;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -162,7 +166,11 @@ public class UserMainPageController implements Initializable {
 
     @FXML
     private void setSelectTask(MouseEvent event) {
-        //TODO - Fetch data for Pane / Visible (true) else false;
+        
+         
+        tasknamelbl.setText(tasktableview.getSelectionModel().getSelectedItem().getName());
+        descriptionlbl.setText(tasktableview.getSelectionModel().getSelectedItem().getDescription());
+        
 
     }
 

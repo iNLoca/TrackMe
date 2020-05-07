@@ -35,11 +35,11 @@
       <JFXComboBox fx:id="projectbox" layoutX="54.0" layoutY="71.0" onAction="#setSelectedProjects" prefHeight="27.0" prefWidth="120.0" promptText="Projects" />
       <Pane layoutX="78.0" layoutY="293.0" prefHeight="141.0" prefWidth="377.0" style="-fx-background-color: white; -fx-border-color: black;">
          <children>
-            <Label layoutX="24.0" layoutY="21.0" prefHeight="17.0" prefWidth="44.0" text="Task" />
-            <Label layoutX="24.0" layoutY="49.0" prefHeight="63.0" prefWidth="190.0" text="Description" />
-            <Label layoutX="186.0" layoutY="21.0" text="Time Spent:" />
-            <Label layoutX="278.0" layoutY="21.0" prefHeight="17.0" prefWidth="74.0" text="1:00:30" />
-            <Label layoutX="29.0" layoutY="112.0" text="Google " />
+            <Label fx:id="tasknamelbl" layoutX="24.0" layoutY="21.0" prefHeight="17.0" prefWidth="97.0" />
+            <Label fx:id="descriptionlbl" layoutX="24.0" layoutY="49.0" prefHeight="63.0" prefWidth="190.0" />
+            <Label layoutX="186.0" layoutY="21.0" />
+            <Label layoutX="278.0" layoutY="21.0" prefHeight="17.0" prefWidth="74.0" />
+            <Label layoutX="29.0" layoutY="112.0" prefHeight="17.0" prefWidth="61.0" text=" " />
          </children>
       </Pane>
       <JFXButton fx:id="addtaskbtn" buttonType="RAISED" layoutX="179.0" layoutY="63.0" onAction="#setAddNewTask" prefHeight="43.0" prefWidth="51.0" ripplerFill="#4387c5cc" text=" ">
