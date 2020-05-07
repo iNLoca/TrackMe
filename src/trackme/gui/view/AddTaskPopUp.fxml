@@ -11,15 +11,15 @@
 
 <AnchorPane id="AnchorPane" prefHeight="199.0" prefWidth="546.0" style="-fx-background-color: #cddaf8#cddaf8 #cddaf8#cddaf8; -fx-border-color: black; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trackme.gui.controller.AddTaskPopUpController">
    <children>
-      <Label layoutX="27.0" layoutY="50.0" prefHeight="17.0" prefWidth="77.0" text="For Project: " />
+      <Label layoutX="22.0" layoutY="50.0" prefHeight="17.0" prefWidth="61.0" text="Project: " />
       <Label layoutX="14.0" layoutY="14.0" prefHeight="17.0" prefWidth="77.0" text="New Task">
          <font>
             <Font name="Al Tarikh Regular" size="17.0" />
          </font>
       </Label>
       <Label layoutX="227.0" layoutY="50.0" prefHeight="17.0" prefWidth="42.0" text="Task:" />
-      <TextField layoutX="269.0" layoutY="45.0" promptText="Task Name" />
-      <TextField layoutX="227.0" layoutY="79.0" prefHeight="77.0" prefWidth="258.0" promptText="Description" />
+      <TextField fx:id="taskname" layoutX="269.0" layoutY="45.0" onAction="#setTaskName" prefHeight="27.0" prefWidth="214.0" promptText="Task Name" />
+      <TextField fx:id="description" layoutX="227.0" layoutY="79.0" onAction="#setDescription" prefHeight="80.0" prefWidth="258.0" promptText="Description" />
       <Button fx:id="close" layoutX="503.0" layoutY="3.0" mnemonicParsing="false" onAction="#setClosePopUp" prefHeight="39.0" prefWidth="42.0" style="-fx-background-color: #cddaf8#cddaf8 #cddaf8#cddaf8;">
          <graphic>
             <ImageView fitHeight="30.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
@@ -29,7 +29,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <JFXComboBox layoutX="104.0" layoutY="45.0" prefHeight="27.0" prefWidth="93.0" />
+      <JFXComboBox fx:id="combox" layoutX="73.0" layoutY="45.0" onAction="#setProject" prefHeight="27.0" prefWidth="127.0" />
       <Button fx:id="addtaskbtn" layoutX="492.0" layoutY="145.0" mnemonicParsing="false" onAction="#addNewTask" prefHeight="40.0" prefWidth="42.0" style="-fx-background-color: #cddaf8#cddaf8 #cddaf8#cddaf8 #cddaf8#cddaf8 #cddaf8#cddaf8;">
          <graphic>
             <ImageView fitHeight="32.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">

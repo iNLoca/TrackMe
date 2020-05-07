@@ -44,6 +44,7 @@ public class AddTaskPopUpController implements Initializable {
 
     @FXML
     private void addNewTask(ActionEvent event) {
+        
     }
     
 }
