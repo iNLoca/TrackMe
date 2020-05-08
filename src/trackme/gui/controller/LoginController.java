@@ -17,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -45,6 +46,8 @@ public class LoginController implements Initializable {
     private final String UserLogin = "/trackme/gui/view/UserMainPage.fxml";
 
     private UserModel userModel;
+    @FXML
+    private Label errorlbl;
 
     /**
      * Initializes the controller class.
@@ -91,7 +94,7 @@ public class LoginController implements Initializable {
             User us = userModel.loginUser(username,password);
             loadUpNextView(us);
         } else {
-            //Display missing data lol
+            errorlbl.setVisible(true);//Display missing data lol
         }
         }
     }
@@ -105,6 +108,8 @@ public class LoginController implements Initializable {
             User us = userModel.loginUser(username,password);
             loadUpNextView(us);
         } else {
+                        errorlbl.setVisible(true);//Display missing data lol
+
             //Display missing data lol
         }
 
