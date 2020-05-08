@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -61,7 +62,32 @@ public class TimeLoggerDAO {
             Logger.getLogger(TimeLoggerDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public void editTimeLog(User user, Project project, Task task, LocalDateTime startTime, LocalDateTime endTime) throws SQLServerException{
+    String sql = "INSERT INTO [TimeLog] (userId, projectId, taskId, time, typeOfTime) VALUES (?,?,?,?,?),(?,?,?,?,?)";
+    
+    try(Connection con = connection.getConnection()){
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        pstmt.setInt(1, user.getId());
+        pstmt.setInt(2, project.getId());
+        pstmt.setInt(3, task.getId());
+        pstmt.setTimestamp(4, Timestamp.valueOf(startTime));
+        pstmt.setInt(5, 0);
+        
+        pstmt.setInt(6, user.getId());
+        pstmt.setInt(7, project.getId());
+        pstmt.setInt(8, task.getId());
+        pstmt.setTimestamp(9, Timestamp.valueOf(endTime));
+        pstmt.setInt(10, 1);
+        pstmt.executeUpdate();
+        
+    }   catch (SQLException ex) {
+            Logger.getLogger(TimeLoggerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+    }
 
+    
     public List<Project> getUserProjectTime(User user) throws SQLServerException {
         List<Project> projects = new ArrayList<>();
         String sql = "SELECT * FROM TimeLog JOIN Projects ON Projects.id = TimeLog.projectId JOIN Task ON Task.id = TimeLog.taskId WHERE userId = ?";
@@ -81,11 +107,12 @@ public class TimeLoggerDAO {
                 String taskName = rs.getString("taskName");
                 LocalDateTime time = rs.getTimestamp("time").toLocalDateTime();
                 int typeOfTime = rs.getInt("typeOfTime");
+                int toPay = rs.getInt("toPay");
 
                 if (projectHash.get(id) == null) {
                     projectHash.put(id, new Project(id, projectName, clientName, cost));
                 }
-                projectHash.get(id).addTasks(new Task(taskId, taskName, taskDescription));
+                projectHash.get(id).addTasks(new Task(taskId, taskName, taskDescription, toPay));
 
                 switch (typeOfTime) {
                     case 1:
@@ -93,9 +120,6 @@ public class TimeLoggerDAO {
                         break;
                     case 2:
                         projectHash.get(id).addTime(new TimeLog(TimeLog.TimeType.STOP, time));
-                        break;
-                    case 3:
-                        projectHash.get(id).addTime(new TimeLog(TimeLog.TimeType.PAUSE, time));
                         break;
                 }
 

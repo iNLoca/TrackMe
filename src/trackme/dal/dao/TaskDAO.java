@@ -31,13 +31,14 @@ public class TaskDAO {
     }
     
     
-    public void insertTaskForProject(Project project, String name, String description) throws SQLServerException{
-    String sql = "INSERT INTO [Task] (taskName, description) VALUES (?,?)";
+    public void insertTaskForProject(Project project, String name, String description, int toPay) throws SQLServerException{
+    String sql = "INSERT INTO [Task] (taskName, description, toPay) VALUES (?,?,?)";
     
     try(Connection con = connection.getConnection()){
             PreparedStatement pstmt = con.prepareStatement(sql);
             pstmt.setString(1, name);
             pstmt.setString(2, description);
+            pstmt.setInt(3, toPay);
             pstmt.executeUpdate();
     }    
     catch (SQLException ex) {
@@ -61,7 +62,8 @@ public class TaskDAO {
         int id = rs.getInt("id");
         String name = rs.getString("taskName");
         String description = rs.getString("description");
-        tasks.add(new Task(id, name, description));
+        int toPay = rs.getInt("toPay");
+        tasks.add(new Task(id, name, description, toPay));
         
         }     
     }   catch (SQLException ex) {

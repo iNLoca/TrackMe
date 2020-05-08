@@ -51,8 +51,8 @@ public class BLLManager implements IBLLFacade {
     }
 
     @Override
-    public void insertTaskForProject(Project project, String name, String description) throws SQLServerException {
-        dalManager.insertTaskForProject(project, name, description);
+    public void insertTaskForProject(Project project, String name, String description, int toPay) throws SQLServerException {
+        dalManager.insertTaskForProject(project, name, description, toPay);
     }
 
 }

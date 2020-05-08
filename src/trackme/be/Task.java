@@ -20,11 +20,13 @@ public class Task {
     private String description;
     private LocalDateTime overallTime;
     private final StringProperty name =  new SimpleStringProperty();
+    private int toPay; //0 = to be paid, 1 = to not be paid
 
-    public Task(int id, String name, String description) {
+    public Task(int id, String name, String description, int toPay) {
         this.id = id;
         this.description = description;
         this.name.set(name);
+        this.toPay = toPay;
 
     }
     
@@ -70,4 +72,13 @@ public class Task {
         this.overallTime = time;
     }
 
+    public int getToPay() {
+        return toPay;
+    }
+
+    public void setToPay(int toPay) {
+        this.toPay = toPay;
+    }
+
+    
 }

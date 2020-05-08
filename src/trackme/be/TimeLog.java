@@ -15,6 +15,7 @@ public class TimeLog {
 
     private TimeType type;
     private LocalDateTime time;
+    
 
     public TimeLog(TimeType type, LocalDateTime time) {
         this.type = type;
@@ -39,7 +40,7 @@ public class TimeLog {
     }
     
     public enum TimeType {
-        PLAY, PAUSE, STOP;
+        PLAY, STOP;
     }
     
 }
