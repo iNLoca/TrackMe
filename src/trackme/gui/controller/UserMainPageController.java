@@ -7,6 +7,7 @@ package trackme.gui.controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXTextField;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.io.IOException;
 import java.net.URL;
@@ -101,14 +102,14 @@ public class UserMainPageController implements Initializable {
     private Project project;
 
     private BLLManager bllManager;
-    @FXML
     private Label tasknamelbl;
-    @FXML
     private Label descriptionlbl;
-    @FXML
     private Label introtasklbl;
-    @FXML
     private Label introdeslbl;
+    @FXML
+    private JFXTextField insertTasklbl;
+    @FXML
+    private JFXTextField Descriplbl;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
