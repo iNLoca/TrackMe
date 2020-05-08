@@ -84,7 +84,7 @@ public class UserMainPageController implements Initializable {
 
     private final String LoginScene = "/trackme/gui/view/Login.fxml";
     private final String OverviewScene = "/trackme/gui/view/UserOverview.fxml";
-    private final String AddTask = "/trackme/gui/view/AddTaskPopUp.fxml";
+    
 
     private ScheduledExecutorService absenceThreadExecutor;
     /**
@@ -181,19 +181,7 @@ public class UserMainPageController implements Initializable {
 
     }
 
-    @FXML
-    private void setAddNewTask(ActionEvent event) throws IOException {
-
-        FXMLLoader fxmll = new FXMLLoader(getClass().getResource(AddTask));
-        Parent root = fxmll.load();
-
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setResizable(false);
-        stage.setScene(scene);
-        stage.show();
-
-    }
+    
 
     @FXML
     private void setOverview(ActionEvent event) throws IOException {
