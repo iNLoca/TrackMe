@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="userfrontPane" prefHeight="514.0" prefWidth="469.0" style="-fx-background-color: #6f80b1#6f80b1 #6f80b1#6f80b1;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trackme.gui.controller.UserMainPageController">
+<AnchorPane id="AnchorPane" fx:id="userfrontPane" prefHeight="514.0" prefWidth="469.0" style="-fx-background-color: #6f80b1#6f80b1 #6f80b1#6f80b1;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trackme.gui.controller.UserMainPageController">
    <children>
       <Button fx:id="startbtn" layoutX="344.0" layoutY="21.0" mnemonicParsing="false" onAction="#PressStartPause" prefHeight="43.0" prefWidth="56.0" style="-fx-background-color: #435a9a#435a9a;" textFill="#4387c5">
          <graphic>
@@ -39,7 +39,7 @@
             <Font size="18.0" />
          </font></Label>
       <JFXComboBox fx:id="projectbox" layoutX="47.0" layoutY="65.0" onAction="#setSelectedProjects" prefHeight="27.0" prefWidth="120.0" promptText="Projects" />
-      <JFXButton fx:id="addtaskbtn" buttonType="RAISED" layoutX="381.0" layoutY="80.0" onAction="#setAddNewTask" prefHeight="43.0" prefWidth="51.0" ripplerFill="#4387c5cc" text=" ">
+      <JFXButton buttonType="RAISED" layoutX="381.0" layoutY="80.0" prefHeight="43.0" prefWidth="51.0" ripplerFill="#4387c5cc" text=" ">
          <graphic>
             <ImageView fitHeight="30.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -48,6 +48,8 @@
             </ImageView>
          </graphic>
       </JFXButton>
+      <JFXTextField fx:id="insertTasklbl" layoutX="47.0" layoutY="109.0" prefHeight="31.0" prefWidth="157.0" promptText="Insert Task" />
+      <JFXTextField fx:id="Descriplbl" layoutX="224.0" layoutY="109.0" prefHeight="31.0" prefWidth="200.0" promptText="Description" />
       <ImageView fitHeight="43.0" fitWidth="147.0" layoutX="-1.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../icons/grumsen-logo-non-retina-345x0-c-default_quality-85.png" />
@@ -97,7 +99,5 @@
             <DropShadow />
          </effect>
       </Pane>
-      <JFXTextField fx:id="insertTasklbl" layoutX="47.0" layoutY="109.0" prefHeight="31.0" prefWidth="157.0" text="Insert Task" />
-      <JFXTextField fx:id="Descriplbl" layoutX="224.0" layoutY="109.0" prefHeight="31.0" prefWidth="200.0" text="Description" />
    </children>
 </AnchorPane>

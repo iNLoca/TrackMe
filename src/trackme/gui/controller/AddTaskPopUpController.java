@@ -63,28 +63,24 @@ public class AddTaskPopUpController implements Initializable {
         
     }
 
-//    @FXML
-//    private void addNewTask(ActionEvent event, Project project) throws SQLServerException {
-//        bllManager.insertTaskForProject(project, name, description);
-//    }
-//
-//    @FXML
-//    private void setTaskName(ActionEvent event) {
-//        name = taskname.getText();
-//    }
-//
-//    @FXML
-//    private void setDescription(ActionEvent event) {
-//        description = descriptionField.getText();
-//    }
-//
-//    @FXML
-//    private void setProject(User user) throws SQLServerException {
-//        ObservableList<Project> projectList = FXCollections.observableArrayList(bllManager.getUserProjectTime(user));
-//        combox.getItems().clear();
-//        combox.getItems().addAll(projectList);
-//        combox.getSelectionModel().select(combox.getValue());
-//    }
+    private void addNewTask(ActionEvent event, Project project) throws SQLServerException {
+  //     bllManager.insertTaskForProject(project, name, description);
+  }
+
+    private void setTaskName(ActionEvent event) {
+       name = taskname.getText();
+    }
+
+    private void setDescription(ActionEvent event) {
+   //    description = descriptionField.getText();
+    }
+
+    private void setProject(User user) throws SQLServerException {
+        ObservableList<Project> projectList = FXCollections.observableArrayList(bllManager.getUserProjectTime(user));
+        combox.getItems().clear();
+        combox.getItems().addAll(projectList);
+        combox.getSelectionModel().select(combox.getValue());
+    }
 
     @FXML
     private void addNewTask(ActionEvent event) {
