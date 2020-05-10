@@ -60,8 +60,7 @@ public class UserMainPageController implements Initializable {
 
     @FXML
     private AnchorPane userfrontPane;
-    @FXML
-    private Button startbtn;
+   
     @FXML
     private Button stopbtn;
     @FXML
@@ -98,6 +97,7 @@ public class UserMainPageController implements Initializable {
 
     private User user;
     private Project project;
+    private Task task;
 
     private BLLManager bllManager;
     private Label tasknamelbl;
@@ -117,13 +117,14 @@ public class UserMainPageController implements Initializable {
     private TableColumn<Task, String> desccolm;
     @FXML
     private TableColumn<Task, Integer> moneycolmn;
-    @FXML
-    private TableColumn<Task, ?> startbtncolumn;
     
     @FXML
     private JFXButton editbtn;
     @FXML
     private CheckBox checkmoney;
+    @FXML
+    private Button startbtn;
+    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -191,6 +192,7 @@ public class UserMainPageController implements Initializable {
     
     
     private void addStartButton(){
+        
         TableColumn<Task, Void> colBtn = new TableColumn("Start Time");
         Callback<TableColumn<Task, Void>, TableCell<Task,Void>>cellFactory = new Callback<TableColumn<Task,Void>,TableCell<Task,Void>>(){
             @Override
@@ -201,12 +203,32 @@ public class UserMainPageController implements Initializable {
                 
                 {
                 btn.setOnAction((ActionEvent event)->{
-                 Task task  = getTableView().getItems().get(getIndex());
-                 System.out.println("selctedTask: " + task);
-                 
-                 
-                
-                
+                 task  = getTableView().getItems().get(getIndex());
+                // System.out.println("selctedTask: " + task);
+                    
+                 if (btn != null && !LOl) {
+            LOl = true;
+            long startTime = System.currentTimeMillis();
+            absenceThreadExecutor = Executors.newSingleThreadScheduledExecutor();
+            absenceThreadExecutor.scheduleAtFixedRate(() -> {
+                Platform.runLater(() -> {
+
+                    long elapsedTime = System.currentTimeMillis() - startTime;
+                    long elapsedSeconds = (elapsedTime / 1000) % 60;
+                    long elapsedMinutes = ((elapsedTime / 1000) / 60) % 60;
+                    long elapsedHours = (((elapsedTime / 1000) / 60) / 60) % 24;
+
+                    timecountlbl.setText(elapsedHours + " : " + elapsedMinutes + " : " + elapsedSeconds);
+                });
+            }, 1, 1, TimeUnit.SECONDS);
+
+                     try {
+                         bllManager.insertTimeLog(user,project ,task , 0);
+                     } catch (SQLServerException ex) {
+                         Logger.getLogger(UserMainPageController.class.getName()).log(Level.SEVERE, null, ex);
+                     }
+        }
+   
                 });
                 
                 }
@@ -300,41 +322,15 @@ public class UserMainPageController implements Initializable {
         stage.show();
 
     }
-    private boolean LOl = false;
+    
 
+  private boolean LOl = false;
+  
     @FXML
-    private void PressStartPause(ActionEvent event) throws InterruptedException {
-      
-        //selcted task 
-        //
-        if (startbtn != null && !LOl) {
-            LOl = true;
-            long startTime = System.currentTimeMillis();
-            absenceThreadExecutor = Executors.newSingleThreadScheduledExecutor();
-            absenceThreadExecutor.scheduleAtFixedRate(() -> {
-                Platform.runLater(() -> {
-
-                    long elapsedTime = System.currentTimeMillis() - startTime;
-                    long elapsedSeconds = (elapsedTime / 1000) % 60;
-                    long elapsedMinutes = ((elapsedTime / 1000) / 60) % 60;
-                    long elapsedHours = (((elapsedTime / 1000) / 60) / 60) % 24;
-
-                    timecountlbl.setText(elapsedHours + " : " + elapsedMinutes + " : " + elapsedSeconds);
-                });
-            }, 1, 1, TimeUnit.SECONDS);
-
-            
-        }
-
-
-        //       absenceThreadExecutor.schedule((Runnable) startbtn, 4, TimeUnit.SECONDS);
-    }
-
-    @FXML
-    private void PressStop(ActionEvent event) {
+    private void PressStop(ActionEvent event) throws SQLServerException {
         LOl = false;
         absenceThreadExecutor.shutdown();
-
+        bllManager.insertTimeLog(user,project ,task , 1);
     }
 
     @FXML

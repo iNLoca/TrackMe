@@ -66,7 +66,7 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         userModel = UserModel.getInstance();
-        fieldValidator();
+        
         
     }
 
@@ -122,24 +122,7 @@ public class LoginController implements Initializable {
         }
     }
     
-    private void fieldValidator() {//   could be also decoupled 
-        RequiredFieldValidator usernameValidator = new RequiredFieldValidator();
-        RequiredFieldValidator passwordValidator = new RequiredFieldValidator();
-        emaillbl.getValidators().add(usernameValidator);
-        usernameValidator.setMessage("Please fill out username.");
-        passlbl.getValidators().add(passwordValidator);
-        passwordValidator.setMessage("Wrong email or password");
-        emaillbl.focusedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
-            if (!newValue) {
-                emaillbl.validate();
-            }
-        });
-        passlbl.focusedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
-            if (!newValue) {
-                passlbl.validate();
-            }
-        });
-    }
+    
     
    /* 
     

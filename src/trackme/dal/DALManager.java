@@ -75,6 +75,11 @@ public class DALManager implements IDALFacade {
     public void insertTaskForProject(Project project, String name, String description, int toPay) throws SQLServerException {
         taskDAO.insertTaskForProject(project, name, description, toPay);
     }
+
+    @Override
+    public void insertTimeLog(User user, Project project, Task task, int timeType) throws SQLServerException {
+        timeLoggerDAO.insertTimeLog(user, project, task, timeType);
+    }
   
     
 }
