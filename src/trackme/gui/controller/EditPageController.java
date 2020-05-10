@@ -6,81 +6,52 @@
 package trackme.gui.controller;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import trackme.be.User;
-import trackme.gui.model.UserModel;
 
 /**
- * FXML Controller class
  *
  * @author mac
  */
-public class UserOverviewController implements Initializable {
+public class EditPageController {
 
     @FXML
-    private AnchorPane OverviewUser;
+    private AnchorPane userfrontPane;
     @FXML
-    private JFXComboBox<?> sortcombobox;
+    private JFXButton addeditbtn;
     @FXML
-    private TableView<?> tasksOverviewTable;
-    @FXML
-    private TableColumn<?, ?> tasks;
-    @FXML
-    private TableColumn<?, ?> date;
-    @FXML
-    private TableColumn<?, ?> tamespent;
+    private ImageView showup;
     @FXML
     private Pane usrmenubar;
     @FXML
-    private Button logoutbtn;
-
-    private final String LoginScene = "/trackme/gui/view/Login.fxml";
-    private final String OverviewScene = "/trackme/gui/view/OverviewScene";
-    private final String Tracker = "/trackme/gui/view/UserMainPage.fxml";
-    @FXML
-    private ImageView menubar;
+    private Label usrnamelbl;
     @FXML
     private JFXButton overviewbtn;
     @FXML
     private JFXButton trackerbtn;
-
-    /**
-     * Initializes the controller class.
-     */
-    private UserModel userModel;
     @FXML
-    private Label usrnamelbl;
+    private Button logoutbtn;
     @FXML
-    private JFXButton editovbtn;
+    private JFXButton editbtn;
     
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-       userModel = UserModel.getInstance();
-        User us = userModel.getLoggedInUser();
-        usrnamelbl.setText(us.getName());
-    }
+    private final String LoginScene = "/trackme/gui/view/Login.fxml";
+    private final String OverviewScene = "/trackme/gui/view/UserOverview.fxml";
 
     @FXML
-    private void setSortComboBox(ActionEvent event) {
+    private void setMenuPopUp(MouseEvent event) {
+        usrmenubar.setVisible(true);
     }
 
     @FXML
@@ -101,11 +72,14 @@ public class UserOverviewController implements Initializable {
 
     @FXML
     private void setFrontPage(ActionEvent event) throws IOException {
-        FXMLLoader fxloader = new FXMLLoader(getClass().getResource(Tracker));
-        Parent root = fxloader.load();
+        
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/trackme/gui/view/UserMainPage.fxml"));
+        Parent root = loader.load();
+        UserMainPageController ctrl = loader.getController();
 
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
@@ -116,19 +90,13 @@ public class UserOverviewController implements Initializable {
     }
 
     @FXML
-    private void setShowMenubar(MouseEvent event) {
-        usrmenubar.setVisible(true);
-
-    }
-
-    @FXML
     private void setCloseMenubar(MouseEvent event) {
         usrmenubar.setVisible(false);
-
     }
 
     @FXML
     private void setLogOutusr(ActionEvent event) throws IOException {
+        
         Stage logOutUser;
         logOutUser = (Stage) logoutbtn.getScene().getWindow();
         logOutUser.close();
@@ -141,10 +109,11 @@ public class UserOverviewController implements Initializable {
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
+
     }
 
     @FXML
-    private void setEditOV(ActionEvent event) throws IOException {
+    private void setEdit(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/trackme/gui/view/EditPage.fxml"));
         Parent root = loader.load();
         EditPageController ctrl = loader.getController();
@@ -157,8 +126,8 @@ public class UserOverviewController implements Initializable {
         stage.show();
 
         Stage closePreviousScene;
-        closePreviousScene = (Stage) editovbtn.getScene().getWindow();
+        closePreviousScene = (Stage) editbtn.getScene().getWindow();
         closePreviousScene.close();
     }
-
+    
 }

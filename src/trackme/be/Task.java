@@ -19,14 +19,14 @@ public class Task {
     
     private int id;
 //    private String name;
-    private String description;
+    private final StringProperty description = new SimpleStringProperty();
     private LocalDateTime overallTime;
     private final StringProperty name =  new SimpleStringProperty();
     private int toPay; //0 = to be paid, 1 = to not be paid
 
     public Task(int id, String name, String description, int toPay) {
         this.id = id;
-        this.description = description;
+        this.description.set(description);
         this.name.set(name);
         this.toPay = toPay;
 
@@ -47,6 +47,7 @@ public class Task {
     @Override
     public String toString() {
         return getName();
+        
     }
 
     
@@ -59,11 +60,15 @@ public class Task {
     }
 
     public String getDescription() {
-        return description;
+        return description.get();
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDescription(String value) {
+         description.set(value);
+    }
+    
+    public StringProperty descriptionProperty(){
+       return description;
     }
 
     public LocalDateTime getTime() {

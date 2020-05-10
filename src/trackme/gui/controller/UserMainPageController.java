@@ -30,7 +30,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -40,6 +42,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import trackme.be.Project;
 import trackme.be.Task;
 import trackme.be.User;
@@ -69,10 +72,7 @@ public class UserMainPageController implements Initializable {
     private Label timecountlbl;
     @FXML
     private JFXComboBox<Project> projectbox;
-    @FXML
-    private TableView<Task> tasktableview;
-    @FXML
-    private TableColumn<Task, String> taskcolmn;
+   
     @FXML
     private Button logoutbtn;
     @FXML
@@ -108,6 +108,22 @@ public class UserMainPageController implements Initializable {
     private JFXTextField insertTasklbl;
     @FXML
     private JFXTextField Descriplbl;
+    
+    @FXML
+    private TableView<Task> tasktableview;
+    @FXML
+    private TableColumn<Task, String> taskcolmn;
+    @FXML
+    private TableColumn<Task, String> desccolm;
+    @FXML
+    private TableColumn<Task, Integer> moneycolmn;
+    @FXML
+    private TableColumn<Task, ?> startbtncolumn;
+    
+    @FXML
+    private JFXButton editbtn;
+    @FXML
+    private CheckBox checkmoney;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -164,10 +180,59 @@ public class UserMainPageController implements Initializable {
 
         ObservableList<Task> taskList = FXCollections.observableArrayList(bllManager.getTasksForProject(project));
         taskcolmn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        desccolm.setCellValueFactory(new PropertyValueFactory<>("description"));
+        
         tasktableview.setItems(taskList);
-
+        
+        addStartButton();
     }
-
+   
+    //String imageSource;
+    
+    
+    private void addStartButton(){
+        TableColumn<Task, Void> colBtn = new TableColumn("Start Time");
+        Callback<TableColumn<Task, Void>, TableCell<Task,Void>>cellFactory = new Callback<TableColumn<Task,Void>,TableCell<Task,Void>>(){
+            @Override
+            public TableCell<Task, Void> call(TableColumn<Task, Void> param) {
+                final TableCell<Task,Void>cell = new TableCell<Task,Void>(){
+                
+                private final Button btn  = new Button("Start");
+                
+                {
+                btn.setOnAction((ActionEvent event)->{
+                 Task task  = getTableView().getItems().get(getIndex());
+                 System.out.println("selctedTask: " + task);
+                 
+                 
+                
+                
+                });
+                
+                }
+                @Override 
+                public void updateItem(Void item,boolean empty){
+                  super.updateItem(item, empty);
+                  if(empty){
+                    setGraphic(null);
+                  }else{
+                  setGraphic(btn);
+                  }
+                
+                }
+                };
+                return cell;
+            }
+        
+        };
+         
+                
+            colBtn.setCellFactory(cellFactory);
+            
+            tasktableview.getColumns().add(colBtn);
+    
+    }
+    
     @FXML
     private void setSelectTask(MouseEvent event) {
         
@@ -236,8 +301,6 @@ public class UserMainPageController implements Initializable {
 
     }
     private boolean LOl = false;
-    private Object lock = new Object();
-    private volatile boolean paused = true;
 
     @FXML
     private void PressStartPause(ActionEvent event) throws InterruptedException {
@@ -272,6 +335,25 @@ public class UserMainPageController implements Initializable {
         LOl = false;
         absenceThreadExecutor.shutdown();
 
+    }
+
+    @FXML
+    private void setEdit(ActionEvent event) throws IOException {
+        
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/trackme/gui/view/EditPage.fxml"));
+        Parent root = loader.load();
+        EditPageController ctrl = loader.getController();
+
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+
+        Stage closePreviousScene;
+        closePreviousScene = (Stage) editbtn.getScene().getWindow();
+        closePreviousScene.close();
     }
 
 }

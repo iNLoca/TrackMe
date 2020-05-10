@@ -54,7 +54,6 @@
             <Image url="@../icons/next-arrow-icon-18.png" />
          </image>
       </ImageView>
-      <JFXComboBox layoutX="52.0" layoutY="251.0" prefHeight="26.0" prefWidth="117.0" promptText="Previous Tasks" />
       <Pane fx:id="usrmenubar" layoutX="-3.0" prefHeight="524.0" prefWidth="201.0" style="-fx-background-color: #cddaf8#cddaf8;" visible="false">
          <children>
             <Label fx:id="usrnamelbl" layoutX="39.0" layoutY="42.0" prefHeight="27.0" prefWidth="98.0" />
@@ -79,6 +78,7 @@
                   </ImageView>
                </graphic>
             </Button>
+            <JFXButton fx:id="editovbtn" buttonType="RAISED" layoutX="5.0" layoutY="262.0" onAction="#setEditOV" prefHeight="27.0" prefWidth="190.0" ripplerFill="#5792eb" style="-fx-background-color: #719cdd#719cdd;" text="Edit" />
          </children>
          <effect>
             <DropShadow />
