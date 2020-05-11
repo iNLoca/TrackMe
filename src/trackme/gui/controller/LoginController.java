@@ -61,16 +61,19 @@ public class LoginController implements Initializable {
     /**
      * Initializes the controller class.
      */
-    
     private User user;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         userModel = UserModel.getInstance();
-        
-        
+
     }
 
     private void loadUpNextView(User us) throws IOException {
+
+        if (us != null) {
+        
+       
 
         if (us.getType() == User.UserType.ADMIN) {
             FXMLLoader fxmloader = new FXMLLoader(getClass().getResource("/trackme/gui/view/UserMainPage.fxml"));
@@ -95,12 +98,14 @@ public class LoginController implements Initializable {
 
             closeLoginScene();
         }
+        }else{  
+            errorlbl.setText("Wrong email or password");
+        }
     }
-    
+
     @FXML
     private void clickLogIn(ActionEvent event) throws IOException, Exception {
-          authentication();
-            
+        authentication();
 
     }
 
@@ -111,39 +116,30 @@ public class LoginController implements Initializable {
     }
 
     private boolean checkifDataIsInserted(String username, String password) {
-    
-    return true;
+        return true;
     }
 
     @FXML
     private void enter(KeyEvent event) throws IOException, Exception {
-         if (event.getCode() == KeyCode.ENTER) {
-             authentication();
+        if (event.getCode() == KeyCode.ENTER) {
+            authentication();
         }
     }
-    
-    
-    
-   
-    
-    private void authentication() throws IOException{
-    
-  String username = emaillbl.getText();
-    String password = passlbl.getText();
-    
-        if (checkifDataIsInserted(username,password)) {
-            User us = userModel.loginUser(username,password);
+
+    private void authentication() throws IOException {
+
+        String username = emaillbl.getText();
+        String password = passlbl.getText();
+
+        if (checkifDataIsInserted(username, password)) {
+            User us = userModel.loginUser(username, password);
             loadUpNextView(us);
-        } else if(checkifDataIsInserted(username,password)==false) {
-              
-              System.out.println("Enter pressed: email Check");
-              
-              
-    
-    
-    }
-        
-        
+        } else if (checkifDataIsInserted(username, password) == false) {
+
+            System.out.println("Enter pressed: email Check");
+
+        }
+
     }
 
     /*
@@ -170,5 +166,5 @@ public class LoginController implements Initializable {
         if (a.getResult() == ButtonType.OK) {
         }
     }
-*/
+     */
 }
