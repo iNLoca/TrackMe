@@ -48,7 +48,7 @@ public class LoginController implements Initializable {
     @FXML
     private JFXPasswordField passlbl;
 
-    private final String UserLogin = "/trackme/gui/view/UserMainPage.fxml";
+    private final String UserLogin = "/trackme/gui/view/MainPageTryOut.fxml";
 
     private UserModel userModel;
     @FXML
@@ -76,7 +76,7 @@ public class LoginController implements Initializable {
        
 
         if (us.getType() == User.UserType.ADMIN) {
-            FXMLLoader fxmloader = new FXMLLoader(getClass().getResource("/trackme/gui/view/UserMainPage.fxml"));
+            FXMLLoader fxmloader = new FXMLLoader(getClass().getResource("/trackme/gui/view/MainPageTryOut.fxml"));
             Parent root = fxmloader.load();
 
             Stage stage = new Stage();
@@ -87,7 +87,7 @@ public class LoginController implements Initializable {
 
             closeLoginScene();
         } else {
-            FXMLLoader fxmloader = new FXMLLoader(getClass().getResource("/trackme/gui/view/UserMainPage.fxml"));
+            FXMLLoader fxmloader = new FXMLLoader(getClass().getResource("/trackme/gui/view/MainPageTryOut.fxml"));
             Parent root = fxmloader.load();
 
             Stage stage = new Stage();

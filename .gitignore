@@ -9,3 +9,8 @@ nbproject/private/private.properties
 .DS_Store
 *.xml
 *.xml
+*.xml
+nbproject/build-impl.xml
+nbproject/genfiles.properties
+nbproject/project.properties
+nbproject/project.xml

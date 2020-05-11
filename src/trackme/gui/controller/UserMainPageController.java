@@ -153,7 +153,7 @@ public class UserMainPageController implements Initializable {
     @FXML
     private void setMenuPopUp(MouseEvent event) {
         usrmenubar.setVisible(true);
-
+        
     }
 
     @FXML
