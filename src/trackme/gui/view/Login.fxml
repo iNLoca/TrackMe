@@ -26,6 +26,6 @@
             </ImageView>
          </graphic>
       </Button>
-      <Label fx:id="errorlbl" layoutX="126.0" layoutY="231.0" prefHeight="21.0" prefWidth="197.0" text="Wrong email or password" textFill="#ff00ba" visible="false" />
+      <Label fx:id="errorlbl" layoutX="126.0" layoutY="231.0" prefHeight="21.0" prefWidth="197.0" textFill="#ff00ba" />
    </children>
 </AnchorPane>

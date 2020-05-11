@@ -124,7 +124,7 @@ public class LoginController implements Initializable {
     
     
     
-   /* 
+   
     
     private void authentication() throws IOException{
     
@@ -145,8 +145,8 @@ public class LoginController implements Initializable {
         
         
     }
-*/
-    
+
+    /*
      private void authentication() throws Exception {
      try {
             this.user= userModel.loginUser(emaillbl.getText(), passlbl.getText());
@@ -170,4 +170,5 @@ public class LoginController implements Initializable {
         if (a.getResult() == ButtonType.OK) {
         }
     }
+*/
 }

@@ -182,6 +182,7 @@ public class UserMainPageController implements Initializable {
         ObservableList<Task> taskList = FXCollections.observableArrayList(bllManager.getTasksForProject(project));
         taskcolmn.setCellValueFactory(new PropertyValueFactory<>("name"));
         desccolm.setCellValueFactory(new PropertyValueFactory<>("description"));
+        moneycolmn.setCellValueFactory(new PropertyValueFactory<>("toPay")); //not finnished 
         
         tasktableview.setItems(taskList);
         
