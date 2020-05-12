@@ -18,7 +18,7 @@
 
 <AnchorPane id="AnchorPane" fx:id="OverviewUser" prefHeight="514.0" prefWidth="469.0" style="-fx-background-color: #6f80b1#6f80b1 #6f80b1#6f80b1 #6f80b1#6f80b1 #6f80b1#6f80b1;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trackme.gui.controller.UserOverviewController">
    <children>
-      <ImageView fitHeight="48.0" fitWidth="162.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="57.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../icons/grumsen-logo-non-retina-345x0-c-default_quality-85.png" />
          </image>

@@ -14,9 +14,9 @@
 
 <AnchorPane id="AnchorPane" fx:id="userfrontPane" prefHeight="514.0" prefWidth="462.0" style="-fx-background-color: #6f80b1#6f80b1 #6f80b1#6f80b1;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trackme.gui.controller.EditPageController">
    <children>
-      <JFXComboBox layoutX="45.0" layoutY="99.0" prefHeight="27.0" prefWidth="120.0" promptText="Projects" />
-      <JFXButton fx:id="addeditbtn" buttonType="RAISED" layoutX="202.0" layoutY="403.0" prefHeight="28.0" prefWidth="68.0" ripplerFill="#4387c5cc" style="-fx-border-color: black;" text="Edit" />
-      <ImageView fitHeight="43.0" fitWidth="147.0" layoutX="-1.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+      <JFXComboBox fx:id="editprojectcombobox" layoutX="45.0" layoutY="99.0" onAction="#setProjectCombobox" prefHeight="27.0" prefWidth="120.0" promptText="Projects" />
+      <JFXButton fx:id="addeditbtn" buttonType="RAISED" layoutX="197.0" layoutY="419.0" onAction="#setEdit" prefHeight="33.0" prefWidth="74.0" ripplerFill="#4387c5cc" style="-fx-border-color: black;" text="Edit" />
+      <ImageView fitHeight="57.0" fitWidth="200.0" layoutX="-1.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../icons/grumsen-logo-non-retina-345x0-c-default_quality-85.png" />
          </image>
@@ -32,16 +32,16 @@
          </image>
       </ImageView>
       <Label layoutX="94.0" layoutY="276.0" text="Start Time:" />
-      <JFXComboBox layoutX="273.0" layoutY="99.0" prefHeight="27.0" prefWidth="147.0" promptText="Tasks" />
+      <JFXComboBox fx:id="taskbox" layoutX="273.0" layoutY="99.0" onAction="#setTaskCombobox" prefHeight="27.0" prefWidth="147.0" promptText="Tasks" />
       <Label layoutX="97.0" layoutY="348.0" text="End Time:" />
-      <TextField layoutX="187.0" layoutY="271.0" prefHeight="23.0" prefWidth="93.0" promptText="HH/MM/SS" />
-      <TextField layoutX="187.0" layoutY="343.0" prefHeight="27.0" prefWidth="93.0" promptText="HH/MM/SS" />
-      <ImageView fitHeight="48.0" fitWidth="62.0" layoutX="393.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+      <TextField fx:id="starttime" layoutX="187.0" layoutY="271.0" onAction="#setStartTime" prefHeight="23.0" prefWidth="93.0" promptText="HH/MM/SS" />
+      <TextField fx:id="endtime" layoutX="187.0" layoutY="343.0" onAction="#setEndTime" prefHeight="27.0" prefWidth="93.0" promptText="HH/MM/SS" />
+      <ImageView fitHeight="48.0" fitWidth="48.0" layoutX="393.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../icons/plus-icon-plus-math-icon-download-icons-9.png" />
+            <Image url="@../icons/pencil_and_paper-512.png" />
          </image>
       </ImageView>
-      <DatePicker layoutX="162.0" layoutY="199.0" />
+      <DatePicker fx:id="date" layoutX="153.0" layoutY="199.0" onAction="#setSelectDate" />
       <Label layoutX="93.0" layoutY="204.0" prefHeight="17.0" prefWidth="48.0" text="Date:" />
       <Pane fx:id="usrmenubar" layoutX="-7.0" prefHeight="514.0" prefWidth="200.0" style="-fx-background-color: #cddaf8#cddaf8;" visible="false">
          <children>
