@@ -8,3 +8,29 @@ and open the template in the editor.
     Author     : mac
 */
 
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pangolin&display=swap');
+
+
+.TaskLabel {
+     
+    -fx-font-family:  'Montserrat Alternates', sans-serif;
+     -fx-font-size: 14px;
+ }
+ 
+ #outputinfo{
+    -fx-font-family:'Pangolin', cursive;
+    -fx-font-size: 14px;
+     
+ }
+
+
+ #TaskAnchorPane {
+  -fx-background-color:yellow;
+  -fx-width:239px;
+  -fx-height:197px;
+  box-shadow:10px 10px 5px black; 
+} 
+ 
+ 
