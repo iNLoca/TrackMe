@@ -6,26 +6,44 @@
 package trackme.gui.controller;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import trackme.be.Project;
+import trackme.be.Task;
+import trackme.be.User;
+import trackme.bll.BLLManager;
+import trackme.gui.model.ProjectModel;
+import trackme.gui.model.TaskModel;
+import trackme.gui.model.UserModel;
 
 /**
  *
  * @author mac
  */
-public class EditPageController {
+public class EditPageController implements Initializable{
 
     @FXML
     private AnchorPane userfrontPane;
@@ -48,10 +66,46 @@ public class EditPageController {
     
     private final String LoginScene = "/trackme/gui/view/Login.fxml";
     private final String OverviewScene = "/trackme/gui/view/UserOverview.fxml";
-
     @FXML
-    private void setMenuPopUp(MouseEvent event) {
-        usrmenubar.setVisible(true);
+    private JFXComboBox<Project> editprojectcombobox;
+    @FXML
+    private JFXComboBox<Task> taskbox;
+    @FXML
+    private TextField starttime;
+    @FXML
+    private TextField endtime;
+    @FXML
+    private DatePicker date;
+    
+    private User user;
+    private Project project;
+    private Task task;
+    private BLLManager bllManager;
+    private UserModel userModel;
+    private TaskModel taskModel;
+    private ProjectModel projectModel;
+    
+    
+      @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        userModel = UserModel.getInstance();
+        user = userModel.getLoggedInUser();
+        usrnamelbl.setText(user.getName());
+        this.bllManager = new BLLManager();
+         //}
+        try {
+            setProjects(user);
+            //setTaskTableView(project);
+        } catch (SQLServerException ex) {
+            Logger.getLogger(UserMainPageController.class.getName()).log(Level.SEVERE, null, ex);
+    }   catch (SQLException ex) {
+            Logger.getLogger(EditPageController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    @FXML
+    private void setMenuPopUp(MouseEvent event) {   
+        usrmenubar.setVisible(true); 
     }
 
     @FXML
@@ -129,5 +183,46 @@ public class EditPageController {
         closePreviousScene = (Stage) editbtn.getScene().getWindow();
         closePreviousScene.close();
     }
+
+    public void setProjects(User user)throws SQLServerException, SQLException{
+     ObservableList<Project> projectList = FXCollections.observableArrayList(bllManager.getUserProjectTime(user));
+        editprojectcombobox.getItems().clear();
+        editprojectcombobox.getItems().addAll(projectList);
+        editprojectcombobox.getSelectionModel().select(editprojectcombobox.getValue());
+    }
+    
+    
+    @FXML
+    private void setProjectCombobox(ActionEvent event)throws SQLServerException {
+         project = editprojectcombobox.getSelectionModel().getSelectedItem();
+         setTaskCombobox(project);
+    }
+
+   private void setTaskCombobox(Project project) throws SQLServerException {
+
+        ObservableList<Task> taskList = FXCollections.observableArrayList(bllManager.getTasksForProject(project));
+        taskbox.getItems().clear();
+        taskbox.getItems().addAll(taskList);
+        taskbox.getSelectionModel().select(taskbox.getValue());
+    
+   }
+   
+    @FXML
+    private void setTaskCombobox(ActionEvent event) {
+    }
+
+    @FXML
+    private void setStartTime(ActionEvent event) {
+    }
+
+    @FXML
+    private void setEndTime(ActionEvent event) {
+    }
+
+    @FXML
+    private void setSelectDate(ActionEvent event) {
+    }
+
+  
     
 }
