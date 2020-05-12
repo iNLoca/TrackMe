@@ -12,6 +12,7 @@ import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.logging.Level;
@@ -139,10 +140,13 @@ public class MainPageTryOutController implements Initializable {
     }
 
     private void setTasksPane(Project project) throws IOException{
-    
+        List<Task> taskList = project.getTaskForProject();
+        for (Task task1 : taskList) {
+            Pane addTasksPane =   FXMLLoader.load(getClass().getResource("/trackme/gui/view/TaskTiles.fxml"));
+            TilesPane.getChildren().add(addTasksPane);  
+        }
        //fore loop
-       Pane addTasksPane =   FXMLLoader.load(getClass().getResource("/trackme/gui/view/TaskTiles.fxml"));
-TilesPane.getChildren().add(addTasksPane);  
+       
         
     
     }
