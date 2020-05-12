@@ -7,16 +7,26 @@ package trackme.gui.controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -26,7 +36,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import trackme.be.Project;
+import trackme.be.Task;
 import trackme.be.User;
+import trackme.bll.BLLManager;
 import trackme.gui.model.UserModel;
 
 /**
@@ -39,20 +52,20 @@ public class UserOverviewController implements Initializable {
     @FXML
     private AnchorPane OverviewUser;
     @FXML
-    private JFXComboBox<?> sortcombobox;
+    private JFXComboBox<Project> sortcombobox;
     @FXML
-    private TableView<?> tasksOverviewTable;
+    private TableView<Task> tasksOverviewTable;
     @FXML
-    private TableColumn<?, ?> tasks;
+    private TableColumn<Task, String> tasks;
     @FXML
-    private TableColumn<?, ?> date;
+    private TableColumn<Task, LocalDate> date;
     @FXML
-    private TableColumn<?, ?> tamespent;
+    private TableColumn<Task, Integer> tamespent;
     @FXML
     private Pane usrmenubar;
     @FXML
     private Button logoutbtn;
-
+    private BLLManager bllManager;
     private final String LoginScene = "/trackme/gui/view/Login.fxml";
     private final String OverviewScene = "/trackme/gui/view/OverviewScene";
     private final String Tracker = "/trackme/gui/view/UserMainPage.fxml";
@@ -66,23 +79,48 @@ public class UserOverviewController implements Initializable {
     /**
      * Initializes the controller class.
      */
+    private List<Project> projects;
     private UserModel userModel;
     @FXML
     private Label usrnamelbl;
     @FXML
     private JFXButton editovbtn;
-    
+    private User user;
+    private Project project;
+    @FXML
+    private BarChart<String, Integer> projectBarChart;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
        userModel = UserModel.getInstance();
-        User us = userModel.getLoggedInUser();
-        usrnamelbl.setText(us.getName());
+        user = userModel.getLoggedInUser();
+        usrnamelbl.setText(user.getName());
+        bllManager = new BLLManager();
+        
+        try {
+            projects = bllManager.getUserProjectTime(user);
+            bllManager.getTotalTimeForEachProject(projects);
+            setTaskInComboBox(user);
+        } catch (SQLServerException ex) {
+            Logger.getLogger(UserOverviewController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(UserOverviewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        setBarChartForSelectedProject(projects);
     }
 
+    private void setTaskInComboBox(User user) throws SQLServerException, SQLException {
+        ObservableList<Project> projectList = FXCollections.observableArrayList(bllManager.getProjectsForUser(user));
+        sortcombobox.getItems().clear();
+        sortcombobox.getItems().addAll(projectList);
+        sortcombobox.getSelectionModel().select(sortcombobox.getValue());
+    }
+    
     @FXML
-    private void setSortComboBox(ActionEvent event) {
+    private void setSortComboBox(ActionEvent event){
+        project = sortcombobox.getSelectionModel().getSelectedItem();
     }
 
+    
     @FXML
     private void setOverview(ActionEvent event) throws IOException {
         FXMLLoader fxloader = new FXMLLoader(getClass().getResource(OverviewScene));
@@ -161,4 +199,20 @@ public class UserOverviewController implements Initializable {
         closePreviousScene.close();
     }
 
+    private void setBarChartForSelectedProject(List<Project> projects){
+        XYChart.Series dataSeries1 = new XYChart.Series();
+        dataSeries1.setName("projects");
+        for (Project var : projects) {
+            String name =var.getName();
+            long time = var.getTotalTimeInSeconds()/3600;
+            dataSeries1.getData().add(new XYChart.Data(name, time));
+        }
+        projectBarChart.setAnimated(false);
+        projectBarChart.setTitle("Overall Time Spent On Projects");
+        projectBarChart.getData().add(dataSeries1);
+    }
+    
+    private void setTaskOverview(Project project){
+    
+    }
 }

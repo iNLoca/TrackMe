@@ -94,11 +94,9 @@ public class UserMainPageController implements Initializable {
     private ImageView imgbtnplaypause;
     @FXML
     private Label usrnamelbl;
-
     private User user;
     private Project project;
     private Task task;
-
     private BLLManager bllManager;
     private Label tasknamelbl;
     private Label descriptionlbl;
@@ -108,7 +106,6 @@ public class UserMainPageController implements Initializable {
     private JFXTextField insertTasklbl;
     @FXML
     private JFXTextField Descriplbl;
-    
     @FXML
     private TableView<Task> tasktableview;
     @FXML
@@ -132,6 +129,7 @@ public class UserMainPageController implements Initializable {
         user = userModel.getLoggedInUser();
         usrnamelbl.setText(user.getName());
         this.bllManager = new BLLManager();
+        
 
         // try {
         //projectModel.getUserProjectTime(us);
@@ -164,7 +162,7 @@ public class UserMainPageController implements Initializable {
     }
 
     private void setProjectsInCombobox(User user) throws SQLServerException, SQLException {
-        ObservableList<Project> projectList = FXCollections.observableArrayList(bllManager.getUserProjectTime(user));
+        ObservableList<Project> projectList = FXCollections.observableArrayList(bllManager.getProjectsForUser(user));
         projectbox.getItems().clear();
         projectbox.getItems().addAll(projectList);
         projectbox.getSelectionModel().select(projectbox.getValue());
@@ -224,7 +222,7 @@ public class UserMainPageController implements Initializable {
             }, 1, 1, TimeUnit.SECONDS);
 
                      try {
-                         bllManager.insertTimeLog(user,project ,task , 0);
+                         bllManager.insertTimeLog(user,project ,task , 1);
                      } catch (SQLServerException ex) {
                          Logger.getLogger(UserMainPageController.class.getName()).log(Level.SEVERE, null, ex);
                      }
@@ -331,7 +329,7 @@ public class UserMainPageController implements Initializable {
     private void PressStop(ActionEvent event) throws SQLServerException {
         LOl = false;
         absenceThreadExecutor.shutdown();
-        bllManager.insertTimeLog(user,project ,task , 1);
+        bllManager.insertTimeLog(user,project ,task , 2);
     }
 
     @FXML

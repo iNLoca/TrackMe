@@ -28,15 +28,15 @@ public class UserModel {
         return single_instance;
     }
 
-    private IBLLFacade facade;
+    private BLLManager bllManager;
     
     public UserModel() {
-        facade= new BLLManager();
+        bllManager= new BLLManager();
     }
     
     
     public User loginUser(String username, String password){
-        loggedInUser = facade.loginUser(username,password);
+        loggedInUser = bllManager.loginUser(username,password);
         return loggedInUser;
     }
     

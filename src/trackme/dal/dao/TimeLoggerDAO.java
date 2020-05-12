@@ -87,6 +87,41 @@ public class TimeLoggerDAO {
     
     }
 
+    public void getTimeForTask(User user, Task task) throws SQLServerException{
+    String sql = "SELECT * FROM TimeLog WHERE userId = ? AND taskId = ? ";
+    
+    try(Connection con = connection.getConnection()){
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        pstmt.setInt(1, user.getId());
+        pstmt.setInt(2, task.getId());
+        ResultSet rs = pstmt.executeQuery();
+        while(rs.next()){
+        LocalDateTime time = rs.getTimestamp("time").toLocalDateTime();
+        int typeOfTime = rs.getInt("typeOfTime");
+        switch (typeOfTime) {
+                    case 1:
+                        task.addTime(new TimeLog(TimeLog.TimeType.PLAY, time));
+                        break;
+                    case 2:
+                        task.addTime(new TimeLog(TimeLog.TimeType.STOP, time));
+                        break;
+                }
+        
+        }
+        
+    }   catch (SQLException ex) {
+            Logger.getLogger(TimeLoggerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+    }
+    
+    public List<Task> getAllTaskLogsForProject(User user, Project project){
+        List<Task> tasks = new ArrayList<>();
+        String sql = "SELECT * FROM TimeLog WHERE projectId = ? AND userId = ?";
+        
+        
+        return tasks;
+    }
     
     public List<Project> getUserProjectTime(User user) throws SQLServerException {
         List<Project> projects = new ArrayList<>();

@@ -24,7 +24,7 @@
          </image>
       </ImageView>
       <JFXComboBox fx:id="sortcombobox" layoutX="52.0" layoutY="71.0" onAction="#setSortComboBox" prefHeight="27.0" prefWidth="117.0" promptText="All Projects" />
-      <BarChart layoutX="38.0" layoutY="98.0" prefHeight="166.0" prefWidth="409.0">
+      <BarChart fx:id="projectBarChart" layoutX="38.0" layoutY="98.0" prefHeight="166.0" prefWidth="409.0">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
         </xAxis>

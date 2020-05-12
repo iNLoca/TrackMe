@@ -7,6 +7,8 @@
 package trackme.be;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -18,11 +20,11 @@ import javafx.beans.property.StringProperty;
 public class Task {
     
     private int id;
-//    private String name;
     private final StringProperty description = new SimpleStringProperty();
-    private LocalDateTime overallTime;
+    private List<TimeLog> taskTime = new ArrayList<>();
     private final StringProperty name =  new SimpleStringProperty();
     private int toPay; //0 = to be paid, 1 = to not be paid
+    private long totalTimeInSeconds;
 
     public Task(int id, String name, String description, int toPay) {
         this.id = id;
@@ -71,20 +73,32 @@ public class Task {
        return description;
     }
 
-    public LocalDateTime getTime() {
-        return overallTime;
-    }
-
-    public void setTime(LocalDateTime time) {
-        this.overallTime = time;
-    }
-
     public int getToPay() {
         return toPay;
     }
 
     public void setToPay(int toPay) {
         this.toPay = toPay;
+    }
+
+    public List<TimeLog> getTaskTime() {
+        return taskTime;
+    }
+
+    public void setTaskTime(List<TimeLog> taskTime) {
+        this.taskTime = taskTime;
+    }
+    
+    public void addTime(TimeLog time){
+        taskTime.add(time);
+    }
+
+    public long getTotalTimeInSeconds() {
+        return totalTimeInSeconds;
+    }
+
+    public void setTotalTimeInSeconds(long totalTimeInSeconds) {
+        this.totalTimeInSeconds = totalTimeInSeconds;
     }
 
     

@@ -23,9 +23,11 @@ import trackme.dal.IDALFacade;
 public class BLLManager implements IBLLFacade {
 
     private DALManager dalManager;
+    private final TimeConverter timeConverter;
 
     public BLLManager() {
         dalManager = new DALManager();
+        timeConverter = new TimeConverter();
         List<Project> pros = dalManager.getAllProjects();
 
     }
@@ -61,6 +63,21 @@ public class BLLManager implements IBLLFacade {
     @Override
     public void insertTimeLog(User user, Project project, Task task, int timeType) throws SQLServerException {
         dalManager.insertTimeLog(user, project, task, timeType);
+    }
+
+    @Override
+    public void getTimeForTask(User user, Task task) throws SQLServerException {
+        dalManager.getTimeForTask(user, task);
+    }
+
+    @Override
+    public void getTotalTimeForTask(User user, Task task) throws SQLServerException {
+        timeConverter.getTotalTimeForTask(user, task);
+    }
+
+    @Override
+    public void getTotalTimeForEachProject(List<Project> projects) {
+        timeConverter.getTotalTimeForEachProject(projects);
     }
 
 }

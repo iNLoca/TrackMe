@@ -31,7 +31,7 @@ public class ProjectDAO {
     }
     
     public List<Project> getProjectsForUser(User user) throws SQLException{
-    String sql = "SELECT * FROM [Projects] WHERE id = ?";
+    String sql = "SELECT * FROM [UserAssignedProject] JOIN Projects ON UserAssignedProject.projectId = Projects.id WHERE userId = ?";
     List<Project> projects = new ArrayList<>();
     
     try(Connection con = connection.getConnection()){
@@ -44,6 +44,27 @@ public class ProjectDAO {
         String name = rs.getString("name");
         String client = rs.getString("clientName");
         int cost = rs.getInt("cost");
+        // int cost = rs.getInt("type"); (pause or not)
+        // fore( project from Projectes)
+        /* if(project.id == project.id && date+- same && project type is == 2){
+        `remove prom original list
+        }
+        if(project.type == 1 >Start ) 
+          rore(projects)
+        
+        
+        1 Task for each line with 1 timelog
+        List<Task> with all timelog for task
+        
+        fore to loop through list
+        type 1 or 2
+        if type 1 i++
+        if type 2 i--
+        
+        
+        
+        
+        */
         projects.add(new Project(id, name, client, cost));
         
         }     
