@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="OverviewUser" prefHeight="514.0" prefWidth="469.0" style="-fx-background-color: #6f80b1#6f80b1 #6f80b1#6f80b1 #6f80b1#6f80b1 #6f80b1#6f80b1;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trackme.gui.controller.Employee.UserOverviewController">
+<AnchorPane id="AnchorPane" fx:id="OverviewUser" prefHeight="514.0" prefWidth="469.0" style="-fx-background-color: #6f80b1#6f80b1 #6f80b1#6f80b1 #6f80b1#6f80b1 #6f80b1#6f80b1;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trackme.gui.controller.Admin.AdminOverviewController">
    <children>
       <ImageView fitHeight="57.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -58,7 +58,7 @@
          <children>
             <Label fx:id="usrnamelbl" layoutX="39.0" layoutY="42.0" prefHeight="27.0" prefWidth="98.0" />
             <JFXButton fx:id="overviewbtn" buttonType="RAISED" layoutX="5.0" layoutY="202.0" onAction="#setOverview" prefHeight="27.0" prefWidth="190.0" ripplerFill="#5792eb" style="-fx-background-color: #719cdd#719cdd;" text="Overview" />
-            <JFXButton fx:id="trackerbtn" buttonType="RAISED" layoutX="5.0" layoutY="143.0" onAction="#setFrontPage" prefHeight="27.0" prefWidth="190.0" ripplerFill="#5792eb" style="-fx-background-color: #719cdd#719cdd;" text="Tracker" />
+            <JFXButton fx:id="trackerbtn" buttonType="RAISED" layoutX="5.0" layoutY="145.0" onAction="#setFrontPage" prefHeight="27.0" prefWidth="190.0" ripplerFill="#5792eb" style="-fx-background-color: #719cdd#719cdd;" text="Tracker" />
             <ImageView fitHeight="56.0" fitWidth="74.0" layoutX="137.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../icons/user1.png" />
@@ -78,7 +78,8 @@
                   </ImageView>
                </graphic>
             </Button>
-            <JFXButton fx:id="editovbtn" buttonType="RAISED" layoutX="5.0" layoutY="262.0" onAction="#setEditOV" prefHeight="27.0" prefWidth="190.0" ripplerFill="#5792eb" style="-fx-background-color: #719cdd#719cdd;" text="Edit" />
+            <JFXButton fx:id="editovbtn" buttonType="RAISED" layoutX="5.0" layoutY="262.0" onAction="#setEditOV" prefHeight="27.0" prefWidth="190.0" ripplerFill="#5792eb" style="-fx-background-color: #719cdd#719cdd;" text="Create" />
+            <JFXButton fx:id="editovbtn1" buttonType="RAISED" layoutX="5.0" layoutY="319.0" onAction="#setEditOV" prefHeight="27.0" prefWidth="190.0" ripplerFill="#5792eb" style="-fx-background-color: #719cdd#719cdd;" text="Profiles" />
          </children>
          <effect>
             <DropShadow />

@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="userfrontPane" prefHeight="514.0" prefWidth="469.0" style="-fx-background-color: #6f80b1#6f80b1 #6f80b1#6f80b1;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trackme.gui.controller.Employee.UserMainPageController">
+<AnchorPane id="AnchorPane" fx:id="adminfrontPane" prefHeight="514.0" prefWidth="469.0" style="-fx-background-color: #6f80b1#6f80b1 #6f80b1#6f80b1;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trackme.gui.controller.Admin.AdminMainPageController">
    <children>
       <Button fx:id="stopbtn" layoutX="396.0" layoutY="21.0" mnemonicParsing="false" onAction="#PressStop" prefHeight="42.0" prefWidth="56.0" style="-fx-background-color: #435a9a#435a9a;">
          <graphic>
@@ -68,7 +68,7 @@
          <children>
             <Label fx:id="usrnamelbl" alignment="CENTER" layoutX="33.0" layoutY="42.0" prefHeight="27.0" prefWidth="104.0" />
             <JFXButton fx:id="overviewbtn" buttonType="RAISED" layoutX="5.0" layoutY="202.0" onAction="#setOverview" prefHeight="27.0" prefWidth="190.0" ripplerFill="#5792eb" style="-fx-background-color: #719cdd#719cdd;" text="Overview" />
-            <JFXButton fx:id="trackerbtn" buttonType="RAISED" layoutX="5.0" layoutY="143.0" onAction="#setFrontPage" prefHeight="27.0" prefWidth="190.0" ripplerFill="#5792eb" style="-fx-background-color: #719cdd#719cdd;" text="Tracker" />
+            <JFXButton fx:id="trackerbtn" buttonType="RAISED" layoutX="5.0" layoutY="149.0" onAction="#setFrontPage" prefHeight="27.0" prefWidth="190.0" ripplerFill="#5792eb" style="-fx-background-color: #719cdd#719cdd;" text="Tracker" />
             <ImageView fitHeight="56.0" fitWidth="74.0" layoutX="137.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../icons/user1.png" />
@@ -88,7 +88,8 @@
                   </ImageView>
                </graphic>
             </Button>
-            <JFXButton fx:id="editbtn" buttonType="RAISED" layoutX="5.0" layoutY="257.0" onAction="#setEdit" prefHeight="27.0" prefWidth="190.0" ripplerFill="#5792eb" style="-fx-background-color: #719cdd#719cdd;" text="Edit" />
+            <JFXButton fx:id="createbtn" buttonType="RAISED" layoutX="5.0" layoutY="257.0" onAction="#setCreate" prefHeight="27.0" prefWidth="190.0" ripplerFill="#5792eb" style="-fx-background-color: #719cdd#719cdd;" text="Create" />
+            <JFXButton fx:id="profilesbtn" buttonType="RAISED" layoutX="5.0" layoutY="308.0" onAction="#setProfiles" prefHeight="27.0" prefWidth="190.0" ripplerFill="#5792eb" style="-fx-background-color: #719cdd#719cdd;" text="Profiles" />
          </children>
          <effect>
             <DropShadow />

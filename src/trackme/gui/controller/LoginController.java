@@ -76,7 +76,7 @@ public class LoginController implements Initializable {
        
 
         if (us.getType() == User.UserType.ADMIN) {
-            FXMLLoader fxmloader = new FXMLLoader(getClass().getResource("/trackme/gui/view/UserMainPage.fxml"));
+            FXMLLoader fxmloader = new FXMLLoader(getClass().getResource("/trackme/gui/view/AdminMainPage.fxml"));
             Parent root = fxmloader.load();
 
             Stage stage = new Stage();
