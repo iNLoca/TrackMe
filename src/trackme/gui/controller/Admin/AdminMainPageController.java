@@ -93,7 +93,7 @@ public class AdminMainPageController implements Initializable {
     @FXML
     private JFXButton profilesbtn;
     private final String LoginScene = "/trackme/gui/view/Login.fxml";
-    private final String OverviewScene = "/trackme/gui/view/UserOverview.fxml";
+    private final String OverviewScene = "/trackme/gui/view/AdminOverview.fxml";
     @FXML
     private AnchorPane adminfrontPane;
     private BLLManager bllManager;
@@ -104,13 +104,14 @@ public class AdminMainPageController implements Initializable {
     private Label introtasklbl;
     private Label introdeslbl;
     
+    
     private ScheduledExecutorService absenceThreadExecutor;
     
       @Override
     public void initialize(URL location, ResourceBundle resources) {
         
         userModel = UserModel.getInstance();
-        user = userModel.getLoggedInUser();
+        this.user = userModel.getLoggedInUser();
         usrnamelbl.setText(user.getName());
         this.bllManager = new BLLManager();
         
@@ -264,7 +265,7 @@ public class AdminMainPageController implements Initializable {
     private void setFrontPage(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/trackme/gui/view/AdminMainPage.fxml"));
         Parent root = loader.load();
-        UserMainPageController ctrl = loader.getController();
+        AdminMainPageController ctrl = loader.getController();
 
         Scene scene = new Scene(root);
         Stage stage = new Stage();
@@ -300,7 +301,7 @@ public class AdminMainPageController implements Initializable {
         
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/trackme/gui/view/AdminCreate.fxml"));
         Parent root = loader.load();
-        UserMainPageController ctrl = loader.getController();
+        AdminCreateController ctrl = loader.getController();
 
         Scene scene = new Scene(root);
         Stage stage = new Stage();
@@ -318,7 +319,7 @@ public class AdminMainPageController implements Initializable {
     private void setProfiles(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/trackme/gui/view/AdminProfiles.fxml"));
         Parent root = loader.load();
-        UserMainPageController ctrl = loader.getController();
+        AdminProfilesController ctrl = loader.getController();
 
         Scene scene = new Scene(root);
         Stage stage = new Stage();

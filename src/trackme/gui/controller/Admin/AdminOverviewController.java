@@ -26,6 +26,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import trackme.be.User;
+import trackme.bll.BLLManager;
+import trackme.gui.controller.Employee.UserMainPageController;
+import trackme.gui.model.UserModel;
 
 /**
  *
@@ -59,15 +63,24 @@ public class AdminOverviewController implements Initializable{
     private JFXButton trackerbtn;
     @FXML
     private Button logoutbtn;
-    @FXML
-    private JFXButton editovbtn;
     
     private final String LoginScene = "/trackme/gui/view/Login.fxml";
+    private final String OverviewScene = "/trackme/gui/view/AdminOverview.fxml";
+    @FXML
+    private JFXButton createbtn;
+    @FXML
+    private JFXButton profilesbtn;
     
+    private User user;
+    private UserModel userModel;
+    private BLLManager bllManager;
     
       @Override
     public void initialize(URL location, ResourceBundle resources) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        userModel = UserModel.getInstance();
+        user = userModel.getLoggedInUser();
+        usrnamelbl.setText(user.getName());
+        this.bllManager = new BLLManager();
     }
 
     @FXML
@@ -85,18 +98,41 @@ public class AdminOverviewController implements Initializable{
     }
 
     @FXML
-    private void setOverview(ActionEvent event) {
+    private void setOverview(ActionEvent event) throws IOException {
+        FXMLLoader fxloader = new FXMLLoader(getClass().getResource(OverviewScene));
+        Parent root = fxloader.load();
+
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+
+        Stage closePreviousScene;
+        closePreviousScene = (Stage) overviewbtn.getScene().getWindow();
+        closePreviousScene.close();
     }
 
     @FXML
-    private void setFrontPage(ActionEvent event) {
+    private void setFrontPage(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/trackme/gui/view/AdminMainPage.fxml"));
+        Parent root = loader.load();
+        AdminMainPageController ctrl = loader.getController();
+
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+
+        Stage closePreviousScene;
+        closePreviousScene = (Stage) trackerbtn.getScene().getWindow();
+        closePreviousScene.close();
     }
 
   
 
-    @FXML
-    private void setEditOV(ActionEvent event) {
-    }
 
      
     @FXML
@@ -113,6 +149,42 @@ public class AdminOverviewController implements Initializable{
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
+    }
+
+    @FXML
+    private void setCreateScene(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/trackme/gui/view/AdminCreate.fxml"));
+        Parent root = loader.load();
+        AdminCreateController ctrl = loader.getController();
+
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+
+        Stage closePreviousScene;
+        closePreviousScene = (Stage) createbtn.getScene().getWindow();
+        closePreviousScene.close();
+    }
+
+    @FXML
+    private void setProfilesPage(ActionEvent event) throws IOException {
+         FXMLLoader loader = new FXMLLoader(getClass().getResource("/trackme/gui/view/AdminProfiles.fxml"));
+        Parent root = loader.load();
+        AdminProfilesController ctrl = loader.getController();
+
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+
+        Stage closePreviousScene;
+        closePreviousScene = (Stage) profilesbtn.getScene().getWindow();
+        closePreviousScene.close();
     }
   
     

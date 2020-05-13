@@ -86,7 +86,8 @@ public class LoginController implements Initializable {
             stage.show();
 
             closeLoginScene();
-        } else {
+            
+        } else if(us.getType() == User.UserType.EMPLOYEE){
             FXMLLoader fxmloader = new FXMLLoader(getClass().getResource("/trackme/gui/view/UserMainPage.fxml"));
             Parent root = fxmloader.load();
 

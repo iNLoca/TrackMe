@@ -78,8 +78,8 @@
                   </ImageView>
                </graphic>
             </Button>
-            <JFXButton fx:id="editovbtn" buttonType="RAISED" layoutX="5.0" layoutY="262.0" onAction="#setEditOV" prefHeight="27.0" prefWidth="190.0" ripplerFill="#5792eb" style="-fx-background-color: #719cdd#719cdd;" text="Create" />
-            <JFXButton fx:id="editovbtn1" buttonType="RAISED" layoutX="5.0" layoutY="319.0" onAction="#setEditOV" prefHeight="27.0" prefWidth="190.0" ripplerFill="#5792eb" style="-fx-background-color: #719cdd#719cdd;" text="Profiles" />
+            <JFXButton fx:id="createbtn" buttonType="RAISED" layoutX="5.0" layoutY="262.0" onAction="#setCreateScene" prefHeight="27.0" prefWidth="190.0" ripplerFill="#5792eb" style="-fx-background-color: #719cdd#719cdd;" text="Create" />
+            <JFXButton fx:id="profilesbtn" buttonType="RAISED" layoutX="5.0" layoutY="319.0" onAction="#setProfilesPage" prefHeight="27.0" prefWidth="190.0" ripplerFill="#5792eb" style="-fx-background-color: #719cdd#719cdd;" text="Profiles" />
          </children>
          <effect>
             <DropShadow />

@@ -41,6 +41,9 @@ public class UserModel {
     }
     
     public User getLoggedInUser(){
+        if (loggedInUser.getId() < 1){
+            System.out.println("no such user");
+        }
         return loggedInUser;
     }
     
