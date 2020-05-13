@@ -103,9 +103,13 @@ public class AdminMainPageController implements Initializable {
     private Label descriptionlbl;
     private Label introtasklbl;
     private Label introdeslbl;
+    private String initialName;
+    private String initialDescription;
     
     
     private ScheduledExecutorService absenceThreadExecutor;
+    @FXML
+    private JFXButton addTask;
     
       @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -331,6 +335,34 @@ public class AdminMainPageController implements Initializable {
         Stage closePreviousScene;
         closePreviousScene = (Stage) profilesbtn.getScene().getWindow();
         closePreviousScene.close();
+    }
+
+    @FXML
+    private void setAddTask(ActionEvent event) throws SQLServerException {
+        
+        if (project != null) {
+            if (insertTasklbl.getText().equals(initialName) && Descriplbl.getText().equals(initialDescription)) {
+
+            } else {
+
+                if (checkmoney.isSelected() && addTask != null) {
+                    bllManager.insertTaskForProject(project, insertTasklbl.getText(), Descriplbl.getText(), 0);
+                    initialName = insertTasklbl.getText();
+                    initialDescription = Descriplbl.getText();
+                    insertTasklbl.clear();
+                    Descriplbl.clear();
+                    setTaskTableView(project);
+                } else if (!checkmoney.isSelected() && addTask != null) {
+                    bllManager.insertTaskForProject(project, insertTasklbl.getText(), Descriplbl.getText(), 1);
+                    initialName = insertTasklbl.getText();
+                    initialDescription = Descriplbl.getText();
+                    insertTasklbl.clear();
+                    Descriplbl.clear();
+                    setTaskTableView(project);
+                }
+            }
+        }
+        
     }
 
   

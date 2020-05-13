@@ -60,7 +60,7 @@ public class UserMainPageController implements Initializable {
 
     @FXML
     private AnchorPane userfrontPane;
-   
+
     @FXML
     private Button stopbtn;
     @FXML
@@ -71,7 +71,7 @@ public class UserMainPageController implements Initializable {
     private Label timecountlbl;
     @FXML
     private JFXComboBox<Project> projectbox;
-   
+
     @FXML
     private Button logoutbtn;
     @FXML
@@ -81,7 +81,6 @@ public class UserMainPageController implements Initializable {
 
     private final String LoginScene = "/trackme/gui/view/Login.fxml";
     private final String OverviewScene = "/trackme/gui/view/UserOverview.fxml";
-    
 
     private ScheduledExecutorService absenceThreadExecutor;
     /**
@@ -91,17 +90,20 @@ public class UserMainPageController implements Initializable {
     private TaskModel taskModel;
     private ProjectModel projectModel;
     @FXML
-    private ImageView imgbtnplaypause;
-    @FXML
     private Label usrnamelbl;
     private User user;
     private Project project;
     private Task task;
+    private Task name;
+    private Task description;
+    private Task toPay;
     private BLLManager bllManager;
     private Label tasknamelbl;
     private Label descriptionlbl;
     private Label introtasklbl;
     private Label introdeslbl;
+    private String initialName;
+    private String initialDescription;
     @FXML
     private JFXTextField insertTasklbl;
     @FXML
@@ -114,14 +116,13 @@ public class UserMainPageController implements Initializable {
     private TableColumn<Task, String> desccolm;
     @FXML
     private TableColumn<Task, Integer> moneycolmn;
-    
+
     @FXML
     private JFXButton editbtn;
     @FXML
     private CheckBox checkmoney;
     @FXML
-    private Button startbtn;
-    
+    private JFXButton addtask;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -129,7 +130,6 @@ public class UserMainPageController implements Initializable {
         user = userModel.getLoggedInUser();
         usrnamelbl.setText(user.getName());
         this.bllManager = new BLLManager();
-        
 
         // try {
         //projectModel.getUserProjectTime(us);
@@ -181,82 +181,80 @@ public class UserMainPageController implements Initializable {
         taskcolmn.setCellValueFactory(new PropertyValueFactory<>("name"));
         desccolm.setCellValueFactory(new PropertyValueFactory<>("description"));
         moneycolmn.setCellValueFactory(new PropertyValueFactory<>("toPay")); //not finnished 
-        
+
         tasktableview.setItems(taskList);
-        
+
         addStartButton();
     }
-   
+
     //String imageSource;
-    
-    
-    private void addStartButton(){
-        
+    private void addStartButton() {
+
         TableColumn<Task, Void> colBtn = new TableColumn("Start Time");
-        Callback<TableColumn<Task, Void>, TableCell<Task,Void>>cellFactory = new Callback<TableColumn<Task,Void>,TableCell<Task,Void>>(){
+        Callback<TableColumn<Task, Void>, TableCell<Task, Void>> cellFactory = new Callback<TableColumn<Task, Void>, TableCell<Task, Void>>() {
             @Override
             public TableCell<Task, Void> call(TableColumn<Task, Void> param) {
-                final TableCell<Task,Void>cell = new TableCell<Task,Void>(){
-                
-                private final Button btn  = new Button("Start");
-                
-                {
-                btn.setOnAction((ActionEvent event)->{
-                 task  = getTableView().getItems().get(getIndex());
-                // System.out.println("selctedTask: " + task);
-                    
-                 if (btn != null && !LOl) {
-            LOl = true;
-            long startTime = System.currentTimeMillis();
-            absenceThreadExecutor = Executors.newSingleThreadScheduledExecutor();
-            absenceThreadExecutor.scheduleAtFixedRate(() -> {
-                Platform.runLater(() -> {
+                final TableCell<Task, Void> cell = new TableCell<Task, Void>() {
 
-                    long elapsedTime = System.currentTimeMillis() - startTime;
-                    long elapsedSeconds = (elapsedTime / 1000) % 60;
-                    long elapsedMinutes = ((elapsedTime / 1000) / 60) % 60;
-                    long elapsedHours = (((elapsedTime / 1000) / 60) / 60) % 24;
+                    private final Button btn = new Button("Start");
 
-                    timecountlbl.setText(elapsedHours + " : " + elapsedMinutes + " : " + elapsedSeconds);
-                });
-            }, 1, 1, TimeUnit.SECONDS);
+                    {
+                        btn.setOnAction((ActionEvent event) -> {
+                            task = getTableView().getItems().get(getIndex());
+                            // System.out.println("selctedTask: " + task);
 
-                     try {
-                         bllManager.insertTimeLog(user,project ,task , 1);
-                     } catch (SQLServerException ex) {
-                         Logger.getLogger(UserMainPageController.class.getName()).log(Level.SEVERE, null, ex);
-                     }
-        }
-   
-                });
-                
-                }
-                @Override 
-                public void updateItem(Void item,boolean empty){
-                  super.updateItem(item, empty);
-                  if(empty){
-                    setGraphic(null);
-                  }else{
-                  setGraphic(btn);
-                  }
-                
-                }
+                            if (btn != null && !LOl) {
+                                LOl = true;
+                                long startTime = System.currentTimeMillis();
+                                absenceThreadExecutor = Executors.newSingleThreadScheduledExecutor();
+                                absenceThreadExecutor.scheduleAtFixedRate(() -> {
+                                    Platform.runLater(() -> {
+
+                                        long elapsedTime = System.currentTimeMillis() - startTime;
+                                        long elapsedSeconds = (elapsedTime / 1000) % 60;
+                                        long elapsedMinutes = ((elapsedTime / 1000) / 60) % 60;
+                                        long elapsedHours = (((elapsedTime / 1000) / 60) / 60) % 24;
+
+                                        timecountlbl.setText(elapsedHours + " : " + elapsedMinutes + " : " + elapsedSeconds);
+                                    });
+                                }, 1, 1, TimeUnit.SECONDS);
+
+                                try {
+                                    bllManager.insertTimeLog(user, project, task, 1);
+                                } catch (SQLServerException ex) {
+                                    Logger.getLogger(UserMainPageController.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+
+                        });
+
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(btn);
+                        }
+
+                    }
                 };
                 return cell;
             }
-        
+
         };
-         
-                
-            colBtn.setCellFactory(cellFactory);
-            
-            tasktableview.getColumns().add(colBtn);
-    
+
+        colBtn.setCellFactory(cellFactory);
+
+        tasktableview.getColumns().add(colBtn);
+
     }
-    
+
     @FXML
     private void setSelectTask(MouseEvent event) {
-        
+
         introtasklbl.setVisible(true);
         introdeslbl.setVisible(true);
 
@@ -264,8 +262,6 @@ public class UserMainPageController implements Initializable {
         descriptionlbl.setText(tasktableview.getSelectionModel().getSelectedItem().getDescription());
 
     }
-
-    
 
     @FXML
     private void setOverview(ActionEvent event) throws IOException {
@@ -321,20 +317,19 @@ public class UserMainPageController implements Initializable {
         stage.show();
 
     }
-    
 
-  private boolean LOl = false;
-  
+    private boolean LOl = false;
+
     @FXML
     private void PressStop(ActionEvent event) throws SQLServerException {
         LOl = false;
         absenceThreadExecutor.shutdown();
-        bllManager.insertTimeLog(user,project ,task , 2);
+        bllManager.insertTimeLog(user, project, task, 2);
     }
 
     @FXML
     private void setEdit(ActionEvent event) throws IOException {
-        
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/trackme/gui/view/EditPage.fxml"));
         Parent root = loader.load();
         EditPageController ctrl = loader.getController();
@@ -350,5 +345,34 @@ public class UserMainPageController implements Initializable {
         closePreviousScene = (Stage) editbtn.getScene().getWindow();
         closePreviousScene.close();
     }
+
+    @FXML
+    private void setAddTask(ActionEvent event) throws SQLServerException {
+
+        if (project != null) {
+            if (insertTasklbl.getText().equals(initialName) && Descriplbl.getText().equals(initialDescription)) {
+
+            } else {
+
+                if (checkmoney.isSelected() && addtask != null) {
+                    bllManager.insertTaskForProject(project, insertTasklbl.getText(), Descriplbl.getText(), 0);
+                    initialName = insertTasklbl.getText();
+                    initialDescription = Descriplbl.getText();
+                    insertTasklbl.clear();
+                    Descriplbl.clear();
+                    setTaskTableView(project);
+                } else if (!checkmoney.isSelected() && addtask != null) {
+                    bllManager.insertTaskForProject(project, insertTasklbl.getText(), Descriplbl.getText(), 1);
+                    initialName = insertTasklbl.getText();
+                    initialDescription = Descriplbl.getText();
+                    insertTasklbl.clear();
+                    Descriplbl.clear();
+                    setTaskTableView(project);
+                }
+            }
+        }
+
+    }
+
 
 }
