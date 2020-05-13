@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -31,6 +32,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -116,8 +118,9 @@ public class UserOverviewController implements Initializable {
     }
     
     @FXML
-    private void setSortComboBox(ActionEvent event){
+    private void setSortComboBox(ActionEvent event) throws SQLServerException{
         project = sortcombobox.getSelectionModel().getSelectedItem();
+        setTaskOverview(user, project);
     }
 
     
@@ -212,7 +215,39 @@ public class UserOverviewController implements Initializable {
         projectBarChart.getData().add(dataSeries1);
     }
     
-    private void setTaskOverview(Project project){
-    
+    private void setTaskOverview(User user, Project project) throws SQLServerException{
+        List<Task> allTaskLogs = bllManager.getAllTaskLogsForProject(user, project);
+        for (Task task : allTaskLogs) {
+            bllManager.getTotalTimeForTask(task);
+            task.setDate(task.getTaskTime().get(0).getTime().toLocalDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
+            task.setTotalTime(convertSecondsToHourMinuteSecond(task));
+        }
+        ObservableList<Task> taskList = FXCollections.observableArrayList(allTaskLogs);
+        tasks.setCellValueFactory(new PropertyValueFactory<>("name"));
+        date.setCellValueFactory(new PropertyValueFactory<>("date"));
+        tamespent.setCellValueFactory(new PropertyValueFactory<>("totalTime")); 
+        tasksOverviewTable.setItems(taskList);
+        
+//        private TableColumn<Task, String> tasks;
+//    @FXML
+//    private TableColumn<Task, LocalDate> date;
+//    @FXML
+//    private TableColumn<Task, Integer> tamespent;
     }
+    private String convertSecondsToHourMinuteSecond(Task task){
+    String time = "";
+    int p1 = (int)task.getTotalTimeInSeconds()/3600;
+    int remainder = (int)task.getTotalTimeInSeconds()-p1*3600;
+    int p2 = remainder / 60;
+    remainder = remainder - p2 *60;
+    int p3 = remainder;
+    time = p1 + ":" + p2 + ":" + p3;
+    return time;
+    }
+    
+    private void filterTaskOverview(){
+        
+        
+    }
+    
 }

@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import trackme.dal.DBConnectionProvider;
@@ -54,6 +56,33 @@ public class UserDAO {
         } 
         return null;
         
+    }
+    
+    public List<User> getAllUsers() throws SQLServerException{
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT * FROM User";
+    
+        try(Connection con = connection.getConnection()){
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        ResultSet rs = pstmt.executeQuery();
+        
+        while(rs.next()){
+        int id = rs.getInt("id");
+        String name = rs.getString("name");
+        int isAdmin = rs.getInt("isAdmin");
+
+        if(isAdmin==1){
+            users.add(new User(id, name, User.UserType.ADMIN));
+        }
+        else {
+            users.add(new User(id, name, User.UserType.EMPLOYEE));
+        }
+        }
+        
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return users;
     }
     
 }

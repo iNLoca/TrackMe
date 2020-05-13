@@ -85,6 +85,11 @@ public class DALManager implements IDALFacade {
     public void getTimeForTask(User user, Task task) throws SQLServerException {
         timeLoggerDAO.getTimeForTask(user, task);
     }
+
+    @Override
+    public List<Task> getAllTaskLogsForProject(User user, Project project) throws SQLServerException {
+        return timeLoggerDAO.getAllTaskLogsForProject(user, project);
+    }
   
     
 }
