@@ -74,6 +74,10 @@ public class AdminOverviewController implements Initializable{
     private User user;
     private UserModel userModel;
     private BLLManager bllManager;
+    @FXML
+    private TableColumn<?, ?> usrcolumn;
+    @FXML
+    private JFXComboBox<?> employeecombobox;
     
       @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -83,9 +87,6 @@ public class AdminOverviewController implements Initializable{
         this.bllManager = new BLLManager();
     }
 
-    @FXML
-    private void setSortComboBox(ActionEvent event) {
-    }
 
     @FXML
     private void setShowMenubar(MouseEvent event) {
@@ -185,6 +186,14 @@ public class AdminOverviewController implements Initializable{
         Stage closePreviousScene;
         closePreviousScene = (Stage) profilesbtn.getScene().getWindow();
         closePreviousScene.close();
+    }
+
+    @FXML
+    private void setEmployeeComboBox(ActionEvent event) {
+    }
+
+    @FXML
+    private void setSortComboBox(ActionEvent event) {
     }
   
     

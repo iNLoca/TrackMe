@@ -23,20 +23,21 @@
             <Image url="@../icons/grumsen-logo-non-retina-345x0-c-default_quality-85.png" />
          </image>
       </ImageView>
-      <JFXComboBox fx:id="sortcombobox" layoutX="52.0" layoutY="71.0" onAction="#setSortComboBox" prefHeight="27.0" prefWidth="117.0" promptText="All Projects" />
-      <BarChart fx:id="projectBarChart" layoutX="38.0" layoutY="98.0" prefHeight="166.0" prefWidth="409.0">
+      <JFXComboBox fx:id="sortcombobox" layoutX="184.0" layoutY="65.0" onAction="#setSortComboBox" prefHeight="27.0" prefWidth="117.0" promptText="All Projects" />
+      <BarChart fx:id="projectBarChart" layoutX="21.0" layoutY="98.0" prefHeight="172.0" prefWidth="436.0">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
         </xAxis>
         <yAxis>
-          <NumberAxis side="LEFT" />
+          <NumberAxis prefHeight="130.0" prefWidth="35.0" side="LEFT" />
         </yAxis>
       </BarChart>
-      <TableView fx:id="tasksOverviewTable" layoutX="52.0" layoutY="284.0" prefHeight="194.0" prefWidth="395.0">
+      <TableView fx:id="tasksOverviewTable" layoutX="38.0" layoutY="284.0" prefHeight="202.0" prefWidth="409.0">
         <columns>
-          <TableColumn fx:id="tasks" prefWidth="158.0" text="Tasks" />
-          <TableColumn fx:id="date" prefWidth="98.0" text="Date" />
-            <TableColumn fx:id="tamespent" prefWidth="138.0" text="Time" />
+            <TableColumn fx:id="usrcolumn" prefWidth="113.0" text="Employees" />
+          <TableColumn fx:id="tasks" prefWidth="105.0" text="Tasks" />
+          <TableColumn fx:id="date" prefWidth="102.0" text="Date" />
+            <TableColumn fx:id="tamespent" prefWidth="88.0" text="Time" />
         </columns>
       </TableView>
       <ImageView fitHeight="27.0" fitWidth="75.0" layoutX="396.0" layoutY="487.0" pickOnBounds="true" preserveRatio="true">
@@ -85,5 +86,6 @@
             <DropShadow />
          </effect>
       </Pane>
+      <JFXComboBox fx:id="employeecombobox" layoutX="42.0" layoutY="65.0" onAction="#setEmployeeComboBox" prefHeight="27.0" prefWidth="117.0" promptText="Employee" />
    </children>
 </AnchorPane>

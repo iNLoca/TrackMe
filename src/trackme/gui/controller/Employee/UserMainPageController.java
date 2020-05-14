@@ -358,16 +358,22 @@ public class UserMainPageController implements Initializable {
                     bllManager.insertTaskForProject(project, insertTasklbl.getText(), Descriplbl.getText(), 0);
                     initialName = insertTasklbl.getText();
                     initialDescription = Descriplbl.getText();
+                   
+                    setTaskTableView(project);
+                    
                     insertTasklbl.clear();
                     Descriplbl.clear();
-                    setTaskTableView(project);
+                    
                 } else if (!checkmoney.isSelected() && addtask != null) {
                     bllManager.insertTaskForProject(project, insertTasklbl.getText(), Descriplbl.getText(), 1);
                     initialName = insertTasklbl.getText();
                     initialDescription = Descriplbl.getText();
+                    
+                     setTaskTableView(project);
+                    
                     insertTasklbl.clear();
                     Descriplbl.clear();
-                    setTaskTableView(project);
+                   
                 }
             }
         }

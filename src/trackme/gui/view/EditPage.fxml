@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane id="AnchorPane" fx:id="userfrontPane" prefHeight="514.0" prefWidth="462.0" style="-fx-background-color: #6f80b1#6f80b1 #6f80b1#6f80b1;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trackme.gui.controller.EditPageController">
+<AnchorPane id="AnchorPane" fx:id="userfrontPane" prefHeight="514.0" prefWidth="462.0" style="-fx-background-color: #6f80b1#6f80b1 #6f80b1#6f80b1;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trackme.gui.controller.Employee.EditPageController">
    <children>
       <JFXComboBox layoutX="45.0" layoutY="99.0" prefHeight="27.0" prefWidth="120.0" promptText="Projects" />
       <JFXButton fx:id="addeditbtn" buttonType="RAISED" layoutX="202.0" layoutY="403.0" prefHeight="28.0" prefWidth="68.0" ripplerFill="#4387c5cc" style="-fx-border-color: black;" text="Edit" />

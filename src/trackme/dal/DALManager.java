@@ -36,6 +36,7 @@ public class DALManager implements IDALFacade {
     }
         
     
+    @Override
     public User getUser(String email, String password) {
         try {
             return userDAO.getUser(email, password);
@@ -84,6 +85,11 @@ public class DALManager implements IDALFacade {
     @Override
     public void getTimeForTask(User user, Task task) throws SQLServerException {
         timeLoggerDAO.getTimeForTask(user, task);
+    }
+
+    @Override
+    public List<User> getAllUsers() throws SQLServerException {
+         return userDAO.getAllUsers();
     }
   
     

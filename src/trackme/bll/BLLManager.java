@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import trackme.be.Project;
 import trackme.be.Task;
 import trackme.be.User;
+import trackme.be.User.UserType;
 import trackme.dal.DALManager;
 import trackme.dal.IDALFacade;
 
@@ -78,6 +79,11 @@ public class BLLManager implements IBLLFacade {
     @Override
     public void getTotalTimeForEachProject(List<Project> projects) {
         timeConverter.getTotalTimeForEachProject(projects);
+    }
+
+    @Override
+    public List<User> getAllUsers() throws SQLServerException {
+       return dalManager.getAllUsers();
     }
 
 }

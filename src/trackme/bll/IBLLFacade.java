@@ -19,7 +19,8 @@ import trackme.be.User;
 public interface IBLLFacade {
 
     public User loginUser(String username, String password);
-
+    
+    public List<User> getAllUsers() throws SQLServerException;
     public List<Task> getTasksForProject(Project project)throws SQLServerException;
     public List<Project> getUserProjectTime(User user) throws SQLServerException;
     public List<Project> getProjectsForUser(User user) throws SQLException;
