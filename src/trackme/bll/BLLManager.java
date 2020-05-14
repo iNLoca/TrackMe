@@ -86,6 +86,9 @@ public class BLLManager implements IBLLFacade {
     public List<User> getAllUsers() throws SQLServerException {
        return dalManager.getAllUsers();
 
+    }
+    
+    @Override
     public List<Task> getAllTaskLogsForProject(User user, Project project) throws SQLServerException {
         return dalManager.getAllTaskLogsForProject(user, project);
 

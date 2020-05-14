@@ -68,11 +68,6 @@ public class UserDAO {
         Statement stmt = con.createStatement();
         ResultSet rs = stmt.executeQuery(sql);
 
-        String sql = "SELECT * FROM User";
-    
-        try(Connection con = connection.getConnection()){
-        PreparedStatement pstmt = con.prepareStatement(sql);
-        ResultSet rs = pstmt.executeQuery();
 
         
         while(rs.next()){
