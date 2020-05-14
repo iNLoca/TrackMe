@@ -27,6 +27,7 @@ public interface IBLLFacade {
     public void insertTaskForProject(Project project, String name, String description, int toPay) throws SQLServerException;
     public void insertTimeLog(User user, Project project, Task task, int timeType) throws SQLServerException;
     public void getTimeForTask(User user, Task task) throws SQLServerException;
-    public void getTotalTimeForTask(User user, Task task) throws SQLServerException;
+    public void getTotalTimeForTask(Task task) throws SQLServerException;
     public void  getTotalTimeForEachProject(List<Project> projects);
+    public List<Task> getAllTaskLogsForProject(User user, Project project) throws SQLServerException;
 }

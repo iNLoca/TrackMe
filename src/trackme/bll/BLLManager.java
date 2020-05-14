@@ -72,8 +72,8 @@ public class BLLManager implements IBLLFacade {
     }
 
     @Override
-    public void getTotalTimeForTask(User user, Task task) throws SQLServerException {
-        timeConverter.getTotalTimeForTask(user, task);
+    public void getTotalTimeForTask(Task task) throws SQLServerException {
+        timeConverter.getTotalTimeForTask(task);
     }
 
     @Override
@@ -82,8 +82,13 @@ public class BLLManager implements IBLLFacade {
     }
 
     @Override
+
     public List<User> getAllUsers() throws SQLServerException {
        return dalManager.getAllUsers();
+
+    public List<Task> getAllTaskLogsForProject(User user, Project project) throws SQLServerException {
+        return dalManager.getAllTaskLogsForProject(user, project);
+
     }
 
 }

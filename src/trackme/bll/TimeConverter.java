@@ -38,8 +38,7 @@ public class TimeConverter {
 //        find time spent on task in one update?
     }
     
-    public void getTotalTimeForTask(User user, Task task) throws SQLServerException{
-        dalManager.getTimeForTask(user, task);
+    public void getTotalTimeForTask(Task task) throws SQLServerException{
         List<TimeLog> variable1 = task.getTaskTime();
           long variable2 = 0;
           long variableToDelete = 0;

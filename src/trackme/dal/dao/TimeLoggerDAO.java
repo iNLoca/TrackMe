@@ -33,6 +33,7 @@ public class TimeLoggerDAO {
 
     private final DBConnectionProvider connection;
     private String timeType;
+    private Task tempTask = null;
 
     public TimeLoggerDAO() {
         connection = new DBConnectionProvider();
@@ -106,19 +107,47 @@ public class TimeLoggerDAO {
                         task.addTime(new TimeLog(TimeLog.TimeType.STOP, time));
                         break;
                 }
-        
         }
-        
     }   catch (SQLException ex) {
             Logger.getLogger(TimeLoggerDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     
     }
     
-    public List<Task> getAllTaskLogsForProject(User user, Project project){
+    public List<Task> getAllTaskLogsForProject(User user, Project project) throws SQLServerException{
         List<Task> tasks = new ArrayList<>();
-        String sql = "SELECT * FROM TimeLog WHERE projectId = ? AND userId = ?";
+        String sql = "SELECT * FROM TimeLog JOIN Task on TimeLog.taskId = Task.id WHERE projectId = ? AND userId = ? ORDER BY taskId";
+        int i =0;
         
+        try(Connection con = connection.getConnection()){
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, project.getId());
+            pstmt.setInt(2, user.getId());
+            ResultSet rs = pstmt.executeQuery();
+            
+            while(rs.next()){
+                int taskId = rs.getInt("taskId");
+                String taskDescription = rs.getString("description");
+                String taskName = rs.getString("taskName");
+                int toPay = rs.getInt("toPay");
+                LocalDateTime time = rs.getTimestamp("time").toLocalDateTime();
+                if(i==0){
+                tempTask = new Task(taskId, taskName, taskDescription, toPay);
+                tempTask.addTime(new TimeLog(TimeLog.TimeType.PLAY, time));
+                i++;
+                }
+                else if (i==1){
+                    tempTask.addTime(new TimeLog(TimeLog.TimeType.STOP, time));
+                    tasks.add(tempTask);
+                    i=0;
+                    tempTask=null;
+                }
+            }
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(TimeLoggerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         return tasks;
     }

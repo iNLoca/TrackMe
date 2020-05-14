@@ -61,11 +61,19 @@ public class UserDAO {
     
     public List<User> getAllUsers() throws SQLServerException{
         List<User> users = new ArrayList<>();
+
         String sql = "SELECT * FROM [User]";
 
         try(Connection con = connection.getConnection()){
         Statement stmt = con.createStatement();
         ResultSet rs = stmt.executeQuery(sql);
+
+        String sql = "SELECT * FROM User";
+    
+        try(Connection con = connection.getConnection()){
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        ResultSet rs = pstmt.executeQuery();
+
         
         while(rs.next()){
         int id = rs.getInt("id");
@@ -80,10 +88,18 @@ public class UserDAO {
         }
         }
 
+
+
+        
+
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return users;
     }
+
+
+
+    
 
 }

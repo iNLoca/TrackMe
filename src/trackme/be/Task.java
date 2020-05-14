@@ -23,6 +23,8 @@ public class Task {
     private final StringProperty description = new SimpleStringProperty();
     private List<TimeLog> taskTime = new ArrayList<>();
     private final StringProperty name =  new SimpleStringProperty();
+    private final StringProperty date =  new SimpleStringProperty();
+    private final StringProperty totalTime =  new SimpleStringProperty();
     private int toPay; //0 = to be paid, 1 = to not be paid
     private long totalTimeInSeconds;
 
@@ -32,6 +34,22 @@ public class Task {
         this.name.set(name);
         this.toPay = toPay;
 
+    }
+    
+    public String getTotalTime() {
+        return totalTime.get();
+    }
+
+    public void setTotalTime(String value) {
+         totalTime.set(value);
+    }
+    
+    public String getDate() {
+        return date.get();
+    }
+
+    public void setDate(String value) {
+         date.set(value);
     }
     
     public String getName() {
@@ -48,10 +66,8 @@ public class Task {
 
     @Override
     public String toString() {
-        return getName();
-        
+        return getName(); 
     }
-
     
     public int getId() {
         return id;
@@ -100,6 +116,6 @@ public class Task {
     public void setTotalTimeInSeconds(long totalTimeInSeconds) {
         this.totalTimeInSeconds = totalTimeInSeconds;
     }
-
+    
     
 }
