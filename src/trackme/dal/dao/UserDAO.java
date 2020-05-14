@@ -132,6 +132,18 @@ public class UserDAO {
         }
 
     }
-    
+
+        public void deleteUser(User user) throws SQLServerException{
+        String sql = "DELETE * FROM [User] WHERE id=?";
+        
+        try(Connection con = connection.getConnection()){
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        pstmt.setInt(1, user.getId());
+        pstmt.executeQuery();
+        
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }
 
 }
