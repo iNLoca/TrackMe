@@ -30,6 +30,22 @@ public class UserDAO {
         connection = new DBConnectionProvider();
     }
     
+    public void createNewUser(String name, String password, String email, int isAdmin) throws SQLServerException{
+    String sql = "INSERT INTO [User](name, email, isAdmin, password) VALUES (?,?,?,?)";
+    
+    try(Connection con = connection.getConnection()){
+    PreparedStatement pstmt = con.prepareStatement(sql);
+    pstmt.setString(1, name);
+    pstmt.setString(2, email);
+    pstmt.setInt(3, isAdmin);
+    pstmt.setString(4, password);
+    pstmt.executeQuery();
+    
+    }   catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public User getUser(String email, String password) throws SQLException{
        
         String sql = "SELECT * FROM [User] WHERE email = ? AND password = ?";
@@ -68,25 +84,26 @@ public class UserDAO {
         Statement stmt = con.createStatement();
         ResultSet rs = stmt.executeQuery(sql);
 
-
-        
         while(rs.next()){
         int id = rs.getInt("id");
         String name = rs.getString("name");
         int isAdmin = rs.getInt("isAdmin");
-
+        String email = rs.getString("email");
+        String password = rs.getString("password");
+        
         if(isAdmin==1){
-            users.add(new User(id, name, User.UserType.ADMIN));
+            User tempUser = new User(id, name, User.UserType.ADMIN);
+            tempUser.setEmail(email);
+            tempUser.setPassword(password);
+            users.add(tempUser);
         }
         else {
-            users.add(new User(id, name, User.UserType.EMPLOYEE));
+            User tempUser = new User(id, name, User.UserType.EMPLOYEE);
+            tempUser.setEmail(email);
+            tempUser.setPassword(password);
+            users.add(tempUser);
         }
         }
-
-
-
-        
-
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -95,18 +112,17 @@ public class UserDAO {
 
 
      // Edit DAO METHOD ??
- public void addEditUser(int id, String name, String email, String password, int isAdmin) {
+        public void addEditUser(int id, String name, String email, String password, int isAdmin) {
+        String sql = "UPDATE [User] SET name = ?, email = ?, isAdmin = ?, password = ? WHERE id = ? ";
         
         try (Connection con = connection.getConnection()) {
-            String sql = "UPDATE User SET users = ? WHERE id = ? ";
             PreparedStatement pstmt = con.prepareStatement(sql);
 
-            pstmt.setInt(1, id);
-            pstmt.setString(2, name);
-            pstmt.setString(3,email);
+            pstmt.setString(1, name);
+            pstmt.setString(2,email); 
+            pstmt.setInt(3, isAdmin);
             pstmt.setString(4, password);
-            pstmt.setInt(5, isAdmin);
-            
+            pstmt.setInt(5, id);
             pstmt.executeUpdate();
 
         } catch (SQLServerException sqlse) {

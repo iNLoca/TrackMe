@@ -245,9 +245,4 @@ public class UserOverviewController implements Initializable {
     return time;
     }
     
-    private void filterTaskOverview(){
-        
-        
-    }
-    
 }
