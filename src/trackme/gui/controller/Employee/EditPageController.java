@@ -12,6 +12,7 @@ import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -67,15 +68,8 @@ public class EditPageController implements Initializable{
     
     private final String LoginScene = "/trackme/gui/view/Login.fxml";
     private final String OverviewScene = "/trackme/gui/view/UserOverview.fxml";
-    @FXML
     private JFXComboBox<Project> editprojectcombobox;
-    @FXML
     private JFXComboBox<Task> taskbox;
-    @FXML
-    private TextField starttime;
-    @FXML
-    private TextField endtime;
-    @FXML
     private DatePicker date;
     
     private User user;
@@ -193,7 +187,6 @@ public class EditPageController implements Initializable{
     }
     
     
-    @FXML
     private void setProjectCombobox(ActionEvent event)throws SQLServerException {
          project = editprojectcombobox.getSelectionModel().getSelectedItem();
          setTaskCombobox(project);
@@ -208,21 +201,19 @@ public class EditPageController implements Initializable{
     
    }
    
-    @FXML
-    private void setTaskCombobox(ActionEvent event) {
-       
-    }
 
-    @FXML
-    private void setStartTime(ActionEvent event) {
-    }
-
-    @FXML
-    private void setEndTime(ActionEvent event) {
-    }
-
-    @FXML
     private void setSelectDate(ActionEvent event) {
+  
+    }
+
+    @FXML
+    private void clickEditButton(ActionEvent event) {
+        
+        LocalDate value = date.getValue();
+        System.out.println("readData");
+        
+        //bllManagersetDateDAO ()
+        
     }
 
   

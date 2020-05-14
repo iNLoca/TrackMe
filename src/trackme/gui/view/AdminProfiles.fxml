@@ -58,7 +58,7 @@
       <JFXCheckBox fx:id="employeecheck" checkedColor="#40fc9e" layoutX="207.0" layoutY="231.0" onAction="#setEmployee" text="Employee" unCheckedColor="BLACK" />
       <JFXButton fx:id="addUser" buttonType="RAISED" layoutX="69.0" layoutY="300.0" onAction="#setAddUser" style="-fx-border-color: black;" text="Add" />
       <JFXButton fx:id="deletebtn" layoutX="250.0" layoutY="300.0" onAction="#setDeleteUser" style="-fx-border-color: black;" text="Delete" />
-      <Label fx:id="errorlbl" alignment="CENTER" layoutX="121.0" layoutY="268.0" prefHeight="17.0" prefWidth="113.0" text="Error" />
+      <Label fx:id="errorlbl" alignment="CENTER" layoutX="98.0" layoutY="268.0" prefHeight="17.0" prefWidth="190.0" text="Error: Empty Fields" textFill="#b21010" visible="false" />
       <JFXButton fx:id="editusr" buttonType="RAISED" layoutX="163.0" layoutY="300.0" onAction="#setEditUser" style="-fx-border-color: black;" text="Edit" />
       <Pane fx:id="usrmenubar" prefHeight="524.0" prefWidth="201.0" style="-fx-background-color: #cddaf8#cddaf8;" visible="false">
          <children>

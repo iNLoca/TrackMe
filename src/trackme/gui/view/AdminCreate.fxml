@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="OverviewUser" prefHeight="524.0" prefWidth="466.0" style="-fx-background-color: #6f80b1#6f80b1 #6f80b1#6f80b1 #6f80b1#6f80b1 #6f80b1#6f80b1;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trackme.gui.controller.Admin.AdminCreateController">
+<AnchorPane id="AnchorPane" fx:id="OverviewUser" prefHeight="524.0" prefWidth="466.0" style="-fx-background-color: #6f80b1#6f80b1 #6f80b1#6f80b1 #6f80b1#6f80b1 #6f80b1#6f80b1;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trackme.gui.controller.Admin.AdminCreateController">
    <children>
       <ImageView fitHeight="57.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -39,8 +39,8 @@
          <font>
             <Font size="18.0" />
          </font></JFXTextField>
-      <JFXTextField layoutX="16.0" layoutY="171.0" promptText="Create Project Name" />
-      <JFXTextField layoutX="236.0" layoutY="171.0" prefHeight="27.0" prefWidth="98.0" promptText="Set Hourly Fee" />
+      <JFXTextField layoutX="16.0" layoutY="171.0" prefHeight="27.0" prefWidth="200.0" promptText="Create Project Name" />
+      <JFXTextField layoutX="268.0" layoutY="171.0" prefHeight="27.0" prefWidth="98.0" promptText="Set Hourly Fee" />
       <JFXButton buttonType="RAISED" layoutX="366.0" layoutY="233.0" prefHeight="29.0" prefWidth="61.0" style="-fx-border-color: black;" text="Add" />
       <ImageView fitHeight="65.0" fitWidth="68.0" layoutX="380.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
          <image>

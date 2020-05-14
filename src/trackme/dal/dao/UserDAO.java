@@ -94,7 +94,28 @@ public class UserDAO {
     }
 
 
+     // Edit DAO METHOD ??
+ public void addEditUser(int id, String name, String email, String password, int isAdmin) {
+        
+        try (Connection con = connection.getConnection()) {
+            String sql = "UPDATE User SET users = ? WHERE id = ? ";
+            PreparedStatement pstmt = con.prepareStatement(sql);
 
+            pstmt.setInt(1, id);
+            pstmt.setString(2, name);
+            pstmt.setString(3,email);
+            pstmt.setString(4, password);
+            pstmt.setInt(5, isAdmin);
+            
+            pstmt.executeUpdate();
+
+        } catch (SQLServerException sqlse) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, sqlse);
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
     
 
 }

@@ -23,6 +23,11 @@ public class User {
         this.type = type;
     }
 
+    @Override
+    public String toString() {
+        return  name + email + password;
+    }
+
     
     public enum UserType {
         EMPLOYEE, ADMIN
