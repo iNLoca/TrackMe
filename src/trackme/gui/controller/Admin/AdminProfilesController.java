@@ -76,7 +76,8 @@ public class AdminProfilesController implements Initializable {
     private String userName;
     private String userPassword;
     private String email;
-    
+    private String checkidadmin;
+    private String checkemplid;
     @FXML
     private TableView<User> usrtableview;
     @FXML
@@ -131,70 +132,119 @@ public class AdminProfilesController implements Initializable {
     }
     
      @FXML
-    private void selectUser(MouseEvent event) {
+    private void selectUser(MouseEvent event) throws SQLServerException {
+     
+         namefield.setText(usrtableview.getSelectionModel().getSelectedItem().getName());
+         emailfield.setText(usrtableview.getSelectionModel().getSelectedItem().getEmail());
+         passfield.setText(usrtableview.getSelectionModel().getSelectedItem().getPassword());
+          //Change getAllUsers() in UserDAO ? 
+         
+         admincheck.setUserData(usrtableview.getSelectionModel().getSelectedItem().getType().compareTo(UserType.ADMIN));
+         //admincheck.setSelected(true);
+         System.out.println("check admin");
         
+        
+       
+         /*
+         admincheck.setUserData(usrtableview.getSelectionModel().getSelectedItem().getType());
+         employeecheck.setUserData(usrtableview.getSelectionModel().getSelectedItem().getType());
+        */
     }
 
  
    
     @FXML
-    private void setAddUser(ActionEvent event) {  ///THIS IS NOT WORKING FOR EMPTYFIELDS
+    private void setAddUser(ActionEvent event) throws SQLServerException { 
         
         
-         if (user != null) {
-        if(emailfield!=null && passfield!=null && namefield!=null && (admincheck.isSelected() || employeecheck.isSelected())){
-       
-            if (namefield.getText().equals(userName) && passfield.getText().equals(userPassword) && emailfield.getText().equals(email)) {
-
-            } else if(admincheck.isSelected() && addUser != null) {
-
-                
-                   // bllManager.insertTaskForProject(project, insertTasklbl.getText(), Descriplbl.getText(), 0);
-                   System.out.println("admin is selected");
+         if(user!=null && (emailfield!=null && passfield!=null && namefield!=null && (admincheck.isSelected() || employeecheck.isSelected()))){
+        
+                saveData();
+      
+        }else {
+        
+             errorlbl.setVisible(true);
+         }
+         
+      
+    }
+    
+    
+    
+    public void saveData() throws SQLServerException {
+     
+                 
+                 
                     userName = namefield.getText();
                     userPassword = passfield.getText();
                     email = emailfield.getText();
+                    if(admincheck.isSelected()){
+                     checkidadmin=admincheck.getId();
+                       System.out.println("Admin id");
+                    }else if(employeecheck.isSelected()){
+                    checkemplid= employeecheck.getId();
+                         System.out.println("Employee Id");
+                    }
+                  
+                    bllManager.createNewUser(userName, userPassword, email, 0);
                     
-                    System.out.println("admin saved");
+                    System.out.println("data is saved");
                     
                     namefield.clear();
                     passfield.clear();
                     emailfield.clear();
                     admincheck.setSelected(false);
-                    
-                } else if (employeecheck.isSelected() && addUser != null) {
-                    //bllManager.insertTaskForProject(project, insertTasklbl.getText(), Descriplbl.getText(), 1);
-                    System.out.println("employee is selected");
-                    
-                    
-                    userName = namefield.getText();
-                    userPassword = passfield.getText();
-                    email = emailfield.getText();
-                    
-                    
-                    System.out.println("Employee saved");
-                    
-                    namefield.clear();
-                    passfield.clear();
-                    emailfield.clear();
                     employeecheck.setSelected(false);
-                }
-            }
-       
-        }
+                    errorlbl.setVisible(false);
+         
     }
 
-    
+  @FXML
+    private void setAdmin(ActionEvent event) {
+       if(admincheck.isSelected()){
+         employeecheck.setSelected(false);
+         
+         
+      
+       }
+    }
+
+    @FXML
+    private void setEmployee(ActionEvent event) {
+        if(employeecheck.isSelected()){
+          admincheck.setSelected(false);
+        }
+        
+    }
 
     @FXML
     private void setDeleteUser(ActionEvent event) {
+        
+        int a= usrtableview.getSelectionModel().getSelectedItem().getId(); 
+       // bllManager.deleteUserById(a); make UserDAO.deleteUser()
+ 
     }
 
     @FXML
-    private void setEditUser(ActionEvent event) {
-    }
+    private void setEditUser(ActionEvent event) throws SQLServerException {
+        
+      if(user!=null && (emailfield!=null && passfield!=null && namefield!=null && (admincheck.isSelected() || employeecheck.isSelected()))){
+        
+                saveData();
+          
+        }else {
+        
+             errorlbl.setVisible(true);
+         }
+         
+      
+    }  //saves new written data over old one 
+      
+        // bllManager.addEditUser(user.getId(), namefield.getText(),emailfield.getText(), passfield.getText(),0);
+        
     
     
+
     
 
     @FXML
@@ -297,23 +347,5 @@ public class AdminProfilesController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-
-    @FXML
-    private void setAdmin(ActionEvent event) {
-       if(admincheck.isSelected()){
-         employeecheck.setSelected(false);
-      
-       }
-    }
-
-    @FXML
-    private void setEmployee(ActionEvent event) {
-        if(employeecheck.isSelected()){
-          admincheck.setSelected(false);
-        }
-        
-    }
-
-   
 
 }

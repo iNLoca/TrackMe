@@ -30,4 +30,7 @@ public interface IBLLFacade {
     public void getTotalTimeForTask(Task task) throws SQLServerException;
     public void  getTotalTimeForEachProject(List<Project> projects);
     public List<Task> getAllTaskLogsForProject(User user, Project project) throws SQLServerException;
+    public void createNewUser(String name, String password, String email, int isAdmin) throws SQLServerException;
+    public void addEditUser(int id, String name, String email, String password, int isAdmin);
+    public void deleteUser(User user) throws SQLServerException;
 }
