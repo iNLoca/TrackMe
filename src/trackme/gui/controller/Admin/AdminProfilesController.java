@@ -140,7 +140,7 @@ public class AdminProfilesController implements Initializable {
           //Change getAllUsers() in UserDAO ? 
          
          admincheck.setUserData(usrtableview.getSelectionModel().getSelectedItem().getType().compareTo(UserType.ADMIN));
-         admincheck.setSelected(true);
+         //admincheck.setSelected(true);
          System.out.println("check admin");
         
         
@@ -154,7 +154,7 @@ public class AdminProfilesController implements Initializable {
  
    
     @FXML
-    private void setAddUser(ActionEvent event) { 
+    private void setAddUser(ActionEvent event) throws SQLServerException { 
         
         
          if(user!=null && (emailfield!=null && passfield!=null && namefield!=null && (admincheck.isSelected() || employeecheck.isSelected()))){
@@ -171,9 +171,9 @@ public class AdminProfilesController implements Initializable {
     
     
     
-    public void saveData() {
+    public void saveData() throws SQLServerException {
      
-                   // bllManager.insertTaskForProject(project, insertTasklbl.getText(), Descriplbl.getText(), 0);
+                 
                  
                     userName = namefield.getText();
                     userPassword = passfield.getText();
@@ -185,7 +185,8 @@ public class AdminProfilesController implements Initializable {
                     checkemplid= employeecheck.getId();
                          System.out.println("Employee Id");
                     }
-                    
+                  
+                    bllManager.createNewUser(userName, userPassword, email, 0);
                     
                     System.out.println("data is saved");
                     
@@ -225,7 +226,7 @@ public class AdminProfilesController implements Initializable {
     }
 
     @FXML
-    private void setEditUser(ActionEvent event) {
+    private void setEditUser(ActionEvent event) throws SQLServerException {
         
       if(user!=null && (emailfield!=null && passfield!=null && namefield!=null && (admincheck.isSelected() || employeecheck.isSelected()))){
         

@@ -94,4 +94,19 @@ public class BLLManager implements IBLLFacade {
 
     }
 
+    @Override
+    public void createNewUser(String name, String password, String email, int isAdmin) throws SQLServerException {
+         dalManager.createNewUser(name, password, email, isAdmin);
+    }
+
+    @Override
+    public void addEditUser(int id, String name, String email, String password, int isAdmin) {
+        dalManager.addEditUser(id, name, email, password, isAdmin);
+    }
+
+    @Override
+    public void deleteUser(User user) throws SQLServerException {
+        dalManager.deleteUser(user);
+    }
+
 }
