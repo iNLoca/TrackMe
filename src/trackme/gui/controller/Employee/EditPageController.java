@@ -10,6 +10,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.io.IOException;
+import static java.lang.Float.parseFloat;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -70,6 +71,7 @@ public class EditPageController implements Initializable{
     private final String OverviewScene = "/trackme/gui/view/UserOverview.fxml";
     private JFXComboBox<Project> editprojectcombobox;
     private JFXComboBox<Task> taskbox;
+    @FXML
     private DatePicker date;
     
     private User user;
@@ -79,6 +81,10 @@ public class EditPageController implements Initializable{
     private UserModel userModel;
     private TaskModel taskModel;
     private ProjectModel projectModel;
+    @FXML
+    private TextField starttime;
+    @FXML
+    private TextField endtime;
     
     
       @Override
@@ -202,20 +208,33 @@ public class EditPageController implements Initializable{
    }
    
 
-    private void setSelectDate(ActionEvent event) {
-  
-    }
-
     @FXML
     private void clickEditButton(ActionEvent event) {
         
         LocalDate value = date.getValue();
         System.out.println("readData");
         
-        //bllManagersetDateDAO ()
+        //bllManagersetDateDAO()in DB
+        
+       
         
     }
 
   
     
+
+
+    @FXML
+    private void setStartTime(ActionEvent event) {
+
+       if (parseFloat(starttime.getText()) >= 0 && parseFloat(starttime.getText()) <= 10) {
+           // bllManager.addNewStartTime();
+    }
+    }
+    @FXML
+    private void setEndTime(ActionEvent event) {
+         if (parseFloat(endtime.getText()) >= 0 && parseFloat(endtime.getText()) <= 10) {
+            //bllManager.addNewEndTime();
+}
+    }
 }
