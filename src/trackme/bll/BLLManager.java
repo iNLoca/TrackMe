@@ -100,8 +100,8 @@ public class BLLManager implements IBLLFacade {
     }
 
     @Override
-    public void addEditUser(int id, String name, String email, String password, int isAdmin) {
-        dalManager.addEditUser(id, name, email, password, isAdmin);
+    public void addEditUser(User user, String name, String email, String password, int isAdmin) {
+        dalManager.addEditUser(user, name, email, password, isAdmin);
     }
 
     @Override

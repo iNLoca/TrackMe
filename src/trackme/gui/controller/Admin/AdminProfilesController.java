@@ -16,6 +16,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -70,6 +72,7 @@ public class AdminProfilesController implements Initializable {
      private final String LoginScene = "/trackme/gui/view/Login.fxml";
     private final String OverviewScene = "/trackme/gui/view/AdminOverview.fxml";
     private User user;
+    private User selectedUser;
     private UserModel userModel;
     private BLLManager bllManager;
     
@@ -108,7 +111,7 @@ public class AdminProfilesController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       userModel = UserModel.getInstance();
+        userModel = UserModel.getInstance();
         user = userModel.getLoggedInUser();
         usrnamelbl.setText(user.getName());
         this.bllManager = new BLLManager();
@@ -127,7 +130,7 @@ public class AdminProfilesController implements Initializable {
         usrtype.setCellValueFactory(new PropertyValueFactory<>("type"));
 
         usrtableview.setItems(userList);
-
+       
     
     }
     
@@ -137,19 +140,81 @@ public class AdminProfilesController implements Initializable {
          namefield.setText(usrtableview.getSelectionModel().getSelectedItem().getName());
          emailfield.setText(usrtableview.getSelectionModel().getSelectedItem().getEmail());
          passfield.setText(usrtableview.getSelectionModel().getSelectedItem().getPassword());
-          //Change getAllUsers() in UserDAO ? 
+        
+         admincheck.setId(usrtableview.getSelectionModel().getSelectedItem().getType().toString());
+         employeecheck.setId(usrtableview.getSelectionModel().getSelectedItem().getType().toString());
+        
          
-         admincheck.setUserData(usrtableview.getSelectionModel().getSelectedItem().getType().compareTo(UserType.ADMIN));
-         //admincheck.setSelected(true);
-         System.out.println("check admin");
-        
-        
+         if(selectedUser.getType() == User.UserType.ADMIN){
+         
+             admincheck.setSelected(true);
+             employeecheck.setSelected(false);
+         }else if(selectedUser.getType() == User.UserType.EMPLOYEE){
+             admincheck.setSelected(false);
+             employeecheck.setSelected(true);
+         }
+         
+        /*
+          admincheck.selectedProperty().addListener(new ChangeListener<Boolean>(){
+             @Override
+             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                 if(newValue){
+                  
+                  admincheck.setSelected(true);
+                  employeecheck.setSelected(false);
+                 }else{
+                  admincheck.setSelected(false);
+                  employeecheck.setSelected(false);
+             }
+             }
+          
+    });
+          
+           employeecheck.selectedProperty().addListener(new ChangeListener<Boolean>(){
+             @Override
+             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                 if(newValue){
+                
+                  employeecheck.setSelected(true);
+                  admincheck.setSelected(false);
+                 }else{
+                    employeecheck.setSelected(false);
+                    admincheck.setSelected(false);
+                 }
+
+             }
+           
+           
+           
+           });
+         
+         
+         
+        /*
+        ChangeListener checkboxcheck;
+        checkboxcheck = (ChangeListener<Boolean>) (ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            if(newValue)
+            admincheck.setId(usrtableview.getSelectionModel().getSelectedItem().getType().toString());
+             
+            admincheck.setSelected(true);
+            
+            employeecheck.setSelected(false);
+         };
        
-         /*
-         admincheck.setUserData(usrtableview.getSelectionModel().getSelectedItem().getType());
-         employeecheck.setUserData(usrtableview.getSelectionModel().getSelectedItem().getType());
-        */
+          checkboxcheck = (ChangeListener<Boolean>) (ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+             if(newValue)
+           employeecheck.setId(usrtableview.getSelectionModel().getSelectedItem().getType().toString());
+            
+             employeecheck.setSelected(true);
+             admincheck.setSelected(false);
+         };
+     
+         */
+        
+        
+
     }
+
 
  
    
@@ -180,15 +245,43 @@ public class AdminProfilesController implements Initializable {
                     email = emailfield.getText();
                     if(admincheck.isSelected()){
                      checkidadmin=admincheck.getId();
-                       System.out.println("Admin id");
+                    bllManager.createNewUser(userName, userPassword, email, 1);
                     }else if(employeecheck.isSelected()){
                     checkemplid= employeecheck.getId();
-                         System.out.println("Employee Id");
+                    bllManager.createNewUser(userName, userPassword, email, 0);
                     }
                   
-                    bllManager.createNewUser(userName, userPassword, email, 0);
                     
-                    System.out.println("data is saved");
+                    setUserTableView();
+                    
+                    clear();
+                    
+                   
+         
+    }
+    
+    public void editData() throws SQLServerException{
+    
+                    userName = namefield.getText();
+                    userPassword = passfield.getText();
+                    email = emailfield.getText();
+                    if(!admincheck.isSelected()){
+                     checkidadmin=admincheck.getId();
+                     admincheck.setSelected(true);
+                    bllManager.addEditUser(selectedUser, userName, email, userPassword, 1);
+                    }else if(!employeecheck.isSelected()){
+                    checkemplid= employeecheck.getId();
+                    employeecheck.setSelected(true);
+                    bllManager.addEditUser(selectedUser, userName, email, userPassword, 0);
+                    
+                    
+                    setUserTableView();
+                    
+                    clear();
+    
+    }
+    }
+    private void clear(){
                     
                     namefield.clear();
                     passfield.clear();
@@ -196,7 +289,7 @@ public class AdminProfilesController implements Initializable {
                     admincheck.setSelected(false);
                     employeecheck.setSelected(false);
                     errorlbl.setVisible(false);
-         
+                    usrtableview.refresh();
     }
 
   @FXML
@@ -218,33 +311,31 @@ public class AdminProfilesController implements Initializable {
     }
 
     @FXML
-    private void setDeleteUser(ActionEvent event) {
+    private void setDeleteUser(ActionEvent event) throws SQLServerException {
+        selectedUser = usrtableview.getSelectionModel().getSelectedItem(); 
+        bllManager.deleteUser(selectedUser);
+        setUserTableView(); 
+        clear();
+       
         
-        int a= usrtableview.getSelectionModel().getSelectedItem().getId(); 
-       // bllManager.deleteUserById(a); make UserDAO.deleteUser()
+        
  
     }
 
     @FXML
     private void setEditUser(ActionEvent event) throws SQLServerException {
-        
-      if(user!=null && (emailfield!=null && passfield!=null && namefield!=null && (admincheck.isSelected() || employeecheck.isSelected()))){
-        
-                saveData();
-          
-        }else {
-        
-             errorlbl.setVisible(true);
-         }
-         
       
-    }  //saves new written data over old one 
+       selectedUser = usrtableview.getSelectionModel().getSelectedItem();
       
-        // bllManager.addEditUser(user.getId(), namefield.getText(),emailfield.getText(), passfield.getText(),0);
+        editData();
+        usrtableview.refresh();
+        clear();
+      
+    }  
+      
+     
         
     
-    
-
     
 
     @FXML

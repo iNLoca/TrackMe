@@ -105,8 +105,8 @@ public class DALManager implements IDALFacade {
     }
 
     @Override
-    public void addEditUser(int id, String name, String email, String password, int isAdmin) {
-        userDAO.addEditUser(id, name, email, password, isAdmin);
+    public void addEditUser(User user, String name, String email, String password, int isAdmin) {
+        userDAO.addEditUser(user, name, email, password, isAdmin);
     }
 
     @Override

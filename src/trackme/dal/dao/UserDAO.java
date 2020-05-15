@@ -112,7 +112,7 @@ public class UserDAO {
 
 
      // Edit DAO METHOD ??
-        public void addEditUser(int id, String name, String email, String password, int isAdmin) {
+        public void addEditUser(User user, String name, String email, String password, int isAdmin) {
         String sql = "UPDATE [User] SET name = ?, email = ?, isAdmin = ?, password = ? WHERE id = ? ";
         
         try (Connection con = connection.getConnection()) {
@@ -122,7 +122,7 @@ public class UserDAO {
             pstmt.setString(2,email); 
             pstmt.setInt(3, isAdmin);
             pstmt.setString(4, password);
-            pstmt.setInt(5, id);
+            pstmt.setInt(5, user.getId());
             pstmt.executeUpdate();
 
         } catch (SQLServerException sqlse) {
@@ -134,7 +134,7 @@ public class UserDAO {
     }
 
         public void deleteUser(User user) throws SQLServerException{
-        String sql = "DELETE * FROM [User] WHERE id=?";
+        String sql = "DELETE  FROM [User] WHERE id=?";
         
         try(Connection con = connection.getConnection()){
         PreparedStatement pstmt = con.prepareStatement(sql);
