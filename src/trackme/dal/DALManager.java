@@ -47,7 +47,7 @@ public class DALManager implements IDALFacade {
     }
 
     @Override
-    public List<Project> getAllProjects() {
+    public List<Project> getUserProjectTime() {
         try {
             User us = userDAO.getUser("martinwobbe@email.com", "password");;
             return timeLoggerDAO.getUserProjectTime(us);
@@ -112,6 +112,16 @@ public class DALManager implements IDALFacade {
     @Override
     public void deleteUser(User user) throws SQLServerException {
         userDAO.deleteUser(user);
+    }
+
+    @Override
+    public List<Project> getAllProjects() throws SQLServerException {
+       return projectDAO.getAllProjects();
+    }
+
+    @Override
+    public void createProject(String name, String clientName, String cost) throws SQLServerException {
+        projectDAO.createProject(name, clientName, cost);
     }
   
     

@@ -14,6 +14,8 @@ import static java.lang.Float.parseFloat;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.temporal.TemporalAccessor;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -219,8 +221,7 @@ public class EditPageController implements Initializable{
         
         //bllManagersetDateDAO()in DB
         
-       
-        
+      
     }
 
   
@@ -229,13 +230,14 @@ public class EditPageController implements Initializable{
 
     @FXML
     private void setStartTime(ActionEvent event) {
-
-      if (parseFloat(starttime.getText()) >= 0 && parseFloat(starttime.getText()) <= 10) {
-           // bllManager.addNewStartTime();
-    }
+     
+         //starttime.getText();
+         System.out.println();
+         //bllManager.addNewStartTime();
+    
     }
     
-
+    
     @FXML
     private void setEndTime(ActionEvent event) {
         if (parseFloat(endtime.getText()) >= 0 && parseFloat(endtime.getText()) <= 10) {

@@ -37,14 +37,14 @@
             <Image url="@../icons/next-arrow-icon-18.png" />
          </image>
       </ImageView>
-      <JFXTextField layoutX="16.0" layoutY="101.0" promptText="Create Client Name">
+      <JFXTextField fx:id="clientname" layoutX="16.0" layoutY="101.0" promptText="Create Client Name">
          <font>
             <Font size="18.0" />
          </font></JFXTextField>
 
-      <JFXTextField layoutX="16.0" layoutY="171.0" promptText="Create Project Name" />
-      <JFXTextField layoutX="236.0" layoutY="171.0" prefHeight="27.0" prefWidth="98.0" promptText="Set Hourly Fee" />
-      <JFXButton buttonType="RAISED" layoutX="366.0" layoutY="216.0" prefHeight="29.0" prefWidth="61.0" style="-fx-border-color: black;" text="Add" />
+      <JFXTextField fx:id="peojectname" layoutX="16.0" layoutY="171.0" promptText="Create Project Name" />
+      <JFXTextField fx:id="hfeelbl" layoutX="236.0" layoutY="171.0" prefHeight="27.0" prefWidth="98.0" promptText="Set Hourly Fee" />
+      <JFXButton fx:id="addbtn" buttonType="RAISED" layoutX="366.0" layoutY="216.0" onAction="#setAddCreate" prefHeight="29.0" prefWidth="61.0" style="-fx-border-color: black;" text="Add" />
       <ImageView fitHeight="65.0" fitWidth="68.0" layoutX="373.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true">
        </ImageView>
       <ImageView fitHeight="65.0" fitWidth="68.0" layoutX="380.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
@@ -56,11 +56,11 @@
             <Reflection />
          </effect>
       </ImageView>
-      <TableView id="createTbv" layoutX="26.0" layoutY="276.0" prefHeight="206.0" prefWidth="420.0" stylesheets="@../css.css">
+      <TableView id="createTbv" fx:id="createtableview" layoutX="26.0" layoutY="276.0" prefHeight="206.0" prefWidth="420.0" stylesheets="@../css.css">
         <columns>
-          <TableColumn prefWidth="164.0" styleClass="tabelRow" text="Client" />
-          <TableColumn prefWidth="163.0" styleClass="tabelRowCell" text="Project" />
-            <TableColumn prefWidth="92.0" styleClass="tabelRowCell" text="Payable" />
+          <TableColumn fx:id="clientcolumn" prefWidth="164.0" styleClass="tabelRow" text="Client" />
+          <TableColumn fx:id="projectcolmn" prefWidth="163.0" styleClass="tabelRowCell" text="Project" />
+            <TableColumn fx:id="feecolmn" prefWidth="92.0" styleClass="tabelRowCell" text="Fee" />
         </columns>
          <effect>
             <InnerShadow color="#00000076" />

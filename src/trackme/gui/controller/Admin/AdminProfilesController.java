@@ -137,23 +137,50 @@ public class AdminProfilesController implements Initializable {
      @FXML
     private void selectUser(MouseEvent event) throws SQLServerException {
      
+        
          namefield.setText(usrtableview.getSelectionModel().getSelectedItem().getName());
          emailfield.setText(usrtableview.getSelectionModel().getSelectedItem().getEmail());
          passfield.setText(usrtableview.getSelectionModel().getSelectedItem().getPassword());
         
-         admincheck.setId(usrtableview.getSelectionModel().getSelectedItem().getType().toString());
-         employeecheck.setId(usrtableview.getSelectionModel().getSelectedItem().getType().toString());
+         admincheck.setUserData(usrtableview.getSelectionModel().getSelectedItem().getType());
+         employeecheck.setUserData(usrtableview.getSelectionModel().getSelectedItem().getType());
+          
+         AdminOREmployee();
         
-         
+    }
+    
+    
+    
+    
+    private void AdminOREmployee(){
+        if (selectedUser!=null){
+            
          if(selectedUser.getType() == User.UserType.ADMIN){
          
-             admincheck.setSelected(true);
-             employeecheck.setSelected(false);
+             admincheck.selectedProperty().addListener(new ChangeListener<Boolean>(){
+                 @Override
+                 public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                     if(newValue){
+                          
+                          
+                     }
+                 }
+             
+             
+             
+             
+             });
+             
+             //admincheck.setSelected(false);
+           
+             
          }else if(selectedUser.getType() == User.UserType.EMPLOYEE){
-             admincheck.setSelected(false);
-             employeecheck.setSelected(true);
+             
+           //  employeecheck.setSelected(true);
+             employeecheck.selectedProperty().getValue();
          }
-         
+    }  
+    }
         /*
           admincheck.selectedProperty().addListener(new ChangeListener<Boolean>(){
              @Override
@@ -213,7 +240,7 @@ public class AdminProfilesController implements Initializable {
         
         
 
-    }
+    
 
 
  

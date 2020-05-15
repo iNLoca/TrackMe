@@ -187,6 +187,8 @@ public class UserMainPageController implements Initializable {
 
         addStartButton();
         
+        
+        
       
     }
 
@@ -328,6 +330,8 @@ public class UserMainPageController implements Initializable {
         LOl = false;
         absenceThreadExecutor.shutdown();
         bllManager.insertTimeLog(user, project, task, 2);
+       // absenceThreadExecutor.shutdownNow();
+        
     }
 
     @FXML
@@ -380,6 +384,9 @@ public class UserMainPageController implements Initializable {
                 }
             }
         }
+        tasktableview.getItems().clear();
+      ////NOT DONE
+        
 
     }
 

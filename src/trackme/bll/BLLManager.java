@@ -29,7 +29,7 @@ public class BLLManager implements IBLLFacade {
     public BLLManager() {
         dalManager = new DALManager();
         timeConverter = new TimeConverter();
-        List<Project> pros = dalManager.getAllProjects();
+        List<Project> pros = dalManager.getUserProjectTime();
 
     }
 
@@ -107,6 +107,17 @@ public class BLLManager implements IBLLFacade {
     @Override
     public void deleteUser(User user) throws SQLServerException {
         dalManager.deleteUser(user);
+    }
+
+    @Override
+    public List<Project> getAllProjects() throws SQLServerException {
+       return   dalManager.getAllProjects();
+        
+    }
+
+    @Override
+    public void createProject(String name, String clientName, String cost) throws SQLServerException {
+         dalManager.createProject(name, clientName, cost);
     }
 
 }

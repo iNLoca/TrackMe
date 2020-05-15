@@ -33,4 +33,6 @@ public interface IBLLFacade {
     public void createNewUser(String name, String password, String email, int isAdmin) throws SQLServerException;
     public void addEditUser(User user, String name, String email, String password, int isAdmin);
     public void deleteUser(User user) throws SQLServerException;
+    public List<Project> getAllProjects() throws SQLServerException;
+    public void createProject(String name, String clientName, String cost) throws SQLServerException;
 }

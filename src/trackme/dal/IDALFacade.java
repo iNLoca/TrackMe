@@ -21,7 +21,7 @@ public interface IDALFacade {
     User getUser(String email, String password);
 
     public List<User> getAllUsers() throws SQLServerException;
-    public List<Project> getAllProjects();
+    public List<Project> getUserProjectTime();
     public List<Task> getTasksForProject(Project project) throws SQLServerException;
     public List<Project> getUserProjectTime(User user) throws SQLServerException;
     public List<Project> getProjectsForUser(User user) throws SQLException;
@@ -32,6 +32,8 @@ public interface IDALFacade {
     public void createNewUser(String name, String password, String email, int isAdmin) throws SQLServerException;
     public void addEditUser(User user, String name, String email, String password, int isAdmin);
     public void deleteUser(User user) throws SQLServerException;
+    public List<Project> getAllProjects() throws SQLServerException;
+    public void createProject(String name, String clientName, String cost) throws SQLServerException;
     
    
 }
