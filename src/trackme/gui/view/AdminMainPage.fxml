@@ -9,13 +9,14 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="adminfrontPane" prefHeight="514.0" prefWidth="469.0" style="-fx-background-color: #6f80b1#6f80b1 #6f80b1#6f80b1;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trackme.gui.controller.Admin.AdminMainPageController">
+<AnchorPane id="AnchorPane" fx:id="adminfrontPane" prefHeight="514.0" prefWidth="469.0" style="-fx-background-color: #6f80b1;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trackme.gui.controller.Admin.AdminMainPageController">
    <children>
       <Button fx:id="stopbtn" layoutX="396.0" layoutY="21.0" mnemonicParsing="false" onAction="#PressStop" prefHeight="42.0" prefWidth="56.0" style="-fx-background-color: #435a9a#435a9a;">
          <graphic>
@@ -25,12 +26,15 @@
                </image>
             </ImageView>
          </graphic>
+         <effect>
+            <InnerShadow />
+         </effect>
       </Button>
       <Label fx:id="timecountlbl" alignment="CENTER_RIGHT" layoutX="296.0" layoutY="31.0" prefHeight="23.0" prefWidth="97.0">
          <font>
             <Font size="18.0" />
          </font></Label>
-      <JFXComboBox fx:id="projectbox" layoutX="47.0" layoutY="65.0" onAction="#setSelectedProjects" prefHeight="27.0" prefWidth="120.0" promptText="Projects" />
+      <JFXComboBox fx:id="projectbox" layoutX="39.0" layoutY="64.0" onAction="#setSelectedProjects" prefHeight="27.0" prefWidth="120.0" promptText="Projects" />
       <JFXButton fx:id="addTask" buttonType="RAISED" layoutX="398.0" layoutY="107.0" onAction="#setAddTask" prefHeight="36.0" prefWidth="49.0" ripplerFill="#4387c5cc" text=" ">
          <graphic>
             <ImageView fitHeight="29.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
@@ -40,7 +44,7 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <JFXTextField fx:id="insertTasklbl" layoutX="47.0" layoutY="109.0" prefHeight="31.0" prefWidth="120.0" promptText="Insert Task" />
+      <JFXTextField fx:id="insertTasklbl" layoutX="39.0" layoutY="109.0" prefHeight="31.0" prefWidth="120.0" promptText="Insert Task" />
       <JFXTextField fx:id="Descriplbl" layoutX="185.0" layoutY="109.0" prefHeight="31.0" prefWidth="147.0" promptText="Description" />
       <ImageView fitHeight="57.0" fitWidth="200.0" layoutX="-1.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -52,12 +56,15 @@
             <Image url="@../icons/next-arrow-icon-18.png" />
          </image>
       </ImageView>
-      <TableView fx:id="tasktableview" layoutX="47.0" layoutY="154.0" onMouseClicked="#setSelectTask" prefHeight="303.0" prefWidth="404.0">
+      <TableView id="createTbv" fx:id="tasktableview" layoutX="33.0" layoutY="165.0" onMouseClicked="#setSelectTask" prefHeight="303.0" prefWidth="404.0" style="-fx-border-color: black;" stylesheets="@../css.css">
         <columns>
-          <TableColumn fx:id="taskcolmn" prefWidth="102.0" text="Tasks" />
-            <TableColumn fx:id="desccolm" prefWidth="136.0" text="Description" />
-            <TableColumn fx:id="moneycolmn" prefWidth="84.0" text="Payable" />
+          <TableColumn id="tableRowCell" fx:id="taskcolmn" prefWidth="109.0" text="Tasks" />
+            <TableColumn id="tableRowCell" fx:id="desccolm" prefWidth="152.0" text="Description" />
+            <TableColumn id="tableRowCell" fx:id="moneycolmn" minWidth="0.0" prefWidth="66.0" text="Payable" />
         </columns>
+         <effect>
+            <InnerShadow />
+         </effect>
       </TableView>
       <ImageView fitHeight="27.0" fitWidth="74.0" layoutX="393.0" layoutY="477.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -97,4 +104,7 @@
       </Pane>
       <JFXCheckBox fx:id="checkmoney" checkedColor="#31fc96" layoutX="345.0" layoutY="117.0" text="\$" unCheckedColor="BLACK" />
    </children>
+   <effect>
+      <InnerShadow />
+   </effect>
 </AnchorPane>
