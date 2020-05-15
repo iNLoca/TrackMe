@@ -7,6 +7,8 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.effect.Reflection?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -41,18 +43,24 @@
          </font></JFXTextField>
       <JFXTextField layoutX="16.0" layoutY="171.0" promptText="Create Project Name" />
       <JFXTextField layoutX="236.0" layoutY="171.0" prefHeight="27.0" prefWidth="98.0" promptText="Set Hourly Fee" />
-      <JFXButton buttonType="RAISED" layoutX="366.0" layoutY="233.0" prefHeight="29.0" prefWidth="61.0" style="-fx-border-color: black;" text="Add" />
-      <ImageView fitHeight="65.0" fitWidth="68.0" layoutX="380.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
+      <JFXButton buttonType="RAISED" layoutX="366.0" layoutY="216.0" prefHeight="29.0" prefWidth="61.0" style="-fx-border-color: black;" text="Add" />
+      <ImageView fitHeight="65.0" fitWidth="68.0" layoutX="373.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../icons/UI_Icons_Outline-05-512.png" />
          </image>
+         <effect>
+            <Reflection />
+         </effect>
       </ImageView>
-      <TableView id="createTbv" layoutX="26.0" layoutY="295.0" prefHeight="181.0" prefWidth="420.0">
+      <TableView id="createTbv" layoutX="26.0" layoutY="276.0" prefHeight="206.0" prefWidth="420.0" stylesheets="@../css.css">
         <columns>
-          <TableColumn prefWidth="164.0" text="Client" />
-          <TableColumn prefWidth="163.0" text="Project" />
-            <TableColumn prefWidth="92.0" text="Payable" />
+          <TableColumn prefWidth="164.0" styleClass="tabelRow" text="Client" />
+          <TableColumn prefWidth="163.0" styleClass="tabelRowCell" text="Project" />
+            <TableColumn prefWidth="92.0" styleClass="tabelRowCell" text="Payable" />
         </columns>
+         <effect>
+            <InnerShadow color="#00000076" />
+         </effect>
       </TableView>
       <Pane fx:id="usrmenubar" layoutX="-3.0" prefHeight="524.0" prefWidth="201.0" style="-fx-background-color: #cddaf8#cddaf8;" visible="false">
          <children>
@@ -86,4 +94,7 @@
          </effect>
       </Pane>
    </children>
+   <effect>
+      <InnerShadow color="#00000098" />
+   </effect>
 </AnchorPane>
