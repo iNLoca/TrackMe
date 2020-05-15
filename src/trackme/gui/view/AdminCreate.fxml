@@ -46,10 +46,7 @@
       <JFXTextField layoutX="236.0" layoutY="171.0" prefHeight="27.0" prefWidth="98.0" promptText="Set Hourly Fee" />
       <JFXButton buttonType="RAISED" layoutX="366.0" layoutY="216.0" prefHeight="29.0" prefWidth="61.0" style="-fx-border-color: black;" text="Add" />
       <ImageView fitHeight="65.0" fitWidth="68.0" layoutX="373.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true">
-
-      <JFXTextField layoutX="16.0" layoutY="171.0" prefHeight="27.0" prefWidth="200.0" promptText="Create Project Name" />
-      <JFXTextField layoutX="268.0" layoutY="171.0" prefHeight="27.0" prefWidth="98.0" promptText="Set Hourly Fee" />
-      <JFXButton buttonType="RAISED" layoutX="366.0" layoutY="233.0" prefHeight="29.0" prefWidth="61.0" style="-fx-border-color: black;" text="Add" />
+       </ImageView>
       <ImageView fitHeight="65.0" fitWidth="68.0" layoutX="380.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
 
          <image>
