@@ -97,6 +97,7 @@
             <DropShadow />
          </effect>
       </Pane>
+      <Label fx:id="errormsg" layoutX="150.0" layoutY="222.0" prefHeight="17.0" prefWidth="201.0" text="Error: Empty Fields or invalid Hourly Fee " textFill="#ab1010" visible="false" />
    </children>
    <effect>
       <InnerShadow color="#00000098" />

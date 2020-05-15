@@ -91,6 +91,8 @@ public class AdminCreateController implements Initializable {
     private String clientnm;
     private String projectps;
     private String fee;
+    @FXML
+    private Label errormsg;
     /**
      * Initializes the controller class.
      */
@@ -112,13 +114,13 @@ public class AdminCreateController implements Initializable {
     @FXML
     private void setAddCreate(ActionEvent event) throws SQLException {
         
-         if(user!=null && (clientname!=null && peojectname!=null && hfeelbl!=null)){
-        
+         if(user!=null && (!clientname.getText().isEmpty() && !peojectname.getText().isEmpty() && !hfeelbl.getText().isEmpty())){
+          
                 saveNewData();
       
-       
+            }else{
         
-           //  errorlbl.setVisible(true);
+            errormsg.setVisible(true);
          }
          
         
@@ -139,6 +141,7 @@ public class AdminCreateController implements Initializable {
                     clientname.clear();
                     peojectname.clear();
                     hfeelbl.clear();
+                    errormsg.setVisible(false);
                     
                     
     
