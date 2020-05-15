@@ -166,6 +166,7 @@ public class UserMainPageController implements Initializable {
         projectbox.getItems().clear();
         projectbox.getItems().addAll(projectList);
         projectbox.getSelectionModel().select(projectbox.getValue());
+       
     }
 
     @FXML
@@ -185,10 +186,12 @@ public class UserMainPageController implements Initializable {
         tasktableview.setItems(taskList);
 
         addStartButton();
+        
+      
     }
 
     //String imageSource;
-    private void addStartButton() {
+    private void addStartButton() throws SQLServerException {
 
         TableColumn<Task, Void> colBtn = new TableColumn("Start Time");
         Callback<TableColumn<Task, Void>, TableCell<Task, Void>> cellFactory = new Callback<TableColumn<Task, Void>, TableCell<Task, Void>>() {
@@ -249,7 +252,7 @@ public class UserMainPageController implements Initializable {
         colBtn.setCellFactory(cellFactory);
 
         tasktableview.getColumns().add(colBtn);
-
+        
     }
 
     @FXML

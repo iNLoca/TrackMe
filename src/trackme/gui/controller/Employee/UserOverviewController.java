@@ -93,7 +93,7 @@ public class UserOverviewController implements Initializable {
     private BarChart<String, Integer> projectBarChart;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       userModel = UserModel.getInstance();
+        userModel = UserModel.getInstance();
         user = userModel.getLoggedInUser();
         usrnamelbl.setText(user.getName());
         bllManager = new BLLManager();

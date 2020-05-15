@@ -69,7 +69,9 @@ public class EditPageController implements Initializable{
     
     private final String LoginScene = "/trackme/gui/view/Login.fxml";
     private final String OverviewScene = "/trackme/gui/view/UserOverview.fxml";
+    @FXML
     private JFXComboBox<Project> editprojectcombobox;
+    @FXML
     private JFXComboBox<Task> taskbox;
     @FXML
     private DatePicker date;
@@ -193,6 +195,7 @@ public class EditPageController implements Initializable{
     }
     
     
+    @FXML
     private void setProjectCombobox(ActionEvent event)throws SQLServerException {
          project = editprojectcombobox.getSelectionModel().getSelectedItem();
          setTaskCombobox(project);
@@ -227,13 +230,15 @@ public class EditPageController implements Initializable{
     @FXML
     private void setStartTime(ActionEvent event) {
 
-       if (parseFloat(starttime.getText()) >= 0 && parseFloat(starttime.getText()) <= 10) {
+      if (parseFloat(starttime.getText()) >= 0 && parseFloat(starttime.getText()) <= 10) {
            // bllManager.addNewStartTime();
     }
     }
+    
+
     @FXML
     private void setEndTime(ActionEvent event) {
-         if (parseFloat(endtime.getText()) >= 0 && parseFloat(endtime.getText()) <= 10) {
+        if (parseFloat(endtime.getText()) >= 0 && parseFloat(endtime.getText()) <= 10) {
             //bllManager.addNewEndTime();
 }
     }
