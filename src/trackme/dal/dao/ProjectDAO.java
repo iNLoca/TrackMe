@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -44,27 +45,7 @@ public class ProjectDAO {
         String name = rs.getString("name");
         String client = rs.getString("clientName");
         int cost = rs.getInt("cost");
-        // int cost = rs.getInt("type"); (pause or not)
-        // fore( project from Projectes)
-        /* if(project.id == project.id && date+- same && project type is == 2){
-        `remove prom original list
-        }
-        if(project.type == 1 >Start ) 
-          rore(projects)
         
-        
-        1 Task for each line with 1 timelog
-        List<Task> with all timelog for task
-        
-        fore to loop through list
-        type 1 or 2
-        if type 1 i++
-        if type 2 i--
-        
-        
-        
-        
-        */
         projects.add(new Project(id, name, client, cost));
         
         }     
@@ -72,4 +53,40 @@ public class ProjectDAO {
         return projects;
     }
 
+    public List<Project> getAllProjects() throws SQLServerException{
+        List<Project> allProjects = new ArrayList();
+        String sql = "SELECT * FROM [Projects]";
+        try(Connection con = connection.getConnection()){
+        Statement stmt = con.createStatement();
+        ResultSet rs = stmt.executeQuery(sql);
+        
+        while(rs.next()){
+        int id = rs.getInt("id");
+        String name = rs.getString("name");
+        String client = rs.getString("clientName");
+        int cost = rs.getInt("cost");
+        allProjects.add(new Project(id, name, client, cost));
+        }
+        
+    }   catch (SQLException ex) {
+            Logger.getLogger(ProjectDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    return allProjects;
+    }
+    
+    public void createProject(String name, String clientName, String cost) throws SQLServerException{
+    String sql = "INSERT INTO [Projects] (name, clientName, cost) VALUES (?,?,?)";
+    
+    try(Connection con = connection.getConnection()){
+    PreparedStatement pstmt = con.prepareStatement(sql);
+    pstmt.setString(1, name);
+    pstmt.setString(2, clientName);
+    pstmt.setInt(3, Integer.valueOf(cost));
+    pstmt.executeQuery();
+    
+    }   catch (SQLException ex) {
+            Logger.getLogger(ProjectDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+    }
 }

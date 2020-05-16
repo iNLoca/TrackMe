@@ -6,6 +6,7 @@
 package trackme.dal;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -112,6 +113,11 @@ public class DALManager implements IDALFacade {
     @Override
     public void deleteUser(User user) throws SQLServerException {
         userDAO.deleteUser(user);
+    }
+
+    @Override
+    public void editTimeLog(User user, Project project, Task task, LocalDateTime startTime, LocalDateTime endTime) throws SQLServerException {
+        timeLoggerDAO.editTimeLog(user, project, task, startTime, endTime);
     }
   
     

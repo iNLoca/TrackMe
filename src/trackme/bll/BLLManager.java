@@ -7,6 +7,10 @@ package trackme.bll;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,13 +26,15 @@ import trackme.dal.IDALFacade;
  * @author mac
  */
 public class BLLManager implements IBLLFacade {
-
+    
+    private final Filter filter;
     private DALManager dalManager;
     private final TimeConverter timeConverter;
 
     public BLLManager() {
         dalManager = new DALManager();
         timeConverter = new TimeConverter();
+        filter = new Filter();
         List<Project> pros = dalManager.getAllProjects();
 
     }
@@ -107,6 +113,21 @@ public class BLLManager implements IBLLFacade {
     @Override
     public void deleteUser(User user) throws SQLServerException {
         dalManager.deleteUser(user);
+    }
+
+    @Override
+    public List<Task> filterList(LocalDate fromTime, LocalDate toTime, List<Task> tasks) throws ParseException {
+        return filter.filterList(fromTime, toTime, tasks);
+    }
+
+    @Override
+    public List<LocalDateTime> calculateTime(LocalTime startTime, LocalTime endTime, LocalDate date) {
+        return timeConverter.calculateTime(startTime, endTime, date);
+    }
+
+    @Override
+    public void editTimeLog(User user, Project project, Task task, LocalDateTime startTime, LocalDateTime endTime) throws SQLServerException {
+        dalManager.editTimeLog(user, project, task, startTime, endTime);
     }
 
 }

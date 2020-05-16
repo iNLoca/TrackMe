@@ -7,9 +7,17 @@ package trackme.bll;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.time.Duration;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.Month;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import trackme.be.Project;
 import trackme.be.Task;
 import trackme.be.TimeLog;
@@ -74,6 +82,21 @@ public class TimeConverter {
             project.setTotalTimeInSeconds(variable2);
         }
     }
-
+    public List<LocalDateTime> calculateTime(LocalTime startTime, LocalTime endTime, LocalDate date){
+        List<LocalDateTime> newTimes = new ArrayList();
+        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone(ZoneId.systemDefault()));
+        Date tempDate = Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        cal.setTime(tempDate);
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        Instant instant1 = startTime.atDate(LocalDate.of(year, month, day)).atZone(ZoneId.systemDefault()).toInstant();
+        Instant instant2 = endTime.atDate(LocalDate.of(year, month, day)).atZone(ZoneId.systemDefault()).toInstant();
+        LocalDateTime ldt1 = LocalDateTime.ofInstant(instant1, ZoneId.systemDefault());
+        LocalDateTime ldt2 = LocalDateTime.ofInstant(instant2, ZoneId.systemDefault());
+        newTimes.add(ldt1);
+        newTimes.add(ldt2);
+    return newTimes;
+    }
     
 }

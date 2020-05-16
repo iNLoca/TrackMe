@@ -8,12 +8,16 @@ package trackme.gui.controller.Employee;
 import trackme.gui.controller.Employee.UserMainPageController;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXTimePicker;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.io.IOException;
 import static java.lang.Float.parseFloat;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -85,6 +89,10 @@ public class EditPageController implements Initializable{
     private TextField starttime;
     @FXML
     private TextField endtime;
+    @FXML
+    private JFXTimePicker startTimePicker;
+    @FXML
+    private JFXTimePicker endTimePicker;
     
     
       @Override
@@ -186,7 +194,7 @@ public class EditPageController implements Initializable{
     }
 
     public void setProjects(User user)throws SQLServerException, SQLException{
-     ObservableList<Project> projectList = FXCollections.observableArrayList(bllManager.getUserProjectTime(user));
+     ObservableList<Project> projectList = FXCollections.observableArrayList(bllManager.getProjectsForUser(user));
         editprojectcombobox.getItems().clear();
         editprojectcombobox.getItems().addAll(projectList);
         editprojectcombobox.getSelectionModel().select(editprojectcombobox.getValue());
@@ -199,7 +207,6 @@ public class EditPageController implements Initializable{
     }
 
    private void setTaskCombobox(Project project) throws SQLServerException {
-
         ObservableList<Task> taskList = FXCollections.observableArrayList(bllManager.getTasksForProject(project));
         taskbox.getItems().clear();
         taskbox.getItems().addAll(taskList);
@@ -209,15 +216,22 @@ public class EditPageController implements Initializable{
    
 
     @FXML
-    private void clickEditButton(ActionEvent event) {
+    private void clickEditButton(ActionEvent event) throws SQLServerException {
         
+        if(date.getValue()!=null && startTimePicker.getValue()!=null && endTimePicker.getValue()!=null){
         LocalDate value = date.getValue();
-        System.out.println("readData");
-        
-        //bllManagersetDateDAO()in DB
-        
-       
-        
+        LocalTime startTime = startTimePicker.getValue();
+        LocalTime endTime = endTimePicker.getValue();
+        List<LocalDateTime> timeList = bllManager.calculateTime(startTime, endTime, value);
+        LocalDateTime newStartTime = timeList.get(0);
+        LocalDateTime newEndTime = timeList.get(1);
+        System.out.println(newStartTime);
+        System.out.println(newEndTime);
+        bllManager.editTimeLog(user, project, task, newStartTime, newEndTime);
+        }
+        else{
+            System.out.println("do something");
+        }
     }
 
   
@@ -236,5 +250,13 @@ public class EditPageController implements Initializable{
          if (parseFloat(endtime.getText()) >= 0 && parseFloat(endtime.getText()) <= 10) {
             //bllManager.addNewEndTime();
 }
+    }
+
+    @FXML
+    private void setStartTimePicker(ActionEvent event) {
+    }
+
+    @FXML
+    private void setEndTimePicker(ActionEvent event) {
     }
 }

@@ -7,6 +7,10 @@ package trackme.bll;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import trackme.be.Project;
 import trackme.be.Task;
@@ -33,4 +37,7 @@ public interface IBLLFacade {
     public void createNewUser(String name, String password, String email, int isAdmin) throws SQLServerException;
     public void addEditUser(User user, String name, String email, String password, int isAdmin);
     public void deleteUser(User user) throws SQLServerException;
+    public List<Task> filterList(LocalDate fromTime, LocalDate toTime, List<Task> tasks) throws ParseException;
+    public List<LocalDateTime> calculateTime(LocalTime startTime, LocalTime endTime, LocalDate date);
+    public void editTimeLog(User user, Project project, Task task, LocalDateTime startTime, LocalDateTime endTime) throws SQLServerException;
 }

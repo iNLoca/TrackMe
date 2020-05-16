@@ -7,6 +7,7 @@ package trackme.dal;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.List;
 import trackme.be.Project;
 import trackme.be.Task;
@@ -32,6 +33,6 @@ public interface IDALFacade {
     public void createNewUser(String name, String password, String email, int isAdmin) throws SQLServerException;
     public void addEditUser(User user, String name, String email, String password, int isAdmin);
     public void deleteUser(User user) throws SQLServerException;
-    
+    public void editTimeLog(User user, Project project, Task task, LocalDateTime startTime, LocalDateTime endTime) throws SQLServerException;
    
 }

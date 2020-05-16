@@ -7,11 +7,14 @@ package trackme.gui.controller.Employee;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXDatePicker;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -91,6 +94,10 @@ public class UserOverviewController implements Initializable {
     private Project project;
     @FXML
     private BarChart<String, Integer> projectBarChart;
+    @FXML
+    private JFXDatePicker fromDatePicker;
+    @FXML
+    private JFXDatePicker toDatePicker;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
        userModel = UserModel.getInstance();
@@ -118,7 +125,7 @@ public class UserOverviewController implements Initializable {
     }
     
     @FXML
-    private void setSortComboBox(ActionEvent event) throws SQLServerException{
+    private void setSortComboBox(ActionEvent event) throws SQLServerException, ParseException{
         project = sortcombobox.getSelectionModel().getSelectedItem();
         setTaskOverview(user, project);
     }
@@ -215,8 +222,13 @@ public class UserOverviewController implements Initializable {
         projectBarChart.getData().add(dataSeries1);
     }
     
-    private void setTaskOverview(User user, Project project) throws SQLServerException{
+    private void setTaskOverview(User user, Project project) throws SQLServerException, ParseException{
         List<Task> allTaskLogs = bllManager.getAllTaskLogsForProject(user, project);
+        
+//fromDatePicker;
+// toDatePicker;
+    
+        if(fromDatePicker.getValue()==null && toDatePicker.getValue()==null){
         for (Task task : allTaskLogs) {
             bllManager.getTotalTimeForTask(task);
             task.setDate(task.getTaskTime().get(0).getTime().toLocalDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
@@ -227,7 +239,20 @@ public class UserOverviewController implements Initializable {
         date.setCellValueFactory(new PropertyValueFactory<>("date"));
         tamespent.setCellValueFactory(new PropertyValueFactory<>("totalTime")); 
         tasksOverviewTable.setItems(taskList);
-        
+        }
+        else{
+        bllManager.filterList(fromDatePicker.getValue(), toDatePicker.getValue(), allTaskLogs);
+        for (Task task : allTaskLogs) {
+            bllManager.getTotalTimeForTask(task);
+            task.setDate(task.getTaskTime().get(0).getTime().toLocalDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
+            task.setTotalTime(convertSecondsToHourMinuteSecond(task));
+        }
+        ObservableList<Task> taskList = FXCollections.observableArrayList(allTaskLogs);
+        tasks.setCellValueFactory(new PropertyValueFactory<>("name"));
+        date.setCellValueFactory(new PropertyValueFactory<>("date"));
+        tamespent.setCellValueFactory(new PropertyValueFactory<>("totalTime")); 
+        tasksOverviewTable.setItems(taskList);
+        }
 //        private TableColumn<Task, String> tasks;
 //    @FXML
 //    private TableColumn<Task, LocalDate> date;
