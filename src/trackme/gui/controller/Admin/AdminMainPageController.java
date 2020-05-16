@@ -113,7 +113,7 @@ public class AdminMainPageController implements Initializable {
     private JFXButton addTask;
     
     ObservableList<Task> taskList;
-
+    TableColumn<Task, Void> colBtn;
    
     
     
@@ -133,6 +133,8 @@ public class AdminMainPageController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(UserMainPageController.class.getName()).log(Level.SEVERE, null, ex);
         }
+         
+      
 
     }
     
@@ -148,6 +150,9 @@ public class AdminMainPageController implements Initializable {
     private void setSelectedProjects(ActionEvent event) throws SQLServerException {
         project = projectbox.getSelectionModel().getSelectedItem();
         setTaskTableView(project);
+        refreshTable();
+       
+        
     }
     
      private void setTaskTableView(Project project) throws SQLServerException {
@@ -160,11 +165,12 @@ public class AdminMainPageController implements Initializable {
         tasktableview.setItems(taskList);
         
         addStartButton();
-        refreshTable();
+               
+        
     }
       private void addStartButton() throws SQLServerException{
         
-        TableColumn<Task, Void> colBtn = new TableColumn("Start Time");
+        colBtn = new TableColumn("Start Time");
         
         Callback<TableColumn<Task, Void>, TableCell<Task,Void>>cellFactory = new Callback<TableColumn<Task,Void>,TableCell<Task,Void>>(){
             @Override
@@ -204,6 +210,7 @@ public class AdminMainPageController implements Initializable {
                 });
                 
                 }
+                
                 @Override 
                 public void updateItem(Void item,boolean empty){
                   super.updateItem(item, empty);
@@ -212,24 +219,34 @@ public class AdminMainPageController implements Initializable {
                   }else{
                   setGraphic(btn);
                   }
-                
+                 
                 }
+               
                 };
                 return cell;
+
             }
         
         };
          
                 
             colBtn.setCellFactory(cellFactory);
-            
+          
             tasktableview.getColumns().add(colBtn);
-           
+            
+            
     
     }
       
+      public void clearStartButton() throws SQLServerException{
+         
+          tasktableview.getColumns().remove(colBtn);
+          
+      }
+      
       public void refreshTable() throws SQLServerException{
-       taskList.clear();
+       tasktableview.getItems().removeAll(taskList);
+       clearStartButton();
        setTaskTableView(project);
        
       }
@@ -237,7 +254,7 @@ public class AdminMainPageController implements Initializable {
      private boolean LOl = false; 
      @FXML
     private void PressStop(ActionEvent event) throws SQLServerException {
-         LOl = false;
+        LOl = false;
         absenceThreadExecutor.shutdown();
         bllManager.insertTimeLog(user,project ,task , 2);
     }
@@ -362,19 +379,29 @@ public class AdminMainPageController implements Initializable {
             } else {
 
                 if (checkmoney.isSelected() && addTask != null) {
+                    initialName = insertTasklbl.getText();
+                    initialDescription = Descriplbl.getText();
                     bllManager.insertTaskForProject(project, insertTasklbl.getText(), Descriplbl.getText(), 0);
-                    initialName = insertTasklbl.getText();
-                    initialDescription = Descriplbl.getText();
+                   
+                    setTaskTableView(project);
+                    
                     insertTasklbl.clear();
                     Descriplbl.clear();
-                    setTaskTableView(project);
+                    tasktableview.refresh();
+                   // refreshTable();
+                    
                 } else if (!checkmoney.isSelected() && addTask != null) {
-                    bllManager.insertTaskForProject(project, insertTasklbl.getText(), Descriplbl.getText(), 1);
                     initialName = insertTasklbl.getText();
                     initialDescription = Descriplbl.getText();
+                    bllManager.insertTaskForProject(project, insertTasklbl.getText(), Descriplbl.getText(), 1);
+                    
+                    setTaskTableView(project);
+                    
                     insertTasklbl.clear();
                     Descriplbl.clear();
-                    setTaskTableView(project);
+                    tasktableview.refresh();
+                    
+                   // refreshTable();
                 }
             }
         }

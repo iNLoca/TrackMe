@@ -84,24 +84,25 @@ public class EditPageController implements Initializable{
     private JFXComboBox<Task> taskbox;
     @FXML
     private DatePicker date;
-    
+    private Task task;
     private User user;
     private Project project;
-    private Task task;
     private BLLManager bllManager;
     private UserModel userModel;
     private TaskModel taskModel;
     private ProjectModel projectModel;
-    @FXML
-    private TextField starttime;
-    @FXML
     private TextField endtime;
     @FXML
     private JFXTimePicker startTimePicker;
     @FXML
     private JFXTimePicker endTimePicker;
+    @FXML
+    private Label completelbl;
+    @FXML
+    private Label errorlbl;
     
     
+            
       @Override
     public void initialize(URL location, ResourceBundle resources) {
         userModel = UserModel.getInstance();
@@ -222,9 +223,12 @@ public class EditPageController implements Initializable{
     
    }
    
+  
+   
 
     @FXML
     private void clickEditButton(ActionEvent event) throws SQLServerException {
+        
         
         if(date.getValue()!=null && startTimePicker.getValue()!=null && endTimePicker.getValue()!=null){
         LocalDate value = date.getValue();
@@ -236,40 +240,21 @@ public class EditPageController implements Initializable{
         LocalDateTime newEndTime = timeList.get(1);
         System.out.println(newStartTime);
         System.out.println(newEndTime);
+        
         bllManager.editTimeLog(user, project, task, newStartTime, newEndTime);
+        completelbl.setVisible(true);
         }
         else{
-            System.out.println("do something");
+           errorlbl.setVisible(true);
+           completelbl.setVisible(false);
         }
 
     }
 
-  
-    
-
-
     @FXML
-    private void setStartTime(ActionEvent event) {
-     
-         //starttime.getText();
-         System.out.println();
-         //bllManager.addNewStartTime();
-    
-    }
-    
-    
-    @FXML
-    private void setEndTime(ActionEvent event) {
-        if (parseFloat(endtime.getText()) >= 0 && parseFloat(endtime.getText()) <= 10) {
-            //bllManager.addNewEndTime();
-}
-    }
-
-    @FXML
-    private void setStartTimePicker(ActionEvent event) {
-    }
-
-    @FXML
-    private void setEndTimePicker(ActionEvent event) {
+    private void setSelectedTask(ActionEvent event) {
+        
+        task = taskbox.getSelectionModel().getSelectedItem();
+        
     }
 }
