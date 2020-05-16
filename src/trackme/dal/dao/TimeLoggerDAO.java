@@ -73,13 +73,13 @@ public class TimeLoggerDAO {
         pstmt.setInt(2, project.getId());
         pstmt.setInt(3, task.getId());
         pstmt.setTimestamp(4, Timestamp.valueOf(startTime));
-        pstmt.setInt(5, 0);
+        pstmt.setInt(5, 1);
         
         pstmt.setInt(6, user.getId());
         pstmt.setInt(7, project.getId());
         pstmt.setInt(8, task.getId());
         pstmt.setTimestamp(9, Timestamp.valueOf(endTime));
-        pstmt.setInt(10, 1);
+        pstmt.setInt(10, 2);
         pstmt.executeUpdate();
         
     }   catch (SQLException ex) {
