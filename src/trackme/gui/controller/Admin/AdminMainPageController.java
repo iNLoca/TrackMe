@@ -13,6 +13,7 @@ import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -105,11 +106,16 @@ public class AdminMainPageController implements Initializable {
     private Label introdeslbl;
     private String initialName;
     private String initialDescription;
-    
+
     
     private ScheduledExecutorService absenceThreadExecutor;
     @FXML
     private JFXButton addTask;
+    
+    ObservableList<Task> taskList;
+
+   
+    
     
       @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -146,7 +152,7 @@ public class AdminMainPageController implements Initializable {
     
      private void setTaskTableView(Project project) throws SQLServerException {
 
-        ObservableList<Task> taskList = FXCollections.observableArrayList(bllManager.getTasksForProject(project));
+        this.taskList = FXCollections.observableArrayList(bllManager.getTasksForProject(project));
         taskcolmn.setCellValueFactory(new PropertyValueFactory<>("name"));
         desccolm.setCellValueFactory(new PropertyValueFactory<>("description"));
         moneycolmn.setCellValueFactory(new PropertyValueFactory<>("toPay")); //not finnished 
@@ -154,8 +160,9 @@ public class AdminMainPageController implements Initializable {
         tasktableview.setItems(taskList);
         
         addStartButton();
+        refreshTable();
     }
-      private void addStartButton(){
+      private void addStartButton() throws SQLServerException{
         
         TableColumn<Task, Void> colBtn = new TableColumn("Start Time");
         
@@ -217,8 +224,16 @@ public class AdminMainPageController implements Initializable {
             colBtn.setCellFactory(cellFactory);
             
             tasktableview.getColumns().add(colBtn);
+           
     
     }
+      
+      public void refreshTable() throws SQLServerException{
+       taskList.clear();
+       setTaskTableView(project);
+       
+      }
+      
      private boolean LOl = false; 
      @FXML
     private void PressStop(ActionEvent event) throws SQLServerException {
