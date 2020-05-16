@@ -241,7 +241,7 @@ public class AdminMainPageController implements Initializable {
       
       public void clearStartButton() throws SQLServerException{
          
-          tasktableview.getColumns().remove(colBtn);
+          tasktableview.getColumns().remove(tasktableview.getColumns().size()-1);
           
       }
       
