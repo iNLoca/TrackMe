@@ -171,6 +171,7 @@ public class AdminMainPageController implements Initializable {
       private void addStartButton() throws SQLServerException{
         
         colBtn = new TableColumn("Start Time");
+        colBtn.getStyleClass().add("tableRowCell");
         
         Callback<TableColumn<Task, Void>, TableCell<Task,Void>>cellFactory = new Callback<TableColumn<Task,Void>,TableCell<Task,Void>>(){
             @Override

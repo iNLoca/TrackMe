@@ -101,8 +101,8 @@
             <Reflection />
          </effect>
       </ImageView>
-      <JFXDatePicker fx:id="fromDatePicker" layoutX="222.0" layoutY="236.0" prefHeight="28.0" prefWidth="100.0" promptText="From Date" />
-      <JFXDatePicker fx:id="toDatePicker" layoutX="328.0" layoutY="235.0" prefHeight="28.0" prefWidth="100.0" promptText="To Date" />
+      <JFXDatePicker fx:id="fromDatePicker" layoutX="208.0" layoutY="235.0" onAction="#setSelectedFromDate" prefHeight="29.0" prefWidth="110.0" promptText="From Date" />
+      <JFXDatePicker fx:id="toDatePicker" layoutX="334.0" layoutY="235.0" onAction="#setSelectedTODATE" prefHeight="28.0" prefWidth="110.0" promptText="To Date" />
    </children>
    <effect>
       <InnerShadow color="#00000083" />

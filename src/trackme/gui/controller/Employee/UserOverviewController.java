@@ -229,6 +229,7 @@ public class UserOverviewController implements Initializable {
 // toDatePicker;
     
         if(fromDatePicker.getValue()==null && toDatePicker.getValue()==null){
+            System.out.println("shit dont works");
         for (Task task : allTaskLogs) {
             bllManager.getTotalTimeForTask(task);
             task.setDate(task.getTaskTime().get(0).getTime().toLocalDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
@@ -241,6 +242,7 @@ public class UserOverviewController implements Initializable {
         tasksOverviewTable.setItems(taskList);
         }
         else{
+            System.out.println("shit works");
         bllManager.filterList(fromDatePicker.getValue(), toDatePicker.getValue(), allTaskLogs);
         for (Task task : allTaskLogs) {
             bllManager.getTotalTimeForTask(task);
@@ -268,6 +270,24 @@ public class UserOverviewController implements Initializable {
     int p3 = remainder;
     time = p1 + ":" + p2 + ":" + p3;
     return time;
+    }
+
+    @FXML
+    private void setSelectedFromDate(ActionEvent event) throws SQLServerException, ParseException {
+        if(toDatePicker.getValue()==null){
+        
+        }else{
+            setTaskOverview(user, project);
+        }
+    }
+
+    @FXML
+    private void setSelectedTODATE(ActionEvent event) throws SQLServerException, ParseException {
+        if(fromDatePicker.getValue()==null){
+        //DO NOTHING YOU NERD
+        }else{
+            setTaskOverview(user, project);
+        }
     }
     
 }
