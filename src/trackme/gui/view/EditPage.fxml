@@ -49,6 +49,19 @@
       </ImageView>
       <DatePicker fx:id="date" layoutX="138.0" layoutY="199.0" />
       <Label layoutX="70.0" layoutY="204.0" prefHeight="17.0" prefWidth="48.0" text="Date:" />
+      <Label fx:id="completelbl" layoutX="181.0" layoutY="460.0" prefHeight="17.0" prefWidth="110.0" text="Edit Completed !" textFill="#41eb63" visible="false">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="errorlbl" layoutX="176.0" layoutY="374.0" prefHeight="17.0" prefWidth="120.0" text="Error: Invalid Fields" textFill="#9e0b0b" visible="false" />
+      <JFXTimePicker fx:id="endTimePicker" layoutX="146.0" layoutY="327.0" />
+      <JFXTimePicker fx:id="startTimePicker" layoutX="146.0" layoutY="270.0" />
+      <Label layoutX="406.0" layoutY="8.0" prefHeight="28.0" prefWidth="48.0" text="Edit">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
       <Pane fx:id="usrmenubar" layoutX="-7.0" prefHeight="514.0" prefWidth="200.0" style="-fx-background-color: #cddaf8#cddaf8;" visible="false">
          <children>
             <Label fx:id="usrnamelbl" alignment="CENTER" layoutX="33.0" layoutY="42.0" prefHeight="27.0" prefWidth="104.0" />
@@ -79,19 +92,6 @@
             <DropShadow />
          </effect>
       </Pane>
-      <Label layoutX="406.0" layoutY="8.0" prefHeight="28.0" prefWidth="48.0" text="Edit">
-         <font>
-            <Font size="19.0" />
-         </font>
-      </Label>
-      <JFXTimePicker fx:id="startTimePicker" layoutX="146.0" layoutY="270.0" />
-      <JFXTimePicker fx:id="endTimePicker" layoutX="146.0" layoutY="327.0" />
-      <Label fx:id="completelbl" layoutX="181.0" layoutY="460.0" prefHeight="17.0" prefWidth="110.0" text="Edit Completed !" textFill="#41eb63" visible="false">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label fx:id="errorlbl" layoutX="176.0" layoutY="374.0" prefHeight="17.0" prefWidth="120.0" text="Error: Invalid Fields" textFill="#9e0b0b" visible="false" />
    </children>
    <effect>
       <InnerShadow color="#000000ba" />

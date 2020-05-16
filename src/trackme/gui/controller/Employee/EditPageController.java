@@ -243,6 +243,7 @@ public class EditPageController implements Initializable{
         
         bllManager.editTimeLog(user, project, task, newStartTime, newEndTime);
         completelbl.setVisible(true);
+        errorlbl.setVisible(false);
         }
         else{
            errorlbl.setVisible(true);

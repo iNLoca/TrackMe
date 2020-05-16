@@ -88,7 +88,7 @@ public class TimeConverter {
         Date tempDate = Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
         cal.setTime(tempDate);
         int year = cal.get(Calendar.YEAR);
-        int month = cal.get(Calendar.MONTH);
+        int month = cal.get(Calendar.MONTH)+1;
         int day = cal.get(Calendar.DAY_OF_MONTH);
         Instant instant1 = startTime.atDate(LocalDate.of(year, month, day)).atZone(ZoneId.systemDefault()).toInstant();
         Instant instant2 = endTime.atDate(LocalDate.of(year, month, day)).atZone(ZoneId.systemDefault()).toInstant();
