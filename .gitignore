@@ -43,3 +43,4 @@ nbdist/
 *.properties
 *.properties
 *.properties
+.DS_Store

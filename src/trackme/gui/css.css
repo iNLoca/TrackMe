@@ -47,7 +47,7 @@ and open the template in the editor.
 }
 
 #createTbv .table-cell{
-    -fx-text-fill: white;
+    -fx-text-fill: black;
 }
 
 #tableRowCell{

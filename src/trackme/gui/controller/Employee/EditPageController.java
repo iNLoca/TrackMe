@@ -15,9 +15,14 @@ import static java.lang.Float.parseFloat;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+
+import java.time.LocalTime;
+import java.time.temporal.TemporalAccessor;
+
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -73,7 +78,9 @@ public class EditPageController implements Initializable{
     
     private final String LoginScene = "/trackme/gui/view/Login.fxml";
     private final String OverviewScene = "/trackme/gui/view/UserOverview.fxml";
+    @FXML
     private JFXComboBox<Project> editprojectcombobox;
+    @FXML
     private JFXComboBox<Task> taskbox;
     @FXML
     private DatePicker date;
@@ -201,6 +208,7 @@ public class EditPageController implements Initializable{
     }
     
     
+    @FXML
     private void setProjectCombobox(ActionEvent event)throws SQLServerException {
          project = editprojectcombobox.getSelectionModel().getSelectedItem();
          setTaskCombobox(project);
@@ -220,6 +228,7 @@ public class EditPageController implements Initializable{
         
         if(date.getValue()!=null && startTimePicker.getValue()!=null && endTimePicker.getValue()!=null){
         LocalDate value = date.getValue();
+
         LocalTime startTime = startTimePicker.getValue();
         LocalTime endTime = endTimePicker.getValue();
         List<LocalDateTime> timeList = bllManager.calculateTime(startTime, endTime, value);
@@ -232,6 +241,7 @@ public class EditPageController implements Initializable{
         else{
             System.out.println("do something");
         }
+
     }
 
   
@@ -240,14 +250,17 @@ public class EditPageController implements Initializable{
 
     @FXML
     private void setStartTime(ActionEvent event) {
-
-       if (parseFloat(starttime.getText()) >= 0 && parseFloat(starttime.getText()) <= 10) {
-           // bllManager.addNewStartTime();
+     
+         //starttime.getText();
+         System.out.println();
+         //bllManager.addNewStartTime();
+    
     }
-    }
+    
+    
     @FXML
     private void setEndTime(ActionEvent event) {
-         if (parseFloat(endtime.getText()) >= 0 && parseFloat(endtime.getText()) <= 10) {
+        if (parseFloat(endtime.getText()) >= 0 && parseFloat(endtime.getText()) <= 10) {
             //bllManager.addNewEndTime();
 }
     }

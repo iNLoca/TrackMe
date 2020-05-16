@@ -7,9 +7,15 @@ package trackme.gui.controller.Admin;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,11 +27,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import trackme.be.Project;
 import trackme.be.User;
 import trackme.bll.BLLManager;
 import trackme.gui.controller.Employee.UserMainPageController;
@@ -62,18 +70,99 @@ public class AdminCreateController implements Initializable {
     private User user;
     private UserModel userModel;
     private BLLManager bllManager;
+    @FXML
+    private JFXTextField clientname;
+    @FXML
+    private JFXTextField peojectname;
+    @FXML
+    private JFXTextField hfeelbl;
+    @FXML
+    private JFXButton addbtn;
+    @FXML
+    private TableView<Project> createtableview;
+    @FXML
+    private TableColumn<Project, String> clientcolumn;
+    @FXML
+    private TableColumn<Project, String> projectcolmn;
+    @FXML
+    private TableColumn<Project, Integer> feecolmn;
+    
+    
+    private String clientnm;
+    private String projectps;
+    private String fee;
+    @FXML
+    private Label errormsg;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-      userModel = UserModel.getInstance();
+        userModel = UserModel.getInstance();
         user = userModel.getLoggedInUser();
         usrnamelbl.setText(user.getName());
         this.bllManager = new BLLManager();
+        
+        try {
+            setTableView();
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminCreateController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }    
 
+    @FXML
+    private void setAddCreate(ActionEvent event) throws SQLException {
+        
+         if(user!=null && (!clientname.getText().isEmpty() && !peojectname.getText().isEmpty() && !hfeelbl.getText().isEmpty())){
+          
+                saveNewData();
+      
+            }else{
+        
+            errormsg.setVisible(true);
+         }
+         
+        
+    }
+    
+    public void saveNewData() throws SQLException{
+    
+                    clientnm = clientname.getText();
+                    projectps = peojectname.getText();
+                    fee = hfeelbl.getText();
+                    
+                   
+                    bllManager.createProject(projectps, clientnm, fee);
+                    
+                  
+                    setTableView();
+                    
+                    clientname.clear();
+                    peojectname.clear();
+                    hfeelbl.clear();
+                    errormsg.setVisible(false);
+                    
+                    
+    
+    
+}
 
+
+    public void setTableView() throws SQLException{
+    
+    
+        ObservableList<Project> projectList = FXCollections.observableArrayList(bllManager.getAllProjects());
+        projectcolmn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        clientcolumn.setCellValueFactory(new PropertyValueFactory<>("client"));
+        feecolmn.setCellValueFactory(new PropertyValueFactory<>("cost"));
+
+        createtableview.setItems(projectList);
+       
+    
+    }
+    
+    
     @FXML
     private void setShowMenubar(MouseEvent event) {
         usrmenubar.setVisible(true);
@@ -169,5 +258,7 @@ public class AdminCreateController implements Initializable {
         closePreviousScene = (Stage) profilesbtn.getScene().getWindow();
         closePreviousScene.close();
     }
+
+    
     
 }

@@ -34,8 +34,11 @@ public class BLLManager implements IBLLFacade {
     public BLLManager() {
         dalManager = new DALManager();
         timeConverter = new TimeConverter();
+
         filter = new Filter();
-        List<Project> pros = dalManager.getAllProjects();
+//        List<Project> pros = dalManager.getAllProjects();
+//        List<Project> pros = dalManager.getUserProjectTime();
+
 
     }
 
@@ -116,6 +119,7 @@ public class BLLManager implements IBLLFacade {
     }
 
     @Override
+
     public List<Task> filterList(LocalDate fromTime, LocalDate toTime, List<Task> tasks) throws ParseException {
         return filter.filterList(fromTime, toTime, tasks);
     }
@@ -130,4 +134,13 @@ public class BLLManager implements IBLLFacade {
         dalManager.editTimeLog(user, project, task, startTime, endTime);
     }
 
+    @Override
+    public List<Project> getAllProjects() throws SQLServerException {
+        return   dalManager.getAllProjects();
+    }
+
+    @Override
+    public void createProject(String name, String clientName, String cost) throws SQLServerException {
+        dalManager.createProject(name, clientName, cost);
+    }
 }
