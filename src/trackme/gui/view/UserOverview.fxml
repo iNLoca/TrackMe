@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="OverviewUser" prefHeight="514.0" prefWidth="469.0" style="-fx-background-color: #6f80b1#6f80b1 #6f80b1#6f80b1 #6f80b1#6f80b1 #6f80b1#6f80b1;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trackme.gui.controller.Employee.UserOverviewController">
+<AnchorPane id="AnchorPane" fx:id="OverviewUser" prefHeight="514.0" prefWidth="469.0" style="-fx-background-color: #6f80b1#6f80b1 #6f80b1#6f80b1 #6f80b1#6f80b1 #6f80b1#6f80b1;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trackme.gui.controller.Employee.UserOverviewController">
    <children>
       <ImageView fitHeight="57.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -74,8 +74,8 @@
             <Reflection />
          </effect>
       </ImageView>
-      <JFXDatePicker fx:id="fromDatePicker" layoutX="208.0" layoutY="235.0" onAction="#setSelectedFromDate" prefHeight="29.0" prefWidth="110.0" promptText="From Date" />
-      <JFXDatePicker fx:id="toDatePicker" layoutX="334.0" layoutY="235.0" onAction="#setSelectedTODATE" prefHeight="28.0" prefWidth="110.0" promptText="To Date" />
+      <JFXDatePicker fx:id="fromDatePicker" defaultColor="WHITE" layoutX="208.0" layoutY="235.0" onAction="#setSelectedFromDate" prefHeight="29.0" prefWidth="110.0" promptText="From Date" />
+      <JFXDatePicker fx:id="toDatePicker" defaultColor="WHITE" layoutX="334.0" layoutY="235.0" onAction="#setSelectedTODATE" prefHeight="28.0" prefWidth="110.0" promptText="To Date" />
       <Pane fx:id="usrmenubar" layoutX="-3.0" prefHeight="524.0" prefWidth="201.0" style="-fx-background-color: #cddaf8#cddaf8;" visible="false">
          <children>
             <Label fx:id="usrnamelbl" layoutX="39.0" layoutY="42.0" prefHeight="27.0" prefWidth="98.0" />

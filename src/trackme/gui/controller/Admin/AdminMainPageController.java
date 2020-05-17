@@ -204,6 +204,7 @@ public class AdminMainPageController implements Initializable {
 
                     @Override
                     public void updateItem(Void item, boolean empty) {
+                        btn.getStyleClass().add("btn");                          
                         super.updateItem(item, empty);
                         if (empty) {
                             setGraphic(null);
