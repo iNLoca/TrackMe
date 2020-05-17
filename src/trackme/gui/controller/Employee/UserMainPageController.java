@@ -123,6 +123,8 @@ public class UserMainPageController implements Initializable {
     private CheckBox checkmoney;
     @FXML
     private JFXButton addtask;
+    @FXML
+    private TableColumn<Task, Void> colBtn;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -192,10 +194,10 @@ public class UserMainPageController implements Initializable {
       
     }
 
-    //String imageSource;
     private void addStartButton() throws SQLServerException {
 
-        TableColumn<Task, Void> colBtn = new TableColumn("Start Time");
+        
+        
         Callback<TableColumn<Task, Void>, TableCell<Task, Void>> cellFactory = new Callback<TableColumn<Task, Void>, TableCell<Task, Void>>() {
             @Override
             public TableCell<Task, Void> call(TableColumn<Task, Void> param) {
@@ -253,7 +255,7 @@ public class UserMainPageController implements Initializable {
 
         colBtn.setCellFactory(cellFactory);
 
-        tasktableview.getColumns().add(colBtn);
+       
         
     }
 

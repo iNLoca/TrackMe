@@ -75,6 +75,7 @@
             <Image url="@../icons/logotrackme.jpg" />
          </image>
       </ImageView>
+      <JFXCheckBox fx:id="checkmoney" checkedColor="#31fc96" layoutX="345.0" layoutY="117.0" text="\$" unCheckedColor="BLACK" />
       <Pane fx:id="usrmenubar" layoutX="-7.0" prefHeight="514.0" prefWidth="200.0" style="-fx-background-color: #cddaf8#cddaf8;" visible="false">
          <children>
             <Label fx:id="usrnamelbl" alignment="CENTER" layoutX="33.0" layoutY="42.0" prefHeight="27.0" prefWidth="104.0" />
@@ -106,7 +107,6 @@
             <DropShadow />
          </effect>
       </Pane>
-      <JFXCheckBox fx:id="checkmoney" checkedColor="#31fc96" layoutX="345.0" layoutY="117.0" text="\$" unCheckedColor="BLACK" />
    </children>
    <effect>
       <InnerShadow />

@@ -96,8 +96,6 @@ public class AdminOverviewController implements Initializable{
     private UserModel userModel;
     private BLLManager bllManager;
     @FXML
-    private TableColumn<User, String> usrcolumn;
-    @FXML
     private JFXComboBox<User> employeecombobox;
     @FXML
     private JFXDatePicker fromDatePicker;
@@ -233,6 +231,10 @@ public class AdminOverviewController implements Initializable{
 
     private void setUsersInEmployeeBox() throws SQLServerException, SQLException {
         ObservableList<User> userList = FXCollections.observableArrayList(bllManager.getAllUsers());
+        for (int i = 0; i < userList.size(); i++) {
+            userList.get(i).setEmail("");
+            userList.get(i).setPassword("");
+        }
         employeecombobox.getItems().clear();
         employeecombobox.getItems().addAll(userList);
         employeecombobox.getSelectionModel().select(employeecombobox.getValue());

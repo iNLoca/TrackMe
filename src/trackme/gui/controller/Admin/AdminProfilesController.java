@@ -68,14 +68,14 @@ public class AdminProfilesController implements Initializable {
     private JFXButton createbtn;
     @FXML
     private JFXButton profilesbtn;
-    
-     private final String LoginScene = "/trackme/gui/view/Login.fxml";
+
+    private final String LoginScene = "/trackme/gui/view/Login.fxml";
     private final String OverviewScene = "/trackme/gui/view/AdminOverview.fxml";
     private User user;
     private User selectedUser;
     private UserModel userModel;
     private BLLManager bllManager;
-    
+
     private String userName;
     private String userPassword;
     private String email;
@@ -120,268 +120,163 @@ public class AdminProfilesController implements Initializable {
         } catch (SQLServerException ex) {
             Logger.getLogger(AdminProfilesController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-    }    
 
-    public void setUserTableView() throws SQLServerException{
-    
+    }
+
+    public void setUserTableView() throws SQLServerException {
+
         ObservableList<User> userList = FXCollections.observableArrayList(bllManager.getAllUsers());
         usrname.setCellValueFactory(new PropertyValueFactory<>("name"));
         usrtype.setCellValueFactory(new PropertyValueFactory<>("type"));
 
         usrtableview.setItems(userList);
-       
-    
+
     }
-    
-     @FXML
+
+    @FXML
     private void selectUser(MouseEvent event) throws SQLServerException {
-     
-        
-         namefield.setText(usrtableview.getSelectionModel().getSelectedItem().getName());
-         emailfield.setText(usrtableview.getSelectionModel().getSelectedItem().getEmail());
-         passfield.setText(usrtableview.getSelectionModel().getSelectedItem().getPassword());
-        
-         admincheck.setUserData(usrtableview.getSelectionModel().getSelectedItem().getType());
-         employeecheck.setUserData(usrtableview.getSelectionModel().getSelectedItem().getType());
-          
-         updateUserRoleCheckbox(usrtableview.getSelectionModel().getSelectedItem());
-        
+
+        namefield.setText(usrtableview.getSelectionModel().getSelectedItem().getName());
+        emailfield.setText(usrtableview.getSelectionModel().getSelectedItem().getEmail());
+        passfield.setText(usrtableview.getSelectionModel().getSelectedItem().getPassword());
+
+        admincheck.setUserData(usrtableview.getSelectionModel().getSelectedItem().getType());
+        employeecheck.setUserData(usrtableview.getSelectionModel().getSelectedItem().getType());
+
+        updateUserRoleCheckbox(usrtableview.getSelectionModel().getSelectedItem());
+
     }
-    
-    
-    
-    
-    private void updateUserRoleCheckbox(User user){
+
+    private void updateUserRoleCheckbox(User user) {
         admincheck.selectedProperty().setValue(false);
         employeecheck.selectedProperty().setValue(false);
-        if (user!=null){
+        if (user != null) {
             System.out.println(user.getType());
-         if(user.getType() == User.UserType.ADMIN){
-             admincheck.selectedProperty().setValue(true);
-         
-//             admincheck.selectedProperty().addListener(new ChangeListener<Boolean>(){
-//                 @Override
-//                 public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-//                     if(newValue){
-//                          
-//                          
-//                     }
-//                 }
+            if (user.getType() == User.UserType.ADMIN) {
+                admincheck.selectedProperty().setValue(true);
 
-             
-             
-             
-             
-           //  });
-             
-             //admincheck.setSelected(false);
-           
-             
-         }else if(user.getType() == User.UserType.EMPLOYEE){
-             employeecheck.selectedProperty().setValue(true);
-           //  employeecheck.setSelected(true);
-           //  employeecheck.selectedProperty().getValue();
-         }
-    }  
-    }
-        /*
-          admincheck.selectedProperty().addListener(new ChangeListener<Boolean>(){
-             @Override
-             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                 if(newValue){
-                  
-                  admincheck.setSelected(true);
-                  employeecheck.setSelected(false);
-                 }else{
-                  admincheck.setSelected(false);
-                  employeecheck.setSelected(false);
-             }
-             }
-          
-    });
-          
-           employeecheck.selectedProperty().addListener(new ChangeListener<Boolean>(){
-             @Override
-             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                 if(newValue){
+            } else if (user.getType() == User.UserType.EMPLOYEE) {
+                employeecheck.selectedProperty().setValue(true);
                 
-                  employeecheck.setSelected(true);
-                  admincheck.setSelected(false);
-                 }else{
-                    employeecheck.setSelected(false);
-                    admincheck.setSelected(false);
-                 }
+            }
+        }
+    }
 
-             }
-           
-           
-           
-           });
-         
-         
-         
-        /*
-        ChangeListener checkboxcheck;
-        checkboxcheck = (ChangeListener<Boolean>) (ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
-            if(newValue)
-            admincheck.setId(usrtableview.getSelectionModel().getSelectedItem().getType().toString());
-             
-            admincheck.setSelected(true);
-            
-            employeecheck.setSelected(false);
-         };
-       
-          checkboxcheck = (ChangeListener<Boolean>) (ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
-             if(newValue)
-           employeecheck.setId(usrtableview.getSelectionModel().getSelectedItem().getType().toString());
-            
-             employeecheck.setSelected(true);
-             admincheck.setSelected(false);
-         };
-     
-         */
-        
-        
-
-    
-
-
- 
-   
     @FXML
-    private void setAddUser(ActionEvent event) throws SQLServerException { 
-        
-        
-         if(user!=null && (emailfield!=null && passfield!=null && namefield!=null && (admincheck.isSelected() || employeecheck.isSelected()))){
-        
-                saveData();
-      
-        }else {
-        
-             errorlbl.setVisible(true);
-         }
-         
-      
-    }
-    
-    
-    
-    public void saveData() throws SQLServerException {
-     
-                 
-                 
-                    userName = namefield.getText();
-                    userPassword = passfield.getText();
-                    email = emailfield.getText();
-                    if(admincheck.isSelected()){
-                     checkidadmin=admincheck.getId();
-                    bllManager.createNewUser(userName, userPassword, email, 1);
-                    }else if(employeecheck.isSelected()){
-                    checkemplid= employeecheck.getId();
-                    bllManager.createNewUser(userName, userPassword, email, 0);
-                    }
-                  
-                    
-                    setUserTableView();
-                    
-                    clear();
-                    
-                   
-         
-    }
-    
-    public void editData() throws SQLServerException{
-    
-                    userName = namefield.getText();
-                    userPassword = passfield.getText();
-                    email = emailfield.getText();
-                    if(!admincheck.isSelected()){
-                     checkidadmin=admincheck.getId();
-                     admincheck.setSelected(true);
-                    bllManager.addEditUser(selectedUser, userName, email, userPassword, 1);
-                    }else if(!employeecheck.isSelected()){
-                    checkemplid= employeecheck.getId();
-                    employeecheck.setSelected(true);
-                    bllManager.addEditUser(selectedUser, userName, email, userPassword, 0);
-                    
-                    
-                    setUserTableView();
-                    
-                    clear();
-    
-    }
-    }
-    private void clear(){
-                    
-                    namefield.clear();
-                    passfield.clear();
-                    emailfield.clear();
-                    admincheck.setSelected(false);
-                    employeecheck.setSelected(false);
-                    errorlbl.setVisible(false);
-                    usrtableview.refresh();
+    private void setAddUser(ActionEvent event) throws SQLServerException {
+
+        if (user != null && (emailfield != null && passfield != null && namefield != null && (admincheck.isSelected() || employeecheck.isSelected()))) {
+
+            saveData();
+
+        } else {
+
+            errorlbl.setVisible(true);
+        }
+
     }
 
-  @FXML
+    public void saveData() throws SQLServerException {
+
+        userName = namefield.getText();
+        userPassword = passfield.getText();
+        email = emailfield.getText();
+        checkidadmin = admincheck.getId();
+        checkemplid = employeecheck.getId();
+
+        if (admincheck.isSelected() && namefield.getText().equals(userName) && passfield.getText().equals(userPassword) && emailfield.getText().equals(email)) {
+
+            bllManager.createNewUser(userName, userPassword, email, 1);
+
+        } else if (employeecheck.isSelected() && namefield.getText().equals(userName) && passfield.getText().equals(userPassword) && emailfield.getText().equals(email)) {
+
+            bllManager.createNewUser(userName, userPassword, email, 0);
+        }
+
+        setUserTableView();
+
+        clear();
+
+    }
+
+    public void editData() throws SQLServerException {
+
+        userName = namefield.getText();
+        userPassword = passfield.getText();
+        email = emailfield.getText();
+        if (!admincheck.isSelected()) {
+            checkidadmin = admincheck.getId();
+            admincheck.setSelected(true);
+            bllManager.addEditUser(selectedUser, userName, email, userPassword, 1);
+        } else if (!employeecheck.isSelected()) {
+            checkemplid = employeecheck.getId();
+            employeecheck.setSelected(true);
+            bllManager.addEditUser(selectedUser, userName, email, userPassword, 0);
+
+            setUserTableView();
+
+            clear();
+
+        }
+    }
+
+    private void clear() {
+
+        namefield.clear();
+        passfield.clear();
+        emailfield.clear();
+        admincheck.selectedProperty().setValue(false);
+        employeecheck.selectedProperty().setValue(false);
+        errorlbl.setVisible(false);
+        usrtableview.refresh();
+    }
+
+    @FXML
     private void setAdmin(ActionEvent event) {
-       if(admincheck.isSelected()){
-         employeecheck.setSelected(false);
-         
-         
-      
-       }
+        if (admincheck.isSelected()) {
+            employeecheck.setSelected(false);
+
+        }
     }
 
     @FXML
     private void setEmployee(ActionEvent event) {
-        if(employeecheck.isSelected()){
-          admincheck.setSelected(false);
+        if (employeecheck.isSelected()) {
+            admincheck.setSelected(false);
         }
-        
+
     }
 
     @FXML
     private void setDeleteUser(ActionEvent event) throws SQLServerException {
-        selectedUser = usrtableview.getSelectionModel().getSelectedItem(); 
+        selectedUser = usrtableview.getSelectionModel().getSelectedItem();
         bllManager.deleteUser(selectedUser);
-        setUserTableView(); 
+        setUserTableView();
         clear();
-       
-        
-        
- 
+
     }
 
     @FXML
     private void setEditUser(ActionEvent event) throws SQLServerException {
-      
-       selectedUser = usrtableview.getSelectionModel().getSelectedItem();
-      
+
+        selectedUser = usrtableview.getSelectionModel().getSelectedItem();
+
         editData();
         usrtableview.refresh();
         clear();
-      
-    }  
-      
-     
-        
-    
-    
+
+    }
 
     @FXML
     private void setShowMenubar(MouseEvent event) {
         usrmenubar.setVisible(true);
     }
-    
 
-    
     @FXML
     private void setCloseMenubar(MouseEvent event) {
         usrmenubar.setVisible(false);
     }
-    
-    
+
     @FXML
     private void setOverview(ActionEvent event) throws IOException {
         FXMLLoader fxloader = new FXMLLoader(getClass().getResource(OverviewScene));
@@ -416,8 +311,6 @@ public class AdminProfilesController implements Initializable {
         closePreviousScene.close();
     }
 
-
-   
     @FXML
     private void setCreateScene(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/trackme/gui/view/AdminCreate.fxml"));
@@ -438,7 +331,7 @@ public class AdminProfilesController implements Initializable {
 
     @FXML
     private void setProfilesPage(ActionEvent event) throws IOException {
-         FXMLLoader loader = new FXMLLoader(getClass().getResource("/trackme/gui/view/AdminProfiles.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/trackme/gui/view/AdminProfiles.fxml"));
         Parent root = loader.load();
         AdminProfilesController ctrl = loader.getController();
 
@@ -453,8 +346,8 @@ public class AdminProfilesController implements Initializable {
         closePreviousScene = (Stage) profilesbtn.getScene().getWindow();
         closePreviousScene.close();
     }
-    
-     @FXML
+
+    @FXML
     private void setLogOutusr(ActionEvent event) throws IOException {
         Stage logOutUser;
         logOutUser = (Stage) logoutbtn.getScene().getWindow();

@@ -53,10 +53,6 @@ public class LoginController implements Initializable {
     private UserModel userModel;
     @FXML
     private Label errorlbl;
-    @FXML
-    private RequiredFieldValidator passwordValidator;
-    @FXML
-    private RequiredFieldValidator usernameValidator;
 
     /**
      * Initializes the controller class.
@@ -66,7 +62,7 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         userModel = UserModel.getInstance();
-
+  
     }
 
     private void loadUpNextView(User us) throws IOException {

@@ -56,16 +56,20 @@
             <Reflection />
          </effect>
       </ImageView>
-      <TableView id="createTbv" fx:id="createtableview" layoutX="26.0" layoutY="276.0" prefHeight="206.0" prefWidth="420.0" stylesheets="@../css.css">
+      <TableView fx:id="createtableview" layoutX="26.0" layoutY="276.0" prefHeight="206.0" prefWidth="420.0" styleClass="createTbv" stylesheets="@../css.css">
         <columns>
-          <TableColumn fx:id="clientcolumn" prefWidth="164.0" styleClass="tabelRow" text="Client" />
-          <TableColumn fx:id="projectcolmn" prefWidth="163.0" styleClass="tabelRowCell" text="Project" />
-            <TableColumn fx:id="feecolmn" prefWidth="92.0" styleClass="tabelRowCell" text="Fee" />
+          <TableColumn fx:id="clientcolumn" prefWidth="164.0" styleClass="tableRowCell" text="Client" />
+          <TableColumn fx:id="projectcolmn" prefWidth="163.0" styleClass="tableRowCell" text="Project" />
+            <TableColumn fx:id="feecolmn" prefWidth="92.0" styleClass="tableRowCell" text="Fee" />
         </columns>
          <effect>
             <InnerShadow color="#00000076" />
          </effect>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
       </TableView>
+      <Label fx:id="errormsg" layoutX="99.0" layoutY="222.0" prefHeight="17.0" prefWidth="252.0" text="Error: Empty Fields or invalid Hourly Fee " textFill="#ab1010" visible="false" />
       <Pane fx:id="usrmenubar" layoutX="-3.0" prefHeight="524.0" prefWidth="201.0" style="-fx-background-color: #cddaf8#cddaf8;" visible="false">
          <children>
             <Label fx:id="usrnamelbl" layoutX="39.0" layoutY="42.0" prefHeight="27.0" prefWidth="98.0" />
@@ -97,7 +101,6 @@
             <DropShadow />
          </effect>
       </Pane>
-      <Label fx:id="errormsg" layoutX="150.0" layoutY="222.0" prefHeight="17.0" prefWidth="201.0" text="Error: Empty Fields or invalid Hourly Fee " textFill="#ab1010" visible="false" />
    </children>
    <effect>
       <InnerShadow color="#00000098" />
