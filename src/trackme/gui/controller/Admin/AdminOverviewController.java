@@ -89,6 +89,7 @@ public class AdminOverviewController implements Initializable{
     private JFXButton profilesbtn;
     
     private User user;
+    private User currentUser;
     private Project project;
     private Task task;
     private List<Project> projects;
@@ -105,8 +106,8 @@ public class AdminOverviewController implements Initializable{
       @Override
     public void initialize(URL location, ResourceBundle resources) {
         userModel = UserModel.getInstance();
-//        user = userModel.getLoggedInUser();
-//        usrnamelbl.setText(user.getName());
+        currentUser = userModel.getLoggedInUser();
+        usrnamelbl.setText(currentUser.getName());
         this.bllManager = new BLLManager();
         
         
