@@ -1,0 +1,81 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 15. maj 2020, 00.53.24
+    Author     : mega_
+*/
+
+
+.root{
+    -fx-background-color: #262626;
+}
+
+.createTbv{
+   -fx-background-color: #7a8ab8;
+}
+
+.createTbv{
+   -fx-background-color: #7a8ab8;
+}
+.createTbv .column-header,
+.createTbv .column-header .filler,
+.createTbv .column-header-background .filler {
+    -fx-background-color: linear-gradient(#131313 0%, #424141 100%);;
+}
+.createTbv .column-header-background{
+    -fx-background-color: linear-gradient(#131313 0%, #424141 100%);
+}
+
+.createTbv:focused{
+    -fx-background-color: transparent;
+}
+
+/* Spaltenköpfe
+    Struktur column-header-background -> column-header */
+
+
+.createTbv .column-header-background .label{
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+
+.createTbv .column-header {
+    -fx-background-color: transparent;
+}
+
+.createTbv .table-cell{
+    -fx-text-fill: black;
+}
+
+.tableRowCell{
+    -fx-background-color: -fx-table-cell-border-color,  #9ca7c9;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em; /* 0 */
+}
+
+.tableRowCell:odd{
+    -fx-background-color: -fx-table-cell-border-color, #8b98c1;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em; /* 0 */  
+}
+
+.tableRowCell:selected {
+    -fx-background-color: #424141;
+    -fx-background-insets: 0;
+    -fx-background-radius: 1;
+}
+
+.createTbv > .virtual-flow > .scroll-bar:vertical,
+.createTbv > .virtual-flow > .scroll-bar:vertical > .track,
+.createTbv > .virtual-flow > .scroll-bar:vertical > .track-background, 
+.createTbv > .virtual-flow > .scroll-bar:horizontal,
+.createTbv > .virtual-flow > .scroll-bar:horizontal > .track,
+.createTbv > .virtual-flow > .scroll-bar:horizontal > .track-background {
+    -fx-background-color: transparent;
+}
+
+
+
