@@ -285,11 +285,9 @@ public class AdminProfilesController implements Initializable {
         selectedUser = usrtableview.getSelectionModel().getSelectedItem();
         
         editData();
-        
-        usrtableview.refresh();
-        
         clear();
-        
+        usrtableview.refresh();
+
         succsesaEditlbl.setVisible(true);
         deletelbl.setVisible(false);
         successaddlbl.setVisible(false);
