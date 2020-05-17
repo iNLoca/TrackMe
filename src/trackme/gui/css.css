@@ -35,7 +35,15 @@ and open the template in the editor.
         
 }
 
+.btn{
 
+-fx-background-color: lightgrey;
+-fx-border-color: #a9d1e8;
+
+
+
+
+}
 /* Spaltenköpfe
     Struktur column-header-background -> column-header */
 
