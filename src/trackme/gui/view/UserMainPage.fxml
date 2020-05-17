@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="userfrontPane" prefHeight="514.0" prefWidth="469.0" style="-fx-background-color: #6f80b1#6f80b1 #6f80b1#6f80b1;" styleClass="createTbv" stylesheets="@../css.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trackme.gui.controller.Employee.UserMainPageController">
+<AnchorPane fx:id="userfrontPane" prefHeight="514.0" prefWidth="469.0" style="-fx-background-color: #6f80b1#6f80b1 #6f80b1#6f80b1;" styleClass="createTbv" stylesheets="@../css.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trackme.gui.controller.Employee.UserMainPageController">
    <children>
       <Button fx:id="stopbtn" layoutX="396.0" layoutY="21.0" mnemonicParsing="false" onAction="#PressStop" prefHeight="42.0" prefWidth="56.0" style="-fx-background-color: #435a9a#435a9a;">
          <graphic>
@@ -56,7 +56,7 @@
             <Image url="@../icons/next-arrow-icon-18.png" />
          </image>
       </ImageView>
-      <TableView id="createTbv" fx:id="tasktableview" fixedCellSize="0.0" layoutX="33.0" layoutY="158.0" onMouseClicked="#setSelectTask" prefHeight="303.0" prefWidth="404.0" stylesheets="@../css.css">
+      <TableView fx:id="tasktableview" fixedCellSize="0.0" layoutX="33.0" layoutY="158.0" onMouseClicked="#setSelectTask" prefHeight="303.0" prefWidth="404.0" styleClass="createTbv" stylesheets="@../css.css">
         <columns>
           <TableColumn fx:id="taskcolmn" prefWidth="102.0" styleClass="tableRowCell" text="Tasks" />
             <TableColumn fx:id="desccolm" prefWidth="136.0" styleClass="tableRowCell" text="Description" />
