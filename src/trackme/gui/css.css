@@ -15,11 +15,10 @@ and open the template in the editor.
 
 .createTbv{
    -fx-background-color: #7a8ab8;
+     
+
 }
 
-.createTbv{
-   -fx-background-color: #7a8ab8;
-}
 .createTbv .column-header,
 .createTbv .column-header .filler,
 .createTbv .column-header-background .filler {
@@ -31,6 +30,18 @@ and open the template in the editor.
 
 .createTbv:focused{
     -fx-background-color: transparent;
+    -fx-text-fill: blue;
+
+        
+}
+.btn{
+ 
+-fx-background-color: lightgrey;
+-fx-border-color: #a9d1e8;
+
+
+
+
 }
 
 /* Spaltenköpfe
@@ -48,6 +59,7 @@ and open the template in the editor.
 
 .createTbv .table-cell{
     -fx-text-fill: black;
+    
 }
 
 .tableRowCell{
@@ -62,11 +74,18 @@ and open the template in the editor.
     -fx-padding: 0.0em; /* 0 */  
 }
 
-.tableRowCell:selected {
-    -fx-background-color: #424141;
-    -fx-background-insets: 0;
-    -fx-background-radius: 1;
+.tableRowCell:focused{
+    -fx-background-color: blue;
+    -fx-text-fill: white;
+
+
+.tableRowCell:selected {  
+    -fx-background-color: blue;
+   
+   
+   
 }
+
 
 .createTbv > .virtual-flow > .scroll-bar:vertical,
 .createTbv > .virtual-flow > .scroll-bar:vertical > .track,
@@ -79,3 +98,4 @@ and open the template in the editor.
 
 
 
+}
