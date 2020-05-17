@@ -7,8 +7,6 @@
 # BlueJ files
 *.ctxt
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
 
 # Package Files #
 *.jar
@@ -24,7 +22,6 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
-/Anything/nbproject/private/
 /TrackMe/nbproject/private/
 /TrackMe/build/
 /TrackMe/dist/
@@ -37,3 +34,6 @@ TrackMe/nbproject/project.properties
 TrackMe/src/.DS_Store
 *.html
 *.jnlp
+*.html
+*.jnlp
+.DS_Store
