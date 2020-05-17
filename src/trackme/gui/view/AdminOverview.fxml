@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
@@ -17,15 +18,15 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="OverviewUser" prefHeight="514.0" prefWidth="469.0" style="-fx-background-color: #6f80b1#6f80b1 #6f80b1#6f80b1 #6f80b1#6f80b1 #6f80b1#6f80b1;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trackme.gui.controller.Admin.AdminOverviewController">
+<AnchorPane id="AnchorPane" fx:id="OverviewUser" prefHeight="514.0" prefWidth="469.0" style="-fx-background-color: #6f80b1#6f80b1 #6f80b1#6f80b1 #6f80b1#6f80b1 #6f80b1#6f80b1;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trackme.gui.controller.Admin.AdminOverviewController">
    <children>
       <ImageView fitHeight="57.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../icons/grumsen-logo-non-retina-345x0-c-default_quality-85.png" />
          </image>
       </ImageView>
-      <JFXComboBox fx:id="sortcombobox" layoutX="184.0" layoutY="65.0" onAction="#setSortComboBox" prefHeight="27.0" prefWidth="117.0" promptText="All Projects" />
-      <BarChart fx:id="projectBarChart" layoutX="14.0" layoutY="112.0" prefHeight="172.0" prefWidth="436.0">
+      <JFXComboBox fx:id="sortcombobox" layoutX="142.0" layoutY="233.0" onAction="#setSortComboBox" prefHeight="27.0" prefWidth="90.0" promptText="All Projects" />
+      <BarChart fx:id="projectBarChart" layoutX="28.0" layoutY="61.0" prefHeight="172.0" prefWidth="340.0">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
         </xAxis>
@@ -93,12 +94,14 @@
             <DropShadow />
          </effect>
       </Pane>
-      <JFXComboBox fx:id="employeecombobox" layoutX="42.0" layoutY="65.0" onAction="#setEmployeeComboBox" prefHeight="27.0" prefWidth="117.0" promptText="Employee" />
+      <JFXComboBox fx:id="employeecombobox" layoutX="42.0" layoutY="233.0" onAction="#setEmployeeComboBox" prefHeight="27.0" prefWidth="90.0" promptText="Employee" />
       <ImageView fitHeight="68.0" fitWidth="56.0" layoutX="378.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../icons/overview.png" />
          </image>
       </ImageView>
+      <JFXDatePicker fx:id="fromDatePicker" layoutX="261.0" layoutY="233.0" onAction="#setSelectedFromDate" prefWidth="90.0" promptText="From" />
+      <JFXDatePicker fx:id="toDatePicker" layoutX="351.0" layoutY="235.0" onAction="#setSelectedToDate" prefWidth="90.0" promptText="To" />
    </children>
    <effect>
       <InnerShadow color="#000000bd" />

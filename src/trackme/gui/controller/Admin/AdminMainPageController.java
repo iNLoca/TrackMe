@@ -107,26 +107,23 @@ public class AdminMainPageController implements Initializable {
     private String initialName;
     private String initialDescription;
 
-    
     private ScheduledExecutorService absenceThreadExecutor;
     @FXML
     private JFXButton addTask;
-    
+
     ObservableList<Task> taskList;
     @FXML
     TableColumn<Task, Void> colBtn;
-   
-    
-    
-      @Override
+
+    @Override
     public void initialize(URL location, ResourceBundle resources) {
-        
+
         userModel = UserModel.getInstance();
         this.user = userModel.getLoggedInUser();
         usrnamelbl.setText(user.getName());
         this.bllManager = new BLLManager();
-        
-         try {
+
+        try {
             setProjectsInCombobox(user);
         } catch (SQLServerException ex) {
             Logger.getLogger(UserMainPageController.class.getName()).log(Level.SEVERE, null, ex);
@@ -134,144 +131,131 @@ public class AdminMainPageController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(UserMainPageController.class.getName()).log(Level.SEVERE, null, ex);
         }
-         
-      
 
     }
-    
-     private void setProjectsInCombobox(User user) throws SQLServerException, SQLException {
+
+    private void setProjectsInCombobox(User user) throws SQLServerException, SQLException {
         ObservableList<Project> projectList = FXCollections.observableArrayList(bllManager.getProjectsForUser(user));
         projectbox.getItems().clear();
         projectbox.getItems().addAll(projectList);
         projectbox.getSelectionModel().select(projectbox.getValue());
     }
-  
 
     @FXML
     private void setSelectedProjects(ActionEvent event) throws SQLServerException {
         project = projectbox.getSelectionModel().getSelectedItem();
         setTaskTableView(project);
         refreshTable();
-       
-        
+
     }
-    
-     private void setTaskTableView(Project project) throws SQLServerException {
+
+    private void setTaskTableView(Project project) throws SQLServerException {
 
         this.taskList = FXCollections.observableArrayList(bllManager.getTasksForProject(project));
         taskcolmn.setCellValueFactory(new PropertyValueFactory<>("name"));
         desccolm.setCellValueFactory(new PropertyValueFactory<>("description"));
         moneycolmn.setCellValueFactory(new PropertyValueFactory<>("toPay")); //not finnished 
-        
+
         tasktableview.setItems(taskList);
-        
+
         addStartButton();
-               
-        
+
     }
-      private void addStartButton() throws SQLServerException{
-        
+
+    private void addStartButton() throws SQLServerException {
+
         colBtn.getStyleClass().add("tableRowCell");
-        
-        Callback<TableColumn<Task, Void>, TableCell<Task,Void>>cellFactory = new Callback<TableColumn<Task,Void>,TableCell<Task,Void>>()
-        {
+
+        Callback<TableColumn<Task, Void>, TableCell<Task, Void>> cellFactory = new Callback<TableColumn<Task, Void>, TableCell<Task, Void>>() {
             @Override
             public TableCell<Task, Void> call(TableColumn<Task, Void> param) {
-                final TableCell<Task,Void>cell = new TableCell<Task,Void>() {
-                
-                private final Button btn  = new Button("Start");
-                
-                
-                {
-                btn.setOnAction((ActionEvent event)->{
-                task  = getTableView().getItems().get(getIndex());
-                // System.out.println("selctedTask: " + task);
-                    
-                 if (btn != null && !LOl) {
-                    btn.setPrefWidth(colBtn.getWidth());
-                    btn.setPrefHeight(colBtn.getHeight());
-                    LOl = true;
-                    long startTime = System.currentTimeMillis();
-                    absenceThreadExecutor = Executors.newSingleThreadScheduledExecutor();
-                    absenceThreadExecutor.scheduleAtFixedRate(() -> {
-                    Platform.runLater(() -> {
+                final TableCell<Task, Void> cell = new TableCell<Task, Void>() {
 
-                    long elapsedTime = System.currentTimeMillis() - startTime;
-                    long elapsedSeconds = (elapsedTime / 1000) % 60;
-                    long elapsedMinutes = ((elapsedTime / 1000) / 60) % 60;
-                    long elapsedHours = (((elapsedTime / 1000) / 60) / 60) % 24;
+                    private final Button btn = new Button("Start");
 
-                    timecountlbl.setText(elapsedHours + " : " + elapsedMinutes + " : " + elapsedSeconds);
-                });
-            }, 1, 1, TimeUnit.SECONDS);
+                    {
+                        btn.setOnAction((ActionEvent event) -> {
+                            task = getTableView().getItems().get(getIndex());
+                            // System.out.println("selctedTask: " + task);
 
-                     try {
-                         bllManager.insertTimeLog(user,project ,task , 1);
-                     } catch (SQLServerException ex) {
-                         Logger.getLogger(UserMainPageController.class.getName()).log(Level.SEVERE, null, ex);
-                     }
-        }
-   
-                });
-                
-                }
-                
-                @Override 
-                public void updateItem(Void item,boolean empty){
-                  super.updateItem(item, empty);
-                  if(empty){
-                    setGraphic(null);
-                  }else{
-                  setGraphic(btn);
-                  }
-                 
-                }
-               
+                            if (btn != null && !LOl) {
+                                LOl = true;
+                                long startTime = System.currentTimeMillis();
+                                absenceThreadExecutor = Executors.newSingleThreadScheduledExecutor();
+                                absenceThreadExecutor.scheduleAtFixedRate(() -> {
+                                    Platform.runLater(() -> {
+                                        long elapsedTime = System.currentTimeMillis() - startTime;
+                                        long elapsedSeconds = (elapsedTime / 1000) % 60;
+                                        long elapsedMinutes = ((elapsedTime / 1000) / 60) % 60;
+                                        long elapsedHours = (((elapsedTime / 1000) / 60) / 60) % 24;
+                                        timecountlbl.setText(elapsedHours + " : " + elapsedMinutes + " : " + elapsedSeconds);
+                                    });
+                                }, 1, 1, TimeUnit.SECONDS);
+                                try {
+                                    bllManager.insertTimeLog(user, project, task, 1);
+                                } catch (SQLServerException ex) {
+                                    Logger.getLogger(UserMainPageController.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+
+                        });
+
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(btn);
+                        }
+
+                    }
+
                 };
                 return cell;
 
             }
-        
+
         };
-        colBtn.setCellFactory(cellFactory);           
-    
+        colBtn.setCellFactory(cellFactory);
+
     }
-      
-      public void refreshTable() throws SQLServerException{
-       tasktableview.getItems().removeAll(taskList);
-       setTaskTableView(project);
-      }
-      
-     private boolean LOl = false; 
-     @FXML
+
+    public void refreshTable() throws SQLServerException {
+        tasktableview.getItems().removeAll(taskList);
+        setTaskTableView(project);
+    }
+
+    private boolean LOl = false;
+
+    @FXML
     private void PressStop(ActionEvent event) throws SQLServerException {
         LOl = false;
         absenceThreadExecutor.shutdown();
-        bllManager.insertTimeLog(user,project ,task , 2);
+        bllManager.insertTimeLog(user, project, task, 2);
     }
-    
-    
+
     @FXML
     private void setSelectTask(MouseEvent event) {
-       introtasklbl.setVisible(true);
-       introdeslbl.setVisible(true);
+        introtasklbl.setVisible(true);
+        introdeslbl.setVisible(true);
 
-       tasknamelbl.setText(tasktableview.getSelectionModel().getSelectedItem().getName());
-       descriptionlbl.setText(tasktableview.getSelectionModel().getSelectedItem().getDescription());
+        tasknamelbl.setText(tasktableview.getSelectionModel().getSelectedItem().getName());
+        descriptionlbl.setText(tasktableview.getSelectionModel().getSelectedItem().getDescription());
     }
-   
+
     @FXML
     private void setMenuPopUp(MouseEvent event) {
         usrmenubar.setVisible(true);
     }
-    
-    
+
     @FXML
     private void setCloseMenubar(MouseEvent event) {
         usrmenubar.setVisible(false);
-        
-    }
 
+    }
 
     @FXML
     private void setOverview(ActionEvent event) throws IOException {
@@ -309,7 +293,7 @@ public class AdminMainPageController implements Initializable {
 
     @FXML
     private void setLogOutusr(ActionEvent event) throws IOException {
-        
+
         Stage logOutUser;
         logOutUser = (Stage) logoutbtn.getScene().getWindow();
         logOutUser.close();
@@ -326,7 +310,7 @@ public class AdminMainPageController implements Initializable {
 
     @FXML
     private void setCreate(ActionEvent event) throws IOException {
-        
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/trackme/gui/view/AdminCreate.fxml"));
         Parent root = loader.load();
         AdminCreateController ctrl = loader.getController();
@@ -363,7 +347,7 @@ public class AdminMainPageController implements Initializable {
 
     @FXML
     private void setAddTask(ActionEvent event) throws SQLServerException {
-        
+
         if (project != null) {
             if (insertTasklbl.getText().equals(initialName) && Descriplbl.getText().equals(initialDescription)) {
 
@@ -373,31 +357,30 @@ public class AdminMainPageController implements Initializable {
                     initialName = insertTasklbl.getText();
                     initialDescription = Descriplbl.getText();
                     bllManager.insertTaskForProject(project, insertTasklbl.getText(), Descriplbl.getText(), 0);
-                   
+
                     setTaskTableView(project);
-                    
+
                     insertTasklbl.clear();
                     Descriplbl.clear();
                     tasktableview.refresh();
-                   // refreshTable();
-                    
+                    // refreshTable();
+
                 } else if (!checkmoney.isSelected() && addTask != null) {
                     initialName = insertTasklbl.getText();
                     initialDescription = Descriplbl.getText();
                     bllManager.insertTaskForProject(project, insertTasklbl.getText(), Descriplbl.getText(), 1);
-                    
+
                     setTaskTableView(project);
-                    
+
                     insertTasklbl.clear();
                     Descriplbl.clear();
                     tasktableview.refresh();
-                    
-                   // refreshTable();
+
+                    // refreshTable();
                 }
             }
         }
-        
+
     }
 
-  
 }

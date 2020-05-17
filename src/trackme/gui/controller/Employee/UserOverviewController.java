@@ -224,10 +224,7 @@ public class UserOverviewController implements Initializable {
     
     private void setTaskOverview(User user, Project project) throws SQLServerException, ParseException{
         List<Task> allTaskLogs = bllManager.getAllTaskLogsForProject(user, project);
-        
-//fromDatePicker;
-// toDatePicker;
-    
+
         if(fromDatePicker.getValue()==null && toDatePicker.getValue()==null){
             System.out.println("shit dont works");
         for (Task task : allTaskLogs) {
@@ -255,12 +252,8 @@ public class UserOverviewController implements Initializable {
         tamespent.setCellValueFactory(new PropertyValueFactory<>("totalTime")); 
         tasksOverviewTable.setItems(taskList);
         }
-//        private TableColumn<Task, String> tasks;
-//    @FXML
-//    private TableColumn<Task, LocalDate> date;
-//    @FXML
-//    private TableColumn<Task, Integer> tamespent;
     }
+    
     private String convertSecondsToHourMinuteSecond(Task task){
     String time = "";
     int p1 = (int)task.getTotalTimeInSeconds()/3600;
