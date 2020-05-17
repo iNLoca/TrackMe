@@ -25,8 +25,8 @@
             <Image url="@../icons/grumsen-logo-non-retina-345x0-c-default_quality-85.png" />
          </image>
       </ImageView>
-      <JFXComboBox fx:id="sortcombobox" layoutX="142.0" layoutY="233.0" onAction="#setSortComboBox" prefHeight="27.0" prefWidth="90.0" promptText="All Projects" />
-      <BarChart fx:id="projectBarChart" layoutX="28.0" layoutY="61.0" prefHeight="172.0" prefWidth="340.0">
+      <JFXComboBox fx:id="sortcombobox" layoutX="55.0" layoutY="263.0" onAction="#setSortComboBox" prefHeight="27.0" prefWidth="137.0" promptText="All Projects" />
+      <BarChart fx:id="projectBarChart" layoutX="28.0" layoutY="57.0" prefHeight="156.0" prefWidth="358.0">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
         </xAxis>
@@ -37,11 +37,11 @@
             <InnerShadow />
          </effect>
       </BarChart>
-      <TableView fx:id="tasksOverviewTable" layoutX="38.0" layoutY="276.0" prefHeight="202.0" prefWidth="409.0" styleClass="createTbv" stylesheets="@../css.css">
+      <TableView fx:id="tasksOverviewTable" layoutX="38.0" layoutY="298.0" prefHeight="185.0" prefWidth="408.0" styleClass="createTbv" stylesheets="@../css.css">
         <columns>
           <TableColumn fx:id="tasks" prefWidth="105.0" styleClass="tableRowCell" text="Tasks" />
           <TableColumn fx:id="date" prefWidth="102.0" styleClass="tableRowCell" text="Date" />
-            <TableColumn fx:id="tamespent" prefWidth="88.0" styleClass="tableRowCell" text="Time" />
+            <TableColumn fx:id="tamespent" prefWidth="134.0" styleClass="tableRowCell" text="Time" />
         </columns>
          <effect>
             <InnerShadow color="#00000091" />
@@ -65,7 +65,7 @@
             <Image url="@../icons/next-arrow-icon-18.png" />
          </image>
       </ImageView>
-      <JFXComboBox fx:id="employeecombobox" layoutX="42.0" layoutY="233.0" onAction="#setEmployeeComboBox" prefHeight="27.0" prefWidth="90.0" promptText="Employee" />
+      <JFXComboBox fx:id="employeecombobox" layoutX="55.0" layoutY="222.0" onAction="#setEmployeeComboBox" prefHeight="27.0" prefWidth="137.0" promptText="Employee" />
       <Pane fx:id="usrmenubar" layoutX="-3.0" prefHeight="524.0" prefWidth="201.0" style="-fx-background-color: #cddaf8#cddaf8;" visible="false">
          <children>
             <Label fx:id="usrnamelbl" layoutX="39.0" layoutY="42.0" prefHeight="27.0" prefWidth="98.0" />
@@ -97,13 +97,13 @@
             <DropShadow />
          </effect>
       </Pane>
-      <ImageView fitHeight="68.0" fitWidth="56.0" layoutX="378.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="68.0" fitWidth="56.0" layoutX="394.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../icons/overview.png" />
          </image>
       </ImageView>
-      <JFXDatePicker fx:id="fromDatePicker" layoutX="261.0" layoutY="233.0" onAction="#setSelectedFromDate" prefWidth="90.0" promptText="From" />
-      <JFXDatePicker fx:id="toDatePicker" layoutX="351.0" layoutY="235.0" onAction="#setSelectedToDate" prefWidth="90.0" promptText="To" />
+      <JFXDatePicker fx:id="fromDatePicker" layoutX="252.0" layoutY="262.0" onAction="#setSelectedFromDate" prefWidth="90.0" promptText="From" />
+      <JFXDatePicker fx:id="toDatePicker" layoutX="349.0" layoutY="262.0" onAction="#setSelectedToDate" prefWidth="90.0" promptText="To" />
    </children>
    <effect>
       <InnerShadow color="#000000bd" />

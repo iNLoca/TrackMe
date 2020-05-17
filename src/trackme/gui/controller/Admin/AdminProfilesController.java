@@ -105,6 +105,12 @@ public class AdminProfilesController implements Initializable {
     private JFXButton editusr;
     @FXML
     private JFXCheckBox employeecheck;
+    @FXML
+    private Label succsesaEditlbl;
+    @FXML
+    private Label successaddlbl;
+    @FXML
+    private Label deletelbl;
 
     /**
      * Initializes the controller class.
@@ -168,10 +174,12 @@ public class AdminProfilesController implements Initializable {
         if (user != null && (emailfield != null && passfield != null && namefield != null && (admincheck.isSelected() || employeecheck.isSelected()))) {
 
             saveData();
-
+            
         } else {
-
             errorlbl.setVisible(true);
+            deletelbl.setVisible(false);
+            successaddlbl.setVisible(false);
+            succsesaEditlbl.setVisible(false);
         }
 
     }
@@ -187,16 +195,20 @@ public class AdminProfilesController implements Initializable {
         if (admincheck.isSelected() && namefield.getText().equals(userName) && passfield.getText().equals(userPassword) && emailfield.getText().equals(email)) {
 
             bllManager.createNewUser(userName, userPassword, email, 1);
-
+            
         } else if (employeecheck.isSelected() && namefield.getText().equals(userName) && passfield.getText().equals(userPassword) && emailfield.getText().equals(email)) {
 
             bllManager.createNewUser(userName, userPassword, email, 0);
+             
         }
 
         setUserTableView();
 
         clear();
-
+        
+        successaddlbl.setVisible(true);
+        deletelbl.setVisible(false);
+        succsesaEditlbl.setVisible(false);
     }
 
     public void editData() throws SQLServerException {
@@ -208,14 +220,18 @@ public class AdminProfilesController implements Initializable {
             checkidadmin = admincheck.getId();
             admincheck.setSelected(true);
             bllManager.addEditUser(selectedUser, userName, email, userPassword, 1);
+            
         } else if (!employeecheck.isSelected()) {
             checkemplid = employeecheck.getId();
             employeecheck.setSelected(true);
             bllManager.addEditUser(selectedUser, userName, email, userPassword, 0);
-
-            setUserTableView();
-
+            
+ 
             clear();
+            
+            setUserTableView();
+            
+            
 
         }
     }
@@ -228,6 +244,7 @@ public class AdminProfilesController implements Initializable {
         admincheck.selectedProperty().setValue(false);
         employeecheck.selectedProperty().setValue(false);
         errorlbl.setVisible(false);
+        
         usrtableview.refresh();
     }
 
@@ -250,20 +267,33 @@ public class AdminProfilesController implements Initializable {
     @FXML
     private void setDeleteUser(ActionEvent event) throws SQLServerException {
         selectedUser = usrtableview.getSelectionModel().getSelectedItem();
+       
         bllManager.deleteUser(selectedUser);
+       
         setUserTableView();
+       
         clear();
-
+        
+        deletelbl.setVisible(true);
+        successaddlbl.setVisible(false);
+        succsesaEditlbl.setVisible(false);
     }
 
     @FXML
     private void setEditUser(ActionEvent event) throws SQLServerException {
-
+         
         selectedUser = usrtableview.getSelectionModel().getSelectedItem();
-
+        
         editData();
+        
         usrtableview.refresh();
+        
         clear();
+        
+        succsesaEditlbl.setVisible(true);
+        deletelbl.setVisible(false);
+        successaddlbl.setVisible(false);
+            
 
     }
 
