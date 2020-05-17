@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -31,20 +32,41 @@ public class TaskDAO {
     }
     
     
-    public void insertTaskForProject(Project project, String name, String description, int toPay) throws SQLServerException{
+    public void insertTask(Project project, String name, String description, int toPay) throws SQLServerException{
     String sql = "INSERT INTO [Task] (taskName, description, toPay) VALUES (?,?,?)";
     
-    try(Connection con = connection.getConnection()){
-            PreparedStatement pstmt = con.prepareStatement(sql);
+    try(Connection con = connection.getConnection();
+            PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
+            
             pstmt.setString(1, name);
             pstmt.setString(2, description);
             pstmt.setInt(3, toPay);
-            pstmt.executeUpdate();
+            pstmt.execute();
+            ResultSet generatedKeys = pstmt.getGeneratedKeys();
+            generatedKeys.next();
+            int id = generatedKeys.getInt(1);
+            insertTaskForProject(id, project.getId());
     }    
     catch (SQLException ex) {
             Logger.getLogger(TaskDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     
+    }
+  
+
+    
+    private void insertTaskForProject(int taskId, int projectId) throws SQLServerException {
+        String sql = "INSERT INTO [TaskForProject] (taskId, projectId) VALUES (?,?)";
+        
+         try(Connection con = connection.getConnection();
+                 PreparedStatement pstmt = con.prepareStatement(sql)){
+             pstmt.setInt(1, taskId);
+             pstmt.setInt(2, projectId);
+             pstmt.execute();
+         }
+         catch(SQLException ex) {
+             Logger.getLogger(TaskDAO.class.getName()).log(Level.SEVERE, null, ex);
+         }
     }
     
     

@@ -61,6 +61,7 @@
           <TableColumn fx:id="taskcolmn" prefWidth="109.0" styleClass="tableRowCell" text="Tasks" />
             <TableColumn fx:id="desccolm" prefWidth="152.0" styleClass="tableRowCell" text="Description" />
             <TableColumn fx:id="moneycolmn" minWidth="0.0" prefWidth="66.0" styleClass="tableRowCell" text="Payable" />
+            <TableColumn fx:id="colBtn" minWidth="0.0" prefWidth="66.0" styleClass="tableRowCell" text="Start Time" />
         </columns>
          <effect>
             <InnerShadow />

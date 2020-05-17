@@ -113,6 +113,7 @@ public class AdminMainPageController implements Initializable {
     private JFXButton addTask;
     
     ObservableList<Task> taskList;
+    @FXML
     TableColumn<Task, Void> colBtn;
    
     
@@ -170,27 +171,30 @@ public class AdminMainPageController implements Initializable {
     }
       private void addStartButton() throws SQLServerException{
         
-        colBtn = new TableColumn("Start Time");
         colBtn.getStyleClass().add("tableRowCell");
         
-        Callback<TableColumn<Task, Void>, TableCell<Task,Void>>cellFactory = new Callback<TableColumn<Task,Void>,TableCell<Task,Void>>(){
+        Callback<TableColumn<Task, Void>, TableCell<Task,Void>>cellFactory = new Callback<TableColumn<Task,Void>,TableCell<Task,Void>>()
+        {
             @Override
             public TableCell<Task, Void> call(TableColumn<Task, Void> param) {
-                final TableCell<Task,Void>cell = new TableCell<Task,Void>(){
+                final TableCell<Task,Void>cell = new TableCell<Task,Void>() {
                 
                 private final Button btn  = new Button("Start");
                 
+                
                 {
                 btn.setOnAction((ActionEvent event)->{
-                 task  = getTableView().getItems().get(getIndex());
+                task  = getTableView().getItems().get(getIndex());
                 // System.out.println("selctedTask: " + task);
                     
                  if (btn != null && !LOl) {
-            LOl = true;
-            long startTime = System.currentTimeMillis();
-            absenceThreadExecutor = Executors.newSingleThreadScheduledExecutor();
-            absenceThreadExecutor.scheduleAtFixedRate(() -> {
-                Platform.runLater(() -> {
+                    btn.setPrefWidth(colBtn.getWidth());
+                    btn.setPrefHeight(colBtn.getHeight());
+                    LOl = true;
+                    long startTime = System.currentTimeMillis();
+                    absenceThreadExecutor = Executors.newSingleThreadScheduledExecutor();
+                    absenceThreadExecutor.scheduleAtFixedRate(() -> {
+                    Platform.runLater(() -> {
 
                     long elapsedTime = System.currentTimeMillis() - startTime;
                     long elapsedSeconds = (elapsedTime / 1000) % 60;
@@ -229,27 +233,13 @@ public class AdminMainPageController implements Initializable {
             }
         
         };
-         
-                
-            colBtn.setCellFactory(cellFactory);
-          
-            tasktableview.getColumns().add(colBtn);
-            
-            
+        colBtn.setCellFactory(cellFactory);           
     
     }
       
-      public void clearStartButton() throws SQLServerException{
-         
-          tasktableview.getColumns().remove(tasktableview.getColumns().size()-1);
-          
-      }
-      
       public void refreshTable() throws SQLServerException{
        tasktableview.getItems().removeAll(taskList);
-       clearStartButton();
        setTaskTableView(project);
-       
       }
       
      private boolean LOl = false; 

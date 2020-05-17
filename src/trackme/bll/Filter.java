@@ -24,13 +24,14 @@ import trackme.be.Task;
 public class Filter {
     
     public List<Task> filterList(LocalDate fromTime, LocalDate toTime, List<Task> tasks) throws ParseException{
-          Date date1 = Date.from(fromTime.atStartOfDay(ZoneId.systemDefault()).toInstant());
-          Date date3 = Date.from(toTime.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        for (Task task : tasks) {
-            Date date2 = Date.from(task.getTaskTime().get(0).getTime().atZone(ZoneId.systemDefault()).toInstant());
-            if(date1.before(date2) && date3.after(date2)){        
-        }else{
-            tasks.remove(task);}
+        Date date1 = Date.from(fromTime.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date date3 = Date.from(toTime.atStartOfDay(ZoneId.systemDefault()).toInstant());
+          
+        for (int i = 0; i < tasks.size(); i++) {
+            Date date2 = Date.from(tasks.get(i).getTaskTime().get(0).getTime().atZone(ZoneId.systemDefault()).toInstant());
+            if(date2.before(date1) || date2.after(date3)) {
+                tasks.remove(i);
+            }
         }
         return tasks;
     }

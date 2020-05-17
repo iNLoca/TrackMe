@@ -145,39 +145,43 @@ public class AdminProfilesController implements Initializable {
          admincheck.setUserData(usrtableview.getSelectionModel().getSelectedItem().getType());
          employeecheck.setUserData(usrtableview.getSelectionModel().getSelectedItem().getType());
           
-         AdminOREmployee();
+         updateUserRoleCheckbox(usrtableview.getSelectionModel().getSelectedItem());
         
     }
     
     
     
     
-    private void AdminOREmployee(){
-        if (selectedUser!=null){
-            
-         if(selectedUser.getType() == User.UserType.ADMIN){
+    private void updateUserRoleCheckbox(User user){
+        admincheck.selectedProperty().setValue(false);
+        employeecheck.selectedProperty().setValue(false);
+        if (user!=null){
+            System.out.println(user.getType());
+         if(user.getType() == User.UserType.ADMIN){
+             admincheck.selectedProperty().setValue(true);
          
-             admincheck.selectedProperty().addListener(new ChangeListener<Boolean>(){
-                 @Override
-                 public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                     if(newValue){
-                          
-                          
-                     }
-                 }
+//             admincheck.selectedProperty().addListener(new ChangeListener<Boolean>(){
+//                 @Override
+//                 public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+//                     if(newValue){
+//                          
+//                          
+//                     }
+//                 }
+
              
              
              
              
-             });
+           //  });
              
              //admincheck.setSelected(false);
            
              
-         }else if(selectedUser.getType() == User.UserType.EMPLOYEE){
-             
+         }else if(user.getType() == User.UserType.EMPLOYEE){
+             employeecheck.selectedProperty().setValue(true);
            //  employeecheck.setSelected(true);
-             employeecheck.selectedProperty().getValue();
+           //  employeecheck.selectedProperty().getValue();
          }
     }  
     }
