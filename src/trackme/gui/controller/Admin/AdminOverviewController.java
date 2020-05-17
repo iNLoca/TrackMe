@@ -226,7 +226,8 @@ public class AdminOverviewController implements Initializable{
         user = employeecombobox.getSelectionModel().getSelectedItem();
         projects = bllManager.getUserProjectTime(user);
         bllManager.getTotalTimeForEachProject(projects);
-        setBarChartForSelectedProject(projects);
+        projectBarChart.getData().clear();
+        setBarChartForSelectedProject(projects); 
         setTaskInComboBox(user);
     }
 
