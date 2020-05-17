@@ -72,8 +72,9 @@ public class UserOverviewController implements Initializable {
     private Button logoutbtn;
     private BLLManager bllManager;
     private final String LoginScene = "/trackme/gui/view/Login.fxml";
-    private final String OverviewScene = "/trackme/gui/view/OverviewScene";
+    private final String OverviewScene = "/trackme/gui/view/UserOverview.fxml";
     private final String Tracker = "/trackme/gui/view/UserMainPage.fxml";
+   
     @FXML
     private ImageView menubar;
     @FXML
@@ -284,3 +285,7 @@ public class UserOverviewController implements Initializable {
     }
     
 }
+
+
+
+
