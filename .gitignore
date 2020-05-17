@@ -29,6 +29,8 @@ TrackMe/build/built-jar.properties
 *.properties
 *.properties
 *.xml
+nbactions.xml
+nb-configuration.xml
 *.DS_Store
 TrackMe/nbproject/project.properties
 TrackMe/src/.DS_Store
