@@ -19,6 +19,8 @@
 *.tar.gz
 *.rar
 *.properties
+*.html
+*.jnlp
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
@@ -33,3 +35,5 @@ TrackMe/build/built-jar.properties
 *.DS_Store
 TrackMe/nbproject/project.properties
 TrackMe/src/.DS_Store
+*.html
+*.jnlp
