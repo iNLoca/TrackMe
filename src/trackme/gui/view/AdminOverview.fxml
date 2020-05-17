@@ -103,9 +103,6 @@
          </image>
       </ImageView>
 
-      <JFXDatePicker fx:id="fromDatePicker" layoutX="252.0" layoutY="262.0" onAction="#setSelectedFromDate" prefWidth="90.0" promptText="From" />
-      <JFXDatePicker fx:id="toDatePicker" layoutX="349.0" layoutY="262.0" onAction="#setSelectedToDate" prefWidth="90.0" promptText="To" />
-
       <JFXDatePicker fx:id="fromDatePicker" defaultColor="WHITE" layoutX="261.0" layoutY="233.0" onAction="#setSelectedFromDate" prefWidth="90.0" promptText="From" />
       <JFXDatePicker fx:id="toDatePicker" defaultColor="WHITE" layoutX="351.0" layoutY="235.0" onAction="#setSelectedToDate" prefWidth="90.0" promptText="To" />
 
