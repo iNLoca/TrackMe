@@ -36,6 +36,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -154,14 +155,19 @@ public class AdminMainPageController implements Initializable {
         this.taskList = FXCollections.observableArrayList(bllManager.getTasksForProject(project));
         taskcolmn.setCellValueFactory(new PropertyValueFactory<>("name"));
         desccolm.setCellValueFactory(new PropertyValueFactory<>("description"));
+        
+        
         moneycolmn.setCellValueFactory(new PropertyValueFactory<>("toPay")); //not finnished 
-
+        
+        
         tasktableview.setItems(taskList);
 
         addStartButton();
 
     }
 
+ //  final ImageView imageview = new ImageView();
+    
     private void addStartButton() throws SQLServerException {
 
         colBtn.getStyleClass().add("tableRowCell");
@@ -201,25 +207,35 @@ public class AdminMainPageController implements Initializable {
                         });
 
                     }
-
+                        String ImageSource = "/trackme/gui/icons/play.png";
+                        ImageView imageview  = new ImageView(ImageSource);
                     @Override
                     public void updateItem(Void item, boolean empty) {
-                        btn.getStyleClass().add("btn");                          
+                       // btn.getStyleClass().add("btn");
+          
+                imageview.setFitHeight(30);
+                imageview.setFitWidth(30);
+                       
                         super.updateItem(item, empty);
                         if (empty) {
                             setGraphic(null);
-                        } else {
+                               imageview.setImage(new Image(ImageSource));
+                        } else { 
+                            setGraphic(imageview);
                             setGraphic(btn);
+                            
                         }
-
+                              
                     }
-
+                       
                 };
+               
                 return cell;
 
             }
 
         };
+        
         colBtn.setCellFactory(cellFactory);
 
     }
@@ -346,25 +362,34 @@ public class AdminMainPageController implements Initializable {
         closePreviousScene.close();
     }
 
+   String ImageURL = "/trackme/gui/icons/yesmoney.png";
+   ImageView newimageview  = new ImageView(ImageURL);
+   
+    String ImageURL2 = "/trackme/gui/icons/nomoney.png";
+   ImageView newimageview2  = new ImageView(ImageURL2);
+    
     @FXML
     private void setAddTask(ActionEvent event) throws SQLServerException {
+       
 
         if (project != null) {
             if (insertTasklbl.getText().equals(initialName) && Descriplbl.getText().equals(initialDescription)) {
-
+              
             } else {
 
                 if (checkmoney.isSelected() && addTask != null) {
                     initialName = insertTasklbl.getText();
                     initialDescription = Descriplbl.getText();
                     bllManager.insertTaskForProject(project, insertTasklbl.getText(), Descriplbl.getText(), 0);
-
+                    
                     setTaskTableView(project);
-
+                    
                     insertTasklbl.clear();
                     Descriplbl.clear();
                     tasktableview.refresh();
                     // refreshTable();
+                    
+                    moneycolmn.setGraphic(newimageview);
 
                 } else if (!checkmoney.isSelected() && addTask != null) {
                     initialName = insertTasklbl.getText();
@@ -378,6 +403,7 @@ public class AdminMainPageController implements Initializable {
                     tasktableview.refresh();
 
                     // refreshTable();
+                    moneycolmn.setGraphic(newimageview2);
                 }
             }
         }
