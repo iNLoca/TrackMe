@@ -1,3 +1,8 @@
+
+# Created by https://www.gitignore.io/api/java,netbeans
+# Edit at https://www.gitignore.io/?templates=java,netbeans
+
+### Java ###
 # Compiled class file
 *.class
 
@@ -18,22 +23,18 @@
 *.zip
 *.tar.gz
 *.rar
-*.properties
-*.html
-*.jnlp
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
-/Anything/nbproject/private/
-/TrackMe/nbproject/private/
-/TrackMe/build/
-/TrackMe/dist/
-TrackMe/build/built-jar.properties
-*.properties
-*.properties
-*.xml
-*.DS_Store
-TrackMe/nbproject/project.properties
-TrackMe/src/.DS_Store
-*.html
-*.jnlp
+
+### NetBeans ###
+**/nbproject/private/
+**/nbproject/Makefile-*.mk
+**/nbproject/Package-*.bash
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# End of https://www.gitignore.io/api/java,netbeans
