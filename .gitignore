@@ -28,9 +28,9 @@
 hs_err_pid*
 
 ### NetBeans ###
-**/nbproject/private/
-**/nbproject/Makefile-*.mk
-**/nbproject/Package-*.bash
+/Trackme/nbproject/private/
+/Trackme/nbproject/Makefile-*.mk
+/Trackme/nbproject/Package-*.bash
 build/
 nbbuild/
 dist/
@@ -38,3 +38,8 @@ nbdist/
 .nb-gradle/
 
 # End of https://www.gitignore.io/api/java,netbeans
+.DS_Store
+*.xml
+.DS_Store
+.DS_Store
+.DS_Store
