@@ -79,13 +79,6 @@ and open the template in the editor.
     -fx-text-fill: white;
 
 }
-.tableRowCell:selected {  
-    -fx-background-color: blue;
-   
-   
-   
-}
-
 
 .createTbv > .virtual-flow > .scroll-bar:vertical,
 .createTbv > .virtual-flow > .scroll-bar:vertical > .track,

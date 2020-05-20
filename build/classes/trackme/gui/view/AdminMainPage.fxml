@@ -44,7 +44,7 @@
             <Image url="@../icons/next-arrow-icon-18.png" />
          </image>
       </ImageView>
-      <TableView fx:id="tasktableview" fixedCellSize="0.0" layoutX="33.0" layoutY="165.0" onMouseClicked="#setSelectTask" prefHeight="306.0" prefWidth="426.0" style="-fx-border-color: black; -fx-selection-bar: red; -fx-selection-bar-non-focused: salmon;" styleClass="createTbv" stylesheets="@../css.css">
+      <TableView fx:id="tasktableview" fixedCellSize="0.0" layoutX="33.0" layoutY="165.0" onMouseClicked="#setSelectTask" prefHeight="306.0" prefWidth="426.0" style="-fx-border-color: black; -fx-selection-bar: black;" styleClass="createTbv" stylesheets="@../css.css">
         <columns>
           <TableColumn fx:id="taskcolmn" prefWidth="109.0" styleClass="tableRowCell" text="Tasks" />
             <TableColumn fx:id="desccolm" prefWidth="81.0" styleClass="tableRowCell" text="Description" />

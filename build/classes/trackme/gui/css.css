@@ -80,7 +80,7 @@ and open the template in the editor.
 
 }
 .tableRowCell:selected {  
-    -fx-background-color: blue;
+    -fx-border-width: 20px;
    
    
    
