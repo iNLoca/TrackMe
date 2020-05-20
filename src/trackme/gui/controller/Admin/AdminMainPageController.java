@@ -56,8 +56,6 @@ import trackme.gui.model.UserModel;
 public class AdminMainPageController implements Initializable {
 
     @FXML
-    private Button stopbtn;
-    @FXML
     private Label timecountlbl;
     @FXML
     private JFXComboBox<Project> projectbox;
@@ -108,13 +106,15 @@ public class AdminMainPageController implements Initializable {
     private String initialName;
     private String initialDescription;
 
-    private ScheduledExecutorService absenceThreadExecutor;
+    private ScheduledExecutorService ThreadExecutor;
     @FXML
     private JFXButton addTask;
 
     ObservableList<Task> taskList;
     @FXML
     TableColumn<Task, Void> colBtn;
+    @FXML
+    private TableColumn<?, ?> totaltimespentcolmn;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -177,31 +177,18 @@ public class AdminMainPageController implements Initializable {
             public TableCell<Task, Void> call(TableColumn<Task, Void> param) {
                 final TableCell<Task, Void> cell = new TableCell<Task, Void>() {
 
-                    private final Button btn = new Button("Start");
+                    private final Button btn = new Button("Stop");
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
                             task = getTableView().getItems().get(getIndex());
                             // System.out.println("selctedTask: " + task);
-
-                            if (btn != null && !LOl) {
-                                LOl = true;
-                                long startTime = System.currentTimeMillis();
-                                absenceThreadExecutor = Executors.newSingleThreadScheduledExecutor();
-                                absenceThreadExecutor.scheduleAtFixedRate(() -> {
-                                    Platform.runLater(() -> {
-                                        long elapsedTime = System.currentTimeMillis() - startTime;
-                                        long elapsedSeconds = (elapsedTime / 1000) % 60;
-                                        long elapsedMinutes = ((elapsedTime / 1000) / 60) % 60;
-                                        long elapsedHours = (((elapsedTime / 1000) / 60) / 60) % 24;
-                                        timecountlbl.setText(elapsedHours + " : " + elapsedMinutes + " : " + elapsedSeconds);
-                                    });
-                                }, 1, 1, TimeUnit.SECONDS);
-                                try {
-                                    bllManager.insertTimeLog(user, project, task, 1);
-                                } catch (SQLServerException ex) {
-                                    Logger.getLogger(UserMainPageController.class.getName()).log(Level.SEVERE, null, ex);
-                                }
+                             LOl = false;
+                             ThreadExecutor.shutdown();
+                            try {
+                                bllManager.insertTimeLog(user, project, task, 2);
+                            } catch (SQLServerException ex) {
+                                Logger.getLogger(AdminMainPageController.class.getName()).log(Level.SEVERE, null, ex);
                             }
 
                         });
@@ -247,22 +234,47 @@ public class AdminMainPageController implements Initializable {
 
     private boolean LOl = false;
 
-    @FXML
-    private void PressStop(ActionEvent event) throws SQLServerException {
-        LOl = false;
-        absenceThreadExecutor.shutdown();
-        bllManager.insertTimeLog(user, project, task, 2);
-    }
 
     @FXML
-    private void setSelectTask(MouseEvent event) {
-        introtasklbl.setVisible(true);
-        introdeslbl.setVisible(true);
-
+    private void setSelectTask(MouseEvent event) throws SQLServerException  {
+        
+         startTracker();
+                     
+        //introtasklbl.setVisible(true);
+       // introdeslbl.setVisible(true);
+        
         tasknamelbl.setText(tasktableview.getSelectionModel().getSelectedItem().getName());
         descriptionlbl.setText(tasktableview.getSelectionModel().getSelectedItem().getDescription());
+       
     }
 
+    private void startTracker()throws SQLServerException{
+    
+      //     if (btn != null && !LOl) {
+                                LOl = true;
+                                long startTime = System.currentTimeMillis();
+                                ThreadExecutor = Executors.newSingleThreadScheduledExecutor();
+                                ThreadExecutor.scheduleAtFixedRate(() -> {
+                                    Platform.runLater(() -> {
+                                        long elapsedTime = System.currentTimeMillis() - startTime;
+                                        long elapsedSeconds = (elapsedTime / 1000) % 60;
+                                        long elapsedMinutes = ((elapsedTime / 1000) / 60) % 60;
+                                        long elapsedHours = (((elapsedTime / 1000) / 60) / 60) % 24;
+                                        timecountlbl.setText(elapsedHours + " : " + elapsedMinutes + " : " + elapsedSeconds);
+                                    });
+                                }, 1, 1, TimeUnit.SECONDS);
+                              
+                            
+                                try {
+                                    bllManager.insertTimeLog(user, project, task, 1);
+                                } catch (SQLServerException ex) {
+                                    Logger.getLogger(UserMainPageController.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                         //   }
+    
+    
+    }
+    
     @FXML
     private void setMenuPopUp(MouseEvent event) {
         usrmenubar.setVisible(true);
@@ -390,6 +402,7 @@ public class AdminMainPageController implements Initializable {
                     // refreshTable();
                     
                     moneycolmn.setGraphic(newimageview);
+                     startTracker();
 
                 } else if (!checkmoney.isSelected() && addTask != null) {
                     initialName = insertTasklbl.getText();
@@ -404,10 +417,12 @@ public class AdminMainPageController implements Initializable {
 
                     // refreshTable();
                     moneycolmn.setGraphic(newimageview2);
+                     startTracker();
                 }
             }
         }
 
     }
+
 
 }

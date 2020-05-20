@@ -130,7 +130,7 @@ public class AdminProfilesController implements Initializable {
     }
 
     public void setUserTableView() throws SQLServerException {
-
+        
         ObservableList<User> userList = FXCollections.observableArrayList(bllManager.getAllUsers());
         usrname.setCellValueFactory(new PropertyValueFactory<>("name"));
         usrtype.setCellValueFactory(new PropertyValueFactory<>("type"));
@@ -141,6 +141,9 @@ public class AdminProfilesController implements Initializable {
 
     @FXML
     private void selectUser(MouseEvent event) throws SQLServerException {
+        
+        deletebtn.setVisible(true);
+        editusr.setVisible(true);
 
         namefield.setText(usrtableview.getSelectionModel().getSelectedItem().getName());
         emailfield.setText(usrtableview.getSelectionModel().getSelectedItem().getEmail());

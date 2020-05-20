@@ -16,21 +16,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="userfrontPane" prefHeight="514.0" prefWidth="469.0" style="-fx-background-color: #6f80b1#6f80b1 #6f80b1#6f80b1;" styleClass="createTbv" stylesheets="@../css.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trackme.gui.controller.Employee.UserMainPageController">
+<AnchorPane fx:id="userfrontPane" prefHeight="514.0" prefWidth="469.0" style="-fx-background-color: #6f80b1#6f80b1 #6f80b1#6f80b1;" styleClass="createTbv" stylesheets="@../css.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trackme.gui.controller.Employee.UserMainPageController">
    <children>
-      <Button fx:id="stopbtn" layoutX="396.0" layoutY="21.0" mnemonicParsing="false" onAction="#PressStop" prefHeight="42.0" prefWidth="56.0" style="-fx-background-color: #435a9a#435a9a;">
-         <graphic>
-            <ImageView fitHeight="34.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../icons/stop.png" />
-               </image>
-            </ImageView>
-         </graphic>
-         <effect>
-            <InnerShadow color="#00000072" />
-         </effect>
-      </Button>
-      <Label fx:id="timecountlbl" alignment="CENTER_RIGHT" layoutX="296.0" layoutY="31.0" prefHeight="23.0" prefWidth="97.0">
+      <Label fx:id="timecountlbl" alignment="CENTER_RIGHT" layoutX="215.0" layoutY="29.0" prefHeight="23.0" prefWidth="97.0">
          <font>
             <Font size="18.0" />
          </font></Label>
@@ -56,12 +44,13 @@
             <Image url="@../icons/next-arrow-icon-18.png" />
          </image>
       </ImageView>
-      <TableView fx:id="tasktableview" fixedCellSize="0.0" layoutX="33.0" layoutY="158.0" onMouseClicked="#setSelectTask" prefHeight="303.0" prefWidth="404.0" styleClass="createTbv" stylesheets="@../css.css">
+      <TableView fx:id="tasktableview" fixedCellSize="0.0" layoutX="33.0" layoutY="158.0" onMouseClicked="#setSelectTask" prefHeight="303.0" prefWidth="404.0" style="-fx-selection-bar: black;" styleClass="createTbv" stylesheets="@../css.css">
         <columns>
           <TableColumn fx:id="taskcolmn" prefWidth="102.0" styleClass="tableRowCell" text="Tasks" />
             <TableColumn fx:id="desccolm" prefWidth="136.0" styleClass="tableRowCell" text="Description" />
             <TableColumn fx:id="moneycolmn" prefWidth="84.0" styleClass="tableRowCell" text="Payable" />
-            <TableColumn fx:id="colBtn" prefWidth="75.0" styleClass="tableRowCell" text="Start Time" />
+            <TableColumn fx:id="totaltimecolmn" prefWidth="75.0" styleClass="tableRowCell" text="Total Time" />
+            <TableColumn fx:id="colBtn" prefWidth="75.0" styleClass="tableRowCell" text="Stop Time" />
         </columns>
          <effect>
             <InnerShadow color="#0000007c" />

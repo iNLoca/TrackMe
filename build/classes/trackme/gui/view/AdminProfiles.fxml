@@ -63,15 +63,13 @@
       <JFXTextField fx:id="emailfield" layoutX="123.0" layoutY="127.0" />
       <JFXCheckBox fx:id="admincheck" checkedColor="#40fc9e" layoutX="91.0" layoutY="231.0" onAction="#setAdmin" text="Admin" unCheckedColor="#0a0a0a" />
       <JFXCheckBox fx:id="employeecheck" checkedColor="#40fc9e" layoutX="207.0" layoutY="231.0" onAction="#setEmployee" text="Employee" unCheckedColor="BLACK" />
-      <JFXButton fx:id="addUser" buttonType="RAISED" layoutX="69.0" layoutY="300.0" onAction="#setAddUser" style="-fx-border-color: black;" text="Add" />
-
-      <JFXButton fx:id="deletebtn" buttonType="RAISED" layoutX="250.0" layoutY="300.0" onAction="#setDeleteUser" ripplerFill="#0000008d" style="-fx-border-color: black;" text="Delete" />
+      <JFXButton fx:id="addUser" buttonType="RAISED" layoutX="168.0" layoutY="300.0" onAction="#setAddUser" style="-fx-border-color: black;" text="Save" />
       <Label fx:id="succsesaEditlbl" alignment="CENTER" layoutX="99.0" layoutY="268.0" prefHeight="17.0" prefWidth="190.0" text="Edit Complete !" textFill="#33ff70" visible="false" />
 
-      <JFXButton fx:id="deletebtn" layoutX="250.0" layoutY="300.0" onAction="#setDeleteUser" style="-fx-border-color: black;" text="Delete" />
+      <JFXButton fx:id="deletebtn" buttonType="RAISED" layoutX="366.0" layoutY="300.0" onAction="#setDeleteUser" style="-fx-border-color: black;" text="Delete" />
       <Label fx:id="errorlbl" alignment="CENTER" layoutX="98.0" layoutY="268.0" prefHeight="17.0" prefWidth="190.0" text="Error: Empty Fields" textFill="#b21010" visible="false" />
 
-      <JFXButton fx:id="editusr" buttonType="RAISED" layoutX="163.0" layoutY="300.0" onAction="#setEditUser" style="-fx-border-color: black;" text="Edit" />
+      <JFXButton fx:id="editusr" buttonType="RAISED" layoutX="288.0" layoutY="300.0" onAction="#setEditUser" style="-fx-border-color: black;" text="Update" />
       <Label fx:id="successaddlbl" alignment="CENTER" layoutX="111.0" layoutY="268.0" prefHeight="17.0" prefWidth="177.0" text="Succesfully Created" textFill="#33ff70" visible="false" />
       <Label fx:id="deletelbl" alignment="CENTER" layoutX="104.0" layoutY="268.0" prefHeight="17.0" prefWidth="190.0" text="Delete Complete " textFill="#33ff70" visible="false" />
       <Pane fx:id="usrmenubar" prefHeight="524.0" prefWidth="201.0" style="-fx-background-color: #cddaf8#cddaf8;" visible="false">
