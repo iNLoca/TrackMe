@@ -13,6 +13,7 @@ import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
@@ -115,6 +116,8 @@ public class AdminMainPageController implements Initializable {
     TableColumn<Task, Void> colBtn;
     @FXML
     private TableColumn<?, ?> totaltimespentcolmn;
+    
+    
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -375,15 +378,18 @@ public class AdminMainPageController implements Initializable {
     }
 
     String ImageURL = "/trackme/gui/icons/yesmoney.png";
-   ImageView newimageview  = new ImageView(ImageURL);
+    ImageView newimageview  = new ImageView(ImageURL);
    
     String ImageURL2 = "/trackme/gui/icons/nomoney.png";
    ImageView newimageview2  = new ImageView(ImageURL2);
+  
+   
     
   
    
     @FXML
     private void setAddTask(ActionEvent event) throws SQLServerException {
+        
        
 
         if (project != null) {
@@ -402,11 +408,13 @@ public class AdminMainPageController implements Initializable {
                     Descriplbl.clear();
                     tasktableview.refresh();
                     // refreshTable();
+                   
+                   
                     
-                   if (moneycolmn.cellValueFactoryProperty().getValue().equals(1)){
-                       //  moneycolmn.getColumns();
-                   }
-                     startTracker();
+                   // moneycolmn.getColumn().add(newimageview);
+                    moneycolmn.setGraphic(newimageview);
+                  
+                //     startTracker();
                      
                 } else if (!checkmoney.isSelected() && addTask != null) {
                     initialName = insertTasklbl.getText();
@@ -420,7 +428,8 @@ public class AdminMainPageController implements Initializable {
                     tasktableview.refresh();
 
                     // refreshTable();
-                    moneycolmn.cellValueFactoryProperty().isEqualTo(newimageview2);
+                     moneycolmn.setGraphic(newimageview);
+                   
                      startTracker();
                 }
             }
