@@ -374,12 +374,14 @@ public class AdminMainPageController implements Initializable {
         closePreviousScene.close();
     }
 
-   String ImageURL = "/trackme/gui/icons/yesmoney.png";
+    String ImageURL = "/trackme/gui/icons/yesmoney.png";
    ImageView newimageview  = new ImageView(ImageURL);
    
     String ImageURL2 = "/trackme/gui/icons/nomoney.png";
    ImageView newimageview2  = new ImageView(ImageURL2);
     
+  
+   
     @FXML
     private void setAddTask(ActionEvent event) throws SQLServerException {
        
@@ -401,9 +403,11 @@ public class AdminMainPageController implements Initializable {
                     tasktableview.refresh();
                     // refreshTable();
                     
-                    moneycolmn.setGraphic(newimageview);
+                   if (moneycolmn.cellValueFactoryProperty().getValue().equals(1)){
+                       //  moneycolmn.getColumns();
+                   }
                      startTracker();
-
+                     
                 } else if (!checkmoney.isSelected() && addTask != null) {
                     initialName = insertTasklbl.getText();
                     initialDescription = Descriplbl.getText();
@@ -416,7 +420,7 @@ public class AdminMainPageController implements Initializable {
                     tasktableview.refresh();
 
                     // refreshTable();
-                    moneycolmn.setGraphic(newimageview2);
+                    moneycolmn.cellValueFactoryProperty().isEqualTo(newimageview2);
                      startTracker();
                 }
             }
