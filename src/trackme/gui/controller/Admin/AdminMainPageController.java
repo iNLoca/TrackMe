@@ -13,7 +13,6 @@ import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -400,8 +399,9 @@ public class AdminMainPageController implements Initializable {
                     Descriplbl.clear();
                     tasktableview.refresh();
                     // refreshTable();
-                    
-                    moneycolmn.setGraphic(newimageview);
+                  
+                // moneycolmn.setGraphic(newimageview);
+              //   moneycolmn.setCellFactory((Callback<TableColumn<Task, Integer>, TableCell<Task, Integer>>) newimageview);
                      startTracker();
 
                 } else if (!checkmoney.isSelected() && addTask != null) {
@@ -416,7 +416,9 @@ public class AdminMainPageController implements Initializable {
                     tasktableview.refresh();
 
                     // refreshTable();
-                    moneycolmn.setGraphic(newimageview2);
+                 //                    moneycolmn.setCellFactory((Callback<TableColumn<Task, Integer>, TableCell<Task, Integer>>) newimageview2);
+
+                   // moneycolmn.setGraphic(newimageview2);
                      startTracker();
                 }
             }

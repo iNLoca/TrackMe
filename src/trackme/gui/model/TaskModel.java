@@ -11,7 +11,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import trackme.be.Project;
 import trackme.be.Task;
-import trackme.be.User;
 import trackme.bll.IBLLFacade;
 
 /**

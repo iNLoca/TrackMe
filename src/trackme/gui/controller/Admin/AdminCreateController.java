@@ -6,7 +6,6 @@
 package trackme.gui.controller.Admin;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
@@ -22,7 +21,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.chart.BarChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -36,7 +34,6 @@ import javafx.stage.Stage;
 import trackme.be.Project;
 import trackme.be.User;
 import trackme.bll.BLLManager;
-import trackme.gui.controller.Employee.UserMainPageController;
 import trackme.gui.model.UserModel;
 
 /**
