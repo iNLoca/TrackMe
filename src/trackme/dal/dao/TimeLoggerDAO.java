@@ -116,7 +116,7 @@ public class TimeLoggerDAO {
     
     public List<Task> getAllTaskLogsForProject(User user, Project project) throws SQLServerException{
         List<Task> tasks = new ArrayList<>();
-        String sql = "SELECT * FROM TimeLog JOIN Task on TimeLog.taskId = Task.id WHERE projectId = ? AND userId = ? ORDER BY taskId";
+        String sql = "SELECT * FROM TimeLog JOIN Task on TimeLog.taskId = Task.id WHERE projectId = ? AND userId = ? ORDER BY taskId, userId";
         int i =0;
         
         try(Connection con = connection.getConnection()){
