@@ -6,12 +6,10 @@
 package trackme.bll;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
-import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.Month;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -21,7 +19,6 @@ import java.util.TimeZone;
 import trackme.be.Project;
 import trackme.be.Task;
 import trackme.be.TimeLog;
-import trackme.be.User;
 import trackme.dal.DALManager;
 /**
  *

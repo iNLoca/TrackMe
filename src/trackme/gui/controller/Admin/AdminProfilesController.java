@@ -7,7 +7,6 @@ package trackme.gui.controller.Admin;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
-import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
@@ -16,8 +15,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -26,7 +23,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.chart.BarChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -40,7 +36,6 @@ import javafx.stage.Stage;
 import trackme.be.User;
 import trackme.be.User.UserType;
 import trackme.bll.BLLManager;
-import trackme.gui.controller.Employee.UserMainPageController;
 import trackme.gui.model.UserModel;
 
 /**
@@ -117,6 +112,7 @@ public class AdminProfilesController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
         userModel = UserModel.getInstance();
         user = userModel.getLoggedInUser();
         usrnamelbl.setText(user.getName());
@@ -126,6 +122,7 @@ public class AdminProfilesController implements Initializable {
         } catch (SQLServerException ex) {
             Logger.getLogger(AdminProfilesController.class.getName()).log(Level.SEVERE, null, ex);
         }
+             addUser.setVisible(true);
 
     }
 
@@ -141,7 +138,7 @@ public class AdminProfilesController implements Initializable {
 
     @FXML
     private void selectUser(MouseEvent event) throws SQLServerException {
-        
+        addUser.setVisible(false);
         deletebtn.setVisible(true);
         editusr.setVisible(true);
 
@@ -224,6 +221,9 @@ public class AdminProfilesController implements Initializable {
             admincheck.setSelected(true);
             bllManager.addEditUser(selectedUser, userName, email, userPassword, 1);
             
+            clear();
+            
+            setUserTableView();
         } else if (!employeecheck.isSelected()) {
             checkemplid = employeecheck.getId();
             employeecheck.setSelected(true);
@@ -249,6 +249,7 @@ public class AdminProfilesController implements Initializable {
         errorlbl.setVisible(false);
         
         usrtableview.refresh();
+        addUser.setVisible(true);
     }
 
     @FXML
@@ -270,7 +271,7 @@ public class AdminProfilesController implements Initializable {
     @FXML
     private void setDeleteUser(ActionEvent event) throws SQLServerException {
         selectedUser = usrtableview.getSelectionModel().getSelectedItem();
-       
+
         bllManager.deleteUser(selectedUser);
        
         setUserTableView();
@@ -286,7 +287,6 @@ public class AdminProfilesController implements Initializable {
     private void setEditUser(ActionEvent event) throws SQLServerException {
          
         selectedUser = usrtableview.getSelectionModel().getSelectedItem();
-        
         editData();
         clear();
         usrtableview.refresh();
@@ -294,6 +294,8 @@ public class AdminProfilesController implements Initializable {
         succsesaEditlbl.setVisible(true);
         deletelbl.setVisible(false);
         successaddlbl.setVisible(false);
+        
+        
             
 
     }

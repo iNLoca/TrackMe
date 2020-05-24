@@ -5,23 +5,19 @@
  */
 package trackme.gui.controller.Employee;
 
-import trackme.gui.controller.Employee.UserMainPageController;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTimePicker;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.io.IOException;
-import static java.lang.Float.parseFloat;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 
 import java.time.LocalTime;
-import java.time.temporal.TemporalAccessor;
 
 import java.util.ResourceBundle;
 import java.util.logging.Level;

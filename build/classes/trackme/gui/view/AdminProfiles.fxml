@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="OverviewUser" prefHeight="514.0" prefWidth="469.0" style="-fx-background-color: #6f80b1#6f80b1 #6f80b1#6f80b1 #6f80b1#6f80b1 #6f80b1#6f80b1;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trackme.gui.controller.Admin.AdminProfilesController">
+<AnchorPane id="AnchorPane" fx:id="OverviewUser" prefHeight="514.0" prefWidth="469.0" style="-fx-background-color: #6f80b1#6f80b1 #6f80b1#6f80b1 #6f80b1#6f80b1 #6f80b1#6f80b1;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trackme.gui.controller.Admin.AdminProfilesController">
    <children>
       <ImageView fitHeight="57.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -63,8 +63,8 @@
       <JFXTextField fx:id="emailfield" layoutX="123.0" layoutY="127.0" />
       <JFXCheckBox fx:id="admincheck" checkedColor="#40fc9e" layoutX="91.0" layoutY="231.0" onAction="#setAdmin" text="Admin" unCheckedColor="#0a0a0a" />
       <JFXCheckBox fx:id="employeecheck" checkedColor="#40fc9e" layoutX="207.0" layoutY="231.0" onAction="#setEmployee" text="Employee" unCheckedColor="BLACK" />
-      <JFXButton fx:id="addUser" buttonType="RAISED" layoutX="168.0" layoutY="300.0" onAction="#setAddUser" style="-fx-border-color: black;" text="Save" />
-      <Label fx:id="succsesaEditlbl" alignment="CENTER" layoutX="99.0" layoutY="268.0" prefHeight="17.0" prefWidth="190.0" text="Edit Complete !" textFill="#33ff70" visible="false" />
+      <JFXButton fx:id="addUser" buttonType="RAISED" layoutX="168.0" layoutY="300.0" onAction="#setAddUser" style="-fx-border-color: black;" text="Save" visible="false" />
+      <Label fx:id="succsesaEditlbl" alignment="CENTER" layoutX="99.0" layoutY="268.0" prefHeight="17.0" prefWidth="190.0" text="Update Completed ! " textFill="#33ff70" visible="false" />
 
       <JFXButton fx:id="deletebtn" buttonType="RAISED" layoutX="366.0" layoutY="300.0" onAction="#setDeleteUser" style="-fx-border-color: black;" text="Delete" />
       <Label fx:id="errorlbl" alignment="CENTER" layoutX="98.0" layoutY="268.0" prefHeight="17.0" prefWidth="190.0" text="Error: Empty Fields" textFill="#b21010" visible="false" />

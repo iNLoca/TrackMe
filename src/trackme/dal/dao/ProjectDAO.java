@@ -6,9 +6,7 @@
 package trackme.dal.dao;
 
 import trackme.be.Project;
-import trackme.dal.DBConnectionProvider;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
-import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

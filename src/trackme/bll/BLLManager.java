@@ -12,14 +12,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import trackme.be.Project;
 import trackme.be.Task;
 import trackme.be.User;
-import trackme.be.User.UserType;
 import trackme.dal.DALManager;
-import trackme.dal.IDALFacade;
 
 /**
  *

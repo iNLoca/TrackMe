@@ -6,7 +6,6 @@
 package trackme.dal.dao;
 
 import trackme.be.Project;
-import trackme.dal.DBConnectionProvider;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,7 +20,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import trackme.be.Task;
 import trackme.be.TimeLog;
-import trackme.be.TimeLog.TimeType;
 import trackme.be.User;
 import trackme.dal.DBConnectionProvider;
 

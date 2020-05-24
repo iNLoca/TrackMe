@@ -7,7 +7,6 @@ package trackme.gui.model;
 
 import trackme.be.User;
 import trackme.bll.BLLManager;
-import trackme.bll.IBLLFacade;
 
 /**
  *
