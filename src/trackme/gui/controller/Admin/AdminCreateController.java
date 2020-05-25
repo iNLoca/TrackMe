@@ -61,12 +61,7 @@ public class AdminCreateController implements Initializable {
     private JFXButton createbtn;
     @FXML
     private JFXButton profilesbtn;
-
-    private final String LoginScene = "/trackme/gui/view/Login.fxml";
-    private final String OverviewScene = "/trackme/gui/view/AdminOverview.fxml";
-    private User user;
-    private UserModel userModel;
-    private BLLManager bllManager;
+    
     @FXML
     private JFXTextField clientname;
     @FXML
@@ -83,15 +78,23 @@ public class AdminCreateController implements Initializable {
     private TableColumn<Project, String> projectcolmn;
     @FXML
     private TableColumn<Project, Integer> feecolmn;
-    
-    
+    @FXML
+    private Label errormsg;  
+   
+    private User user;
+    private UserModel userModel;
+    private BLLManager bllManager;
     private String clientnm;
     private String projectps;
     private String fee;
-    @FXML
-    private Label errormsg;
+    
+    private final String LoginScene = "/trackme/gui/view/Login.fxml";
+    private final String OverviewScene = "/trackme/gui/view/AdminOverview.fxml";
+   
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -108,22 +111,31 @@ public class AdminCreateController implements Initializable {
         
     }    
 
-    @FXML
-    private void setAddCreate(ActionEvent event) throws SQLException {
-        
-         if(user!=null && (!clientname.getText().isEmpty() && !peojectname.getText().isEmpty() && !hfeelbl.getText().isEmpty())){
-          
-                saveNewData();
-      
-            }else{
-        
-            errormsg.setVisible(true);
-         }
-         
-        
-    }
     
-    public void saveNewData() throws SQLException{
+    /**
+     * Setting Table functionality
+     * @throws SQLException 
+     */
+    
+      public void setTableView() throws SQLException{
+    
+    
+        ObservableList<Project> projectList = FXCollections.observableArrayList(bllManager.getAllProjects());
+        projectcolmn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        clientcolumn.setCellValueFactory(new PropertyValueFactory<>("client"));
+        feecolmn.setCellValueFactory(new PropertyValueFactory<>("cost"));
+
+        createtableview.setItems(projectList);
+       
+    
+    }
+      
+      /**
+       * Method that saves the data in DB
+       * @throws SQLException 
+       */
+      
+     public void saveNewData() throws SQLException{
     
                     clientnm = clientname.getText();
                     projectps = peojectname.getText();
@@ -139,31 +151,52 @@ public class AdminCreateController implements Initializable {
                     peojectname.clear();
                     hfeelbl.clear();
                     errormsg.setVisible(false);
-                    
-                    
-    
-    
+ 
 }
-
-
-    public void setTableView() throws SQLException{
-    
-    
-        ObservableList<Project> projectList = FXCollections.observableArrayList(bllManager.getAllProjects());
-        projectcolmn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        clientcolumn.setCellValueFactory(new PropertyValueFactory<>("client"));
-        feecolmn.setCellValueFactory(new PropertyValueFactory<>("cost"));
-
-        createtableview.setItems(projectList);
-       
-    
+     
+ /**
+  * Creating a new Client
+  * @param event
+  * @throws SQLException 
+  */        
+         
+    @FXML
+    private void setAddCreate(ActionEvent event) throws SQLException {
+        
+         if(user!=null && (!clientname.getText().isEmpty() && !peojectname.getText().isEmpty() && !hfeelbl.getText().isEmpty())){
+          
+                saveNewData();
+      
+            }else{
+        
+            errormsg.setVisible(true);
+         }
+         
+        
     }
     
+ 
+    
+    /**
+     * Menu bar methods
+     * @param event 
+     */
     
     @FXML
     private void setShowMenubar(MouseEvent event) {
         usrmenubar.setVisible(true);
     }
+    
+     @FXML
+    private void setCloseMenubar(MouseEvent event) {
+        usrmenubar.setVisible(false);
+    }
+    
+    /**
+     * Opening Scene methods
+     * @param event
+     * @throws IOException 
+     */
 
     @FXML
     private void setOverview(ActionEvent event) throws IOException {
@@ -199,10 +232,7 @@ public class AdminCreateController implements Initializable {
         closePreviousScene.close();
     }
 
-    @FXML
-    private void setCloseMenubar(MouseEvent event) {
-        usrmenubar.setVisible(false);
-    }
+   
 
     @FXML
     private void setLogOutusr(ActionEvent event) throws IOException {
