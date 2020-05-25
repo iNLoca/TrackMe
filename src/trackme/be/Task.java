@@ -1,4 +1,3 @@
- 
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -11,20 +10,20 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-
+import javafx.scene.image.ImageView;
 
 /**
  *
  * @author WøbbePC
  */
 public class Task {
-    
+
     private int id;
     private final StringProperty description = new SimpleStringProperty();
     private List<TimeLog> taskTime = new ArrayList<>();
-    private final StringProperty name =  new SimpleStringProperty();
-    private final StringProperty date =  new SimpleStringProperty();
-    private final StringProperty totalTime =  new SimpleStringProperty();
+    private final StringProperty name = new SimpleStringProperty();
+    private final StringProperty date = new SimpleStringProperty();
+    private final StringProperty totalTime = new SimpleStringProperty();
     private int toPay; //0 = to be paid, 1 = to not be paid
     private long totalTimeInSeconds;
 
@@ -35,23 +34,34 @@ public class Task {
         this.toPay = toPay;
 
     }
-    
+
+    public ImageView getToPayImage() {
+        String ImageURL = "/trackme/gui/icons/yesmoney.png";
+
+        if (toPay == 1) {
+            ImageURL = "/trackme/gui/icons/nomoney.png";
+        }
+
+        ImageView newimageview = new ImageView(ImageURL);
+        return newimageview;
+    }
+
     public String getTotalTime() {
         return totalTime.get();
     }
 
     public void setTotalTime(String value) {
-         totalTime.set(value);
+        totalTime.set(value);
     }
-    
+
     public String getDate() {
         return date.get();
     }
 
     public void setDate(String value) {
-         date.set(value);
+        date.set(value);
     }
-    
+
     public String getName() {
         return name.get();
     }
@@ -66,9 +76,9 @@ public class Task {
 
     @Override
     public String toString() {
-        return getName(); 
+        return getName();
     }
-    
+
     public int getId() {
         return id;
     }
@@ -82,11 +92,11 @@ public class Task {
     }
 
     public void setDescription(String value) {
-         description.set(value);
+        description.set(value);
     }
-    
-    public StringProperty descriptionProperty(){
-       return description;
+
+    public StringProperty descriptionProperty() {
+        return description;
     }
 
     public int getToPay() {
@@ -104,8 +114,8 @@ public class Task {
     public void setTaskTime(List<TimeLog> taskTime) {
         this.taskTime = taskTime;
     }
-    
-    public void addTime(TimeLog time){
+
+    public void addTime(TimeLog time) {
         taskTime.add(time);
     }
 
@@ -116,6 +126,5 @@ public class Task {
     public void setTotalTimeInSeconds(long totalTimeInSeconds) {
         this.totalTimeInSeconds = totalTimeInSeconds;
     }
-    
-    
+
 }

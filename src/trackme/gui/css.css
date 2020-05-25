@@ -12,12 +12,12 @@ and open the template in the editor.
 .root{
     -fx-background-color: #262626;
 }
-
+/*
 .createTbv{
    -fx-background-color: #7a8ab8;
-     
+   
 
-}
+}*/
 
 .createTbv .column-header,
 .createTbv .column-header .filler,
@@ -27,27 +27,65 @@ and open the template in the editor.
 .createTbv .column-header-background{
     -fx-background-color: linear-gradient(#131313 0%, #424141 100%);
 }
+.createTbv .column-header-background .label{
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+.createTbv *.scroll-bar:horizontal *.increment-button,
+.createTbv *.scroll-bar:horizontal *.decrement-button {
+    -fx-background-color: null;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
 
+.createTbv *.scroll-bar:horizontal *.increment-arrow,
+.createTbv *.scroll-bar:horizontal *.decrement-arrow {
+    -fx-background-color: null;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+    -fx-shape: null;
+}
+.createTbv > .virtual-flow > .scroll-bar:vertical,
+.createTbv > .virtual-flow > .scroll-bar:vertical > .track,
+.createTbv > .virtual-flow > .scroll-bar:vertical > .track-background{
+    
+    -fx-background-color: transparent;
+}
+/*
 .createTbv:focused{
     -fx-background-color: transparent;
     -fx-text-fill: blue;
 
         
 }
+*/
+
+.createTbv{
+
+    -fx-border-style: solid;
+    
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+    -fx-text-fill: black;
+    -fx-animated: true;
+}
 
 .btn{
 
--fx-background-color: lightgrey;
--fx-border-color: #a9d1e8;
+-fx-background-color: whitesmoke;
+-fx-border-color: black;
 
 
 
 
 }
+
 /* Spaltenköpfe
     Struktur column-header-background -> column-header */
 
-
+/*
 .createTbv .column-header-background .label{
     -fx-background-color: transparent;
     -fx-text-fill: white;
@@ -66,12 +104,14 @@ and open the template in the editor.
     -fx-background-color: -fx-table-cell-border-color,  #9ca7c9;
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em; /* 0 */
+/*
 }
 
 .tableRowCell:odd{
     -fx-background-color: -fx-table-cell-border-color, #8b98c1;
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em; /* 0 */  
+/*
 }
 
 .tableRowCell:focused{
@@ -89,3 +129,4 @@ and open the template in the editor.
     -fx-background-color: transparent;
 }
 
+*/

@@ -75,7 +75,7 @@ public class AdminMainPageController implements Initializable {
     @FXML
     private TableColumn<Task, String> desccolm;
     @FXML
-    private TableColumn<Task, Integer> moneycolmn;
+    private TableColumn<Task, ImageView> moneycolmn;
     @FXML
     private Pane usrmenubar;
     @FXML
@@ -109,6 +109,12 @@ public class AdminMainPageController implements Initializable {
     private String initialName;
     private String initialDescription;
 
+    private String ImageURL = "/trackme/gui/icons/yesmoney.png";
+    ImageView newimageview = new ImageView(ImageURL);
+
+    private String ImageURL2 = "/trackme/gui/icons/nomoney.png";
+    ImageView newimageview2 = new ImageView(ImageURL2);
+
     private ScheduledExecutorService ThreadExecutor;
     @FXML
     private JFXButton addTask;
@@ -118,8 +124,6 @@ public class AdminMainPageController implements Initializable {
     TableColumn<Task, Void> colBtn;
     @FXML
     private TableColumn<?, ?> totaltimespentcolmn;
-    
-    
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -152,7 +156,25 @@ public class AdminMainPageController implements Initializable {
         project = projectbox.getSelectionModel().getSelectedItem();
         setTaskTableView(project);
         refreshTable();
-
+    }
+    
+    private Callback<TableColumn<Task, Integer>, TableCell<Task, Integer>> getCustomCellFactory() {
+        return (TableColumn<Task, Integer> param)
+                -> {
+            return new TableCell<Task, Integer>() {
+                @Override
+                public void updateItem(final Integer item, boolean empty) {
+                    if (item != null) {
+                        if (item == 0) {
+                            //this.getChildren().clear();
+                            this.getChildren().add(newimageview);
+                        } else {
+                            this.getChildren().add(newimageview);
+                        }
+                    }
+                }
+            };
+        };
     }
 
     private void setTaskTableView(Project project) throws SQLServerException {
@@ -160,19 +182,18 @@ public class AdminMainPageController implements Initializable {
         this.taskList = FXCollections.observableArrayList(bllManager.getTasksForProject(project));
         taskcolmn.setCellValueFactory(new PropertyValueFactory<>("name"));
         desccolm.setCellValueFactory(new PropertyValueFactory<>("description"));
-        
-        
-        moneycolmn.setCellValueFactory(new PropertyValueFactory<>("toPay")); //not finnished 
-        
-        
+
+        // moneycolmn.setCellValueFactory(new PropertyValueFactory<>("toPay")); //not finnished 
+        moneycolmn.setCellValueFactory(new PropertyValueFactory<>("toPayImage")); //not finnished 
+        //moneycolmn.setCellFactory(getCustomCellFactory());
+
         tasktableview.setItems(taskList);
 
         addStartButton();
 
     }
 
- //  final ImageView imageview = new ImageView();
-    
+    //  final ImageView imageview = new ImageView();
     private void addStartButton() throws SQLServerException {
 
         colBtn.getStyleClass().add("tableRowCell");
@@ -188,8 +209,8 @@ public class AdminMainPageController implements Initializable {
                         btn.setOnAction((ActionEvent event) -> {
                             task = getTableView().getItems().get(getIndex());
                             // System.out.println("selctedTask: " + task);
-                             LOl = false;
-                             ThreadExecutor.shutdown();
+                            LOl = false;
+                            ThreadExecutor.shutdown();
                             try {
                                 bllManager.insertTimeLog(user, project, task, 2);
                             } catch (SQLServerException ex) {
@@ -199,35 +220,36 @@ public class AdminMainPageController implements Initializable {
                         });
 
                     }
-                        String ImageSource = "/trackme/gui/icons/play.png";
-                        ImageView imageview  = new ImageView(ImageSource);
+                    String ImageSource = "/trackme/gui/icons/play.png";
+                    ImageView imageview = new ImageView(ImageSource);
+
                     @Override
                     public void updateItem(Void item, boolean empty) {
-                       // btn.getStyleClass().add("btn");
-          
-                imageview.setFitHeight(30);
-                imageview.setFitWidth(30);
-                       
+                        // btn.getStyleClass().add("btn");
+
+                        imageview.setFitHeight(30);
+                        imageview.setFitWidth(30);
+
                         super.updateItem(item, empty);
                         if (empty) {
                             setGraphic(null);
-                               imageview.setImage(new Image(ImageSource));
-                        } else { 
+                            imageview.setImage(new Image(ImageSource));
+                        } else {
                             setGraphic(imageview);
                             setGraphic(btn);
-                            
+
                         }
-                              
+
                     }
-                       
+
                 };
-               
+
                 return cell;
 
             }
 
         };
-        
+
         colBtn.setCellFactory(cellFactory);
 
     }
@@ -239,51 +261,47 @@ public class AdminMainPageController implements Initializable {
 
     private boolean LOl = false;
 
-
     @FXML
-    private void setSelectTask(MouseEvent event) throws SQLServerException  {
-        
-         startTracker();
-                     
+    private void setSelectTask(MouseEvent event) throws SQLServerException {
+
+        startTracker();
+
         //introtasklbl.setVisible(true);
-       // introdeslbl.setVisible(true);
-      
+        // introdeslbl.setVisible(true);
         try {
             tasknamelbl.setText(tasktableview.getSelectionModel().getSelectedItem().getName());
         } catch (NullPointerException e) {
             System.out.println("cannot be null");
         }
         descriptionlbl.setText(tasktableview.getSelectionModel().getSelectedItem().getDescription());
-       
+
     }
 
-    private void startTracker()throws SQLServerException{
-    
-      //     if (btn != null && !LOl) {
-                                LOl = true;
-                                long startTime = System.currentTimeMillis();
-                                ThreadExecutor = Executors.newSingleThreadScheduledExecutor();
-                                ThreadExecutor.scheduleAtFixedRate(() -> {
-                                    Platform.runLater(() -> {
-                                        long elapsedTime = System.currentTimeMillis() - startTime;
-                                        long elapsedSeconds = (elapsedTime / 1000) % 60;
-                                        long elapsedMinutes = ((elapsedTime / 1000) / 60) % 60;
-                                        long elapsedHours = (((elapsedTime / 1000) / 60) / 60) % 24;
-                                        timecountlbl.setText(elapsedHours + " : " + elapsedMinutes + " : " + elapsedSeconds);
-                                    });
-                                }, 1, 1, TimeUnit.SECONDS);
-                              
-                            
-                                try {
-                                    bllManager.insertTimeLog(user, project, task, 1);
-                                } catch (SQLServerException ex) {
-                                    Logger.getLogger(UserMainPageController.class.getName()).log(Level.SEVERE, null, ex);
-                                }
-                         //   }
-    
-    
+    private void startTracker() throws SQLServerException {
+
+        //     if (btn != null && !LOl) {
+        LOl = true;
+        long startTime = System.currentTimeMillis();
+        ThreadExecutor = Executors.newSingleThreadScheduledExecutor();
+        ThreadExecutor.scheduleAtFixedRate(() -> {
+            Platform.runLater(() -> {
+                long elapsedTime = System.currentTimeMillis() - startTime;
+                long elapsedSeconds = (elapsedTime / 1000) % 60;
+                long elapsedMinutes = ((elapsedTime / 1000) / 60) % 60;
+                long elapsedHours = (((elapsedTime / 1000) / 60) / 60) % 24;
+                timecountlbl.setText(elapsedHours + " : " + elapsedMinutes + " : " + elapsedSeconds);
+            });
+        }, 1, 1, TimeUnit.SECONDS);
+
+        try {
+            bllManager.insertTimeLog(user, project, task, 1);
+        } catch (SQLServerException ex) {
+            Logger.getLogger(UserMainPageController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //   }
+
     }
-    
+
     @FXML
     private void setMenuPopUp(MouseEvent event) {
         usrmenubar.setVisible(true);
@@ -383,52 +401,34 @@ public class AdminMainPageController implements Initializable {
         closePreviousScene.close();
     }
 
-    String ImageURL = "/trackme/gui/icons/yesmoney.png";
-    ImageView newimageview  = new ImageView(ImageURL);
-   
-    String ImageURL2 = "/trackme/gui/icons/nomoney.png";
-   ImageView newimageview2  = new ImageView(ImageURL2);
-  
-   
-    
-  
-   
     @FXML
     private void setAddTask(ActionEvent event) throws SQLServerException {
-        
-       
 
         if (project != null) {
             if (insertTasklbl.getText().equals(initialName) && Descriplbl.getText().equals(initialDescription)) {
-              
+
             } else {
 
                 if (checkmoney.isSelected() && addTask != null) {
                     initialName = insertTasklbl.getText();
                     initialDescription = Descriplbl.getText();
                     bllManager.insertTaskForProject(project, insertTasklbl.getText(), Descriplbl.getText(), 0);
-                    
+
                     setTaskTableView(project);
-                    
+
                     insertTasklbl.clear();
                     Descriplbl.clear();
                     tasktableview.refresh();
                     // refreshTable();
 
-                  
-                // moneycolmn.setGraphic(newimageview);
-              //   moneycolmn.setCellFactory((Callback<TableColumn<Task, Integer>, TableCell<Task, Integer>>) newimageview);
-                     startTracker();
+                    // moneycolmn.setGraphic(newimageview);
+                    //   moneycolmn.setCellFactory((Callback<TableColumn<Task, Integer>, TableCell<Task, Integer>>) newimageview);
+                    startTracker();
 
-                   
-                   
-                    
-                   // moneycolmn.getColumn().add(newimageview);
+                    // moneycolmn.getColumn().add(newimageview);
                     moneycolmn.setGraphic(newimageview);
-                  
-                //     startTracker();
-                     
 
+                    //     startTracker();
                 } else if (!checkmoney.isSelected() && addTask != null) {
                     initialName = insertTasklbl.getText();
                     initialDescription = Descriplbl.getText();
@@ -441,19 +441,15 @@ public class AdminMainPageController implements Initializable {
                     tasktableview.refresh();
 
                     // refreshTable();
-                 //                    moneycolmn.setCellFactory((Callback<TableColumn<Task, Integer>, TableCell<Task, Integer>>) newimageview2);
+                    //                    moneycolmn.setCellFactory((Callback<TableColumn<Task, Integer>, TableCell<Task, Integer>>) newimageview2);
+                    // moneycolmn.setGraphic(newimageview2);
+                    moneycolmn.setGraphic(newimageview);
 
-                   // moneycolmn.setGraphic(newimageview2);
-
-                     moneycolmn.setGraphic(newimageview);
-                   
-
-                     startTracker();
+                    startTracker();
                 }
             }
         }
 
     }
-
 
 }
