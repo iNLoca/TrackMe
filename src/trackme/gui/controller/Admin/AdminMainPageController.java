@@ -247,8 +247,12 @@ public class AdminMainPageController implements Initializable {
                      
         //introtasklbl.setVisible(true);
        // introdeslbl.setVisible(true);
-        
-        tasknamelbl.setText(tasktableview.getSelectionModel().getSelectedItem().getName());
+      
+        try {
+            tasknamelbl.setText(tasktableview.getSelectionModel().getSelectedItem().getName());
+        } catch (NullPointerException e) {
+            System.out.println("cannot be null");
+        }
         descriptionlbl.setText(tasktableview.getSelectionModel().getSelectedItem().getDescription());
        
     }

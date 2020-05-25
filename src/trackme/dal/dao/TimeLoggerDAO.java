@@ -59,6 +59,9 @@ public class TimeLoggerDAO {
 
         } catch (SQLException ex) {
             Logger.getLogger(TimeLoggerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }catch (NullPointerException ea){
+            System.out.println("cant be null");
+            
         }
     }
     

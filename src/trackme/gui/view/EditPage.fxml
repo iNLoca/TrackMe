@@ -49,7 +49,7 @@
       </ImageView>
       <DatePicker fx:id="date" layoutX="138.0" layoutY="199.0" />
       <Label layoutX="70.0" layoutY="204.0" prefHeight="17.0" prefWidth="48.0" text="Date:" />
-      <Label fx:id="completelbl" layoutX="181.0" layoutY="460.0" prefHeight="17.0" prefWidth="110.0" text="Update Completed !" textFill="#41eb63" visible="false">
+      <Label fx:id="completelbl" layoutX="163.0" layoutY="460.0" prefHeight="20.0" prefWidth="147.0" text="Update Completed !" textFill="#41eb63" visible="false">
          <font>
             <Font size="14.0" />
          </font>
