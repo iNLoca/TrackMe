@@ -41,18 +41,14 @@ public class LoginController implements Initializable {
     private JFXTextField emaillbl;
     @FXML
     private JFXPasswordField passlbl;
-
-    private final String UserLogin = "/trackme/gui/view/UserMainPage.fxml";
-
-    private UserModel userModel;
     @FXML
     private Label errorlbl;
 
-    /**
-     * Initializes the controller class.
-     */
     private User user;
+    private UserModel userModel;
 
+    private final String UserLogin = "/trackme/gui/view/UserMainPage.fxml";
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         userModel = UserModel.getInstance();
@@ -133,29 +129,4 @@ public class LoginController implements Initializable {
 
     }
 
-    /*
-     private void authentication() throws Exception {
-     try {
-            this.user= userModel.loginUser(emaillbl.getText(), passlbl.getText());
-        } catch (Exception ex) {
-            showAlert(ex);
-        }
-        if (user != null) {
-            if (user.getType() == User.UserType.ADMIN) {
-                loadUpNextView(user);
-                closeLoginScene();
-            } else if (user.getType() == User.UserType.EMPLOYEE) {
-               loadUpNextView(user);
-                closeLoginScene();
-            }
-        }
-}
-     private void showAlert(Exception ex) {
-        Alert a = new Alert(Alert.AlertType.ERROR, "An error occured: " + ex.getMessage(), ButtonType.OK);
-        a.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-        a.show();
-        if (a.getResult() == ButtonType.OK) {
-        }
-    }
-     */
 }

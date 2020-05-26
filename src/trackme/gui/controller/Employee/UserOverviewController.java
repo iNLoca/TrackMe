@@ -68,42 +68,39 @@ public class UserOverviewController implements Initializable {
     private Pane usrmenubar;
     @FXML
     private Button logoutbtn;
-    private BLLManager bllManager;
-    private final String LoginScene = "/trackme/gui/view/Login.fxml";
-    private final String OverviewScene = "/trackme/gui/view/UserOverview.fxml";
-    private final String Tracker = "/trackme/gui/view/UserMainPage.fxml";
-   
     @FXML
     private ImageView menubar;
     @FXML
     private JFXButton overviewbtn;
     @FXML
     private JFXButton trackerbtn;
-
-    /**
-     * Initializes the controller class.
-     */
-    private List<Project> projects;
-    private UserModel userModel;
     @FXML
     private Label usrnamelbl;
     @FXML
     private JFXButton editovbtn;
-    private User user;
-    private Project project;
     @FXML
     private BarChart<String, Integer> projectBarChart;
     @FXML
     private JFXDatePicker fromDatePicker;
     @FXML
     private JFXDatePicker toDatePicker;
+
+    private User user;
+    private Project project;
+    private List<Project> projects;
+    private UserModel userModel;
+    private BLLManager bllManager;
+    private final String LoginScene = "/trackme/gui/view/Login.fxml";
+    private final String OverviewScene = "/trackme/gui/view/UserOverview.fxml";
+    private final String Tracker = "/trackme/gui/view/UserMainPage.fxml";
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         userModel = UserModel.getInstance();
         user = userModel.getLoggedInUser();
         usrnamelbl.setText(user.getName());
         bllManager = new BLLManager();
-        
+
         try {
             projects = bllManager.getUserProjectTime(user);
             bllManager.getTotalTimeForEachProject(projects);
@@ -116,20 +113,160 @@ public class UserOverviewController implements Initializable {
         setBarChartForSelectedProject(projects);
     }
 
+    /**
+     * Task Combo Box setup
+     *
+     * @param user
+     * @throws SQLServerException
+     * @throws SQLException
+     */
     private void setTaskInComboBox(User user) throws SQLServerException, SQLException {
         ObservableList<Project> projectList = FXCollections.observableArrayList(bllManager.getProjectsForUser(user));
         sortcombobox.getItems().clear();
         sortcombobox.getItems().addAll(projectList);
         sortcombobox.getSelectionModel().select(sortcombobox.getValue());
     }
-    
+
+    /**
+     * Sort combo box on selection
+     *
+     * @param event
+     * @throws SQLServerException
+     * @throws ParseException
+     */
     @FXML
-    private void setSortComboBox(ActionEvent event) throws SQLServerException, ParseException{
+    private void setSortComboBox(ActionEvent event) throws SQLServerException, ParseException {
         project = sortcombobox.getSelectionModel().getSelectedItem();
         setTaskOverview(user, project);
     }
 
-    
+    /**
+     * BarChart setup method
+     *
+     * @param projects
+     */
+    private void setBarChartForSelectedProject(List<Project> projects) {
+        XYChart.Series dataSeries1 = new XYChart.Series();
+        dataSeries1.setName("projects");
+        for (Project var : projects) {
+            String name = var.getName();
+            long time = var.getTotalTimeInSeconds() / 3600;
+            dataSeries1.getData().add(new XYChart.Data(name, time));
+        }
+        projectBarChart.setAnimated(false);
+        projectBarChart.setTitle("Overall Time Spent On Projects");
+        projectBarChart.getData().add(dataSeries1);
+    }
+
+    /**
+     * Task Overview table setup method??
+     *
+     * @param user
+     * @param project
+     * @throws SQLServerException
+     * @throws ParseException
+     */
+    private void setTaskOverview(User user, Project project) throws SQLServerException, ParseException {
+        List<Task> allTaskLogs = bllManager.getAllTaskLogsForProject(user, project);
+
+        if (fromDatePicker.getValue() == null && toDatePicker.getValue() == null) {
+            System.out.println("shit dont works");
+            for (Task task : allTaskLogs) {
+                bllManager.getTotalTimeForTask(task);
+                task.setDate(task.getTaskTime().get(0).getTime().toLocalDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
+                task.setTotalTime(convertSecondsToHourMinuteSecond(task));
+            }
+            ObservableList<Task> taskList = FXCollections.observableArrayList(allTaskLogs);
+            tasks.setCellValueFactory(new PropertyValueFactory<>("name"));
+            date.setCellValueFactory(new PropertyValueFactory<>("date"));
+            tamespent.setCellValueFactory(new PropertyValueFactory<>("totalTime"));
+            tasksOverviewTable.setItems(taskList);
+        } else {
+            System.out.println("shit works");
+            bllManager.filterList(fromDatePicker.getValue(), toDatePicker.getValue(), allTaskLogs);
+            for (Task task : allTaskLogs) {
+                bllManager.getTotalTimeForTask(task);
+                task.setDate(task.getTaskTime().get(0).getTime().toLocalDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
+                task.setTotalTime(convertSecondsToHourMinuteSecond(task));
+            }
+            ObservableList<Task> taskList = FXCollections.observableArrayList(allTaskLogs);
+            tasks.setCellValueFactory(new PropertyValueFactory<>("name"));
+            date.setCellValueFactory(new PropertyValueFactory<>("date"));
+            tamespent.setCellValueFactory(new PropertyValueFactory<>("totalTime"));
+            tasksOverviewTable.setItems(taskList);
+        }
+    }
+
+    /**
+     * Time Converter method
+     *
+     * @param task
+     * @return
+     */
+    private String convertSecondsToHourMinuteSecond(Task task) {
+        String time = "";
+        int p1 = (int) task.getTotalTimeInSeconds() / 3600;
+        int remainder = (int) task.getTotalTimeInSeconds() - p1 * 3600;
+        int p2 = remainder / 60;
+        remainder = remainder - p2 * 60;
+        int p3 = remainder;
+        time = p1 + ":" + p2 + ":" + p3;
+        return time;
+    }
+
+    /**
+     * DatePicker Selection Form Date Method
+     * @param event
+     * @throws SQLServerException
+     * @throws ParseException
+     */
+    @FXML
+    private void setSelectedFromDate(ActionEvent event) throws SQLServerException, ParseException {
+        if (toDatePicker.getValue() == null) {
+
+        } else {
+            setTaskOverview(user, project);
+        }
+    }
+
+    /**
+     *DatePicker Selection To Date Method
+     * @param event
+     * @throws SQLServerException
+     * @throws ParseException
+     */
+    @FXML
+    private void setSelectedTODATE(ActionEvent event) throws SQLServerException, ParseException {
+        if (fromDatePicker.getValue() == null) {
+            //DO NOTHING YOU NERD
+        } else {
+            setTaskOverview(user, project);
+        }
+    }
+
+    /**
+     * Menu bar method
+     *
+     * @param event
+     */
+    @FXML
+    private void setShowMenubar(MouseEvent event) {
+        usrmenubar.setVisible(true);
+
+    }
+
+    @FXML
+    private void setCloseMenubar(MouseEvent event) {
+        usrmenubar.setVisible(false);
+
+    }
+
+    /**
+     * Opening scenes methods
+     *
+     * @param event
+     * @throws IOException
+     */
     @FXML
     private void setOverview(ActionEvent event) throws IOException {
         FXMLLoader fxloader = new FXMLLoader(getClass().getResource(OverviewScene));
@@ -160,18 +297,6 @@ public class UserOverviewController implements Initializable {
         Stage closePreviousScene;
         closePreviousScene = (Stage) trackerbtn.getScene().getWindow();
         closePreviousScene.close();
-    }
-
-    @FXML
-    private void setShowMenubar(MouseEvent event) {
-        usrmenubar.setVisible(true);
-
-    }
-
-    @FXML
-    private void setCloseMenubar(MouseEvent event) {
-        usrmenubar.setVisible(false);
-
     }
 
     @FXML
@@ -208,82 +333,4 @@ public class UserOverviewController implements Initializable {
         closePreviousScene.close();
     }
 
-    private void setBarChartForSelectedProject(List<Project> projects){
-        XYChart.Series dataSeries1 = new XYChart.Series();
-        dataSeries1.setName("projects");
-        for (Project var : projects) {
-            String name =var.getName();
-            long time = var.getTotalTimeInSeconds()/3600;
-            dataSeries1.getData().add(new XYChart.Data(name, time));
-        }
-        projectBarChart.setAnimated(false);
-        projectBarChart.setTitle("Overall Time Spent On Projects");
-        projectBarChart.getData().add(dataSeries1);
-    }
-    
-    private void setTaskOverview(User user, Project project) throws SQLServerException, ParseException{
-        List<Task> allTaskLogs = bllManager.getAllTaskLogsForProject(user, project);
-
-        if(fromDatePicker.getValue()==null && toDatePicker.getValue()==null){
-            System.out.println("shit dont works");
-        for (Task task : allTaskLogs) {
-            bllManager.getTotalTimeForTask(task);
-            task.setDate(task.getTaskTime().get(0).getTime().toLocalDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
-            task.setTotalTime(convertSecondsToHourMinuteSecond(task));
-        }
-        ObservableList<Task> taskList = FXCollections.observableArrayList(allTaskLogs);
-        tasks.setCellValueFactory(new PropertyValueFactory<>("name"));
-        date.setCellValueFactory(new PropertyValueFactory<>("date"));
-        tamespent.setCellValueFactory(new PropertyValueFactory<>("totalTime")); 
-        tasksOverviewTable.setItems(taskList);
-        }
-        else{
-            System.out.println("shit works");
-        bllManager.filterList(fromDatePicker.getValue(), toDatePicker.getValue(), allTaskLogs);
-        for (Task task : allTaskLogs) {
-            bllManager.getTotalTimeForTask(task);
-            task.setDate(task.getTaskTime().get(0).getTime().toLocalDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
-            task.setTotalTime(convertSecondsToHourMinuteSecond(task));
-        }
-        ObservableList<Task> taskList = FXCollections.observableArrayList(allTaskLogs);
-        tasks.setCellValueFactory(new PropertyValueFactory<>("name"));
-        date.setCellValueFactory(new PropertyValueFactory<>("date"));
-        tamespent.setCellValueFactory(new PropertyValueFactory<>("totalTime")); 
-        tasksOverviewTable.setItems(taskList);
-        }
-    }
-    
-    private String convertSecondsToHourMinuteSecond(Task task){
-    String time = "";
-    int p1 = (int)task.getTotalTimeInSeconds()/3600;
-    int remainder = (int)task.getTotalTimeInSeconds()-p1*3600;
-    int p2 = remainder / 60;
-    remainder = remainder - p2 *60;
-    int p3 = remainder;
-    time = p1 + ":" + p2 + ":" + p3;
-    return time;
-    }
-
-    @FXML
-    private void setSelectedFromDate(ActionEvent event) throws SQLServerException, ParseException {
-        if(toDatePicker.getValue()==null){
-        
-        }else{
-            setTaskOverview(user, project);
-        }
-    }
-
-    @FXML
-    private void setSelectedTODATE(ActionEvent event) throws SQLServerException, ParseException {
-        if(fromDatePicker.getValue()==null){
-        //DO NOTHING YOU NERD
-        }else{
-            setTaskOverview(user, project);
-        }
-    }
-    
 }
-
-
-
-

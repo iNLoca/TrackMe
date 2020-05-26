@@ -63,25 +63,14 @@ public class AdminProfilesController implements Initializable {
     private JFXButton createbtn;
     @FXML
     private JFXButton profilesbtn;
-
-    private final String LoginScene = "/trackme/gui/view/Login.fxml";
-    private final String OverviewScene = "/trackme/gui/view/AdminOverview.fxml";
-    private User user;
-    private User selectedUser;
-    private UserModel userModel;
-    private BLLManager bllManager;
-
-    private String userName;
-    private String userPassword;
-    private String email;
-    private String checkidadmin;
-    private String checkemplid;
+  
     @FXML
     private TableView<User> usrtableview;
     @FXML
     private TableColumn<User, String> usrname;
     @FXML
     private TableColumn<User, UserType> usrtype;
+    
     @FXML
     private JFXTextField namefield;
     @FXML
@@ -106,7 +95,21 @@ public class AdminProfilesController implements Initializable {
     private Label successaddlbl;
     @FXML
     private Label deletelbl;
+    
+    private User user;
+    private User selectedUser;
+    private UserModel userModel;
+    private BLLManager bllManager;
 
+    private String userName;
+    private String userPassword;
+    private String email;
+    private String checkidadmin;
+    private String checkemplid;
+
+    private final String LoginScene = "/trackme/gui/view/Login.fxml";
+    private final String OverviewScene = "/trackme/gui/view/AdminOverview.fxml";
+    
     /**
      * Initializes the controller class.
      */
@@ -126,6 +129,12 @@ public class AdminProfilesController implements Initializable {
 
     }
 
+    
+    /**
+     * User table setup method
+     * @throws SQLServerException 
+     */
+    
     public void setUserTableView() throws SQLServerException {
         
         ObservableList<User> userList = FXCollections.observableArrayList(bllManager.getAllUsers());
@@ -136,6 +145,11 @@ public class AdminProfilesController implements Initializable {
 
     }
 
+    /**
+     * Selected User from Table Method
+     * @param event
+     * @throws SQLServerException 
+     */
     @FXML
     private void selectUser(MouseEvent event) throws SQLServerException {
         addUser.setVisible(false);
@@ -153,6 +167,10 @@ public class AdminProfilesController implements Initializable {
 
     }
 
+    /**
+     * Update checkbox method
+     * @param user 
+     */
     private void updateUserRoleCheckbox(User user) {
         admincheck.selectedProperty().setValue(false);
         employeecheck.selectedProperty().setValue(false);
@@ -168,6 +186,11 @@ public class AdminProfilesController implements Initializable {
         }
     }
 
+    /**
+     * Method for creating new user
+     * @param event
+     * @throws SQLServerException 
+     */
     @FXML
     private void setAddUser(ActionEvent event) throws SQLServerException {
 
@@ -184,6 +207,10 @@ public class AdminProfilesController implements Initializable {
 
     }
 
+    /**
+     * Saves the Data inserted by user 
+     * @throws SQLServerException 
+     */
     public void saveData() throws SQLServerException {
 
         userName = namefield.getText();
@@ -210,6 +237,11 @@ public class AdminProfilesController implements Initializable {
         deletelbl.setVisible(false);
         succsesaEditlbl.setVisible(false);
     }
+    
+    /**
+     * Method for updating the newly created data
+     * @throws SQLServerException 
+     */
 
     public void editData() throws SQLServerException {
 
@@ -238,6 +270,11 @@ public class AdminProfilesController implements Initializable {
 
         }
     }
+    
+    /**
+     * 
+     * Method for clearing/refreshing data
+     */
 
     private void clear() {
 
@@ -252,6 +289,11 @@ public class AdminProfilesController implements Initializable {
         addUser.setVisible(true);
     }
 
+    /**
+     * Checkbox Selection methods,
+     * preventing selection simultaneously
+     * @param event 
+     */
     @FXML
     private void setAdmin(ActionEvent event) {
         if (admincheck.isSelected()) {
@@ -267,6 +309,12 @@ public class AdminProfilesController implements Initializable {
         }
 
     }
+    
+    /**
+     * Method for Deleting User
+     * @param event
+     * @throws SQLServerException 
+     */
 
     @FXML
     private void setDeleteUser(ActionEvent event) throws SQLServerException {
@@ -283,6 +331,11 @@ public class AdminProfilesController implements Initializable {
         succsesaEditlbl.setVisible(false);
     }
 
+    /**
+     * Event method for Updating User data
+     * @param event
+     * @throws SQLServerException 
+     */
     @FXML
     private void setEditUser(ActionEvent event) throws SQLServerException {
          
@@ -294,11 +347,13 @@ public class AdminProfilesController implements Initializable {
         succsesaEditlbl.setVisible(true);
         deletelbl.setVisible(false);
         successaddlbl.setVisible(false);
-        
-        
-            
-
+   
     }
+    
+    /**
+     * Menu Bar functionality methods 
+     * @param event 
+     */
 
     @FXML
     private void setShowMenubar(MouseEvent event) {
@@ -309,6 +364,12 @@ public class AdminProfilesController implements Initializable {
     private void setCloseMenubar(MouseEvent event) {
         usrmenubar.setVisible(false);
     }
+    
+    /**
+     * Methods for opening scenes
+     * @param event
+     * @throws IOException 
+     */
 
     @FXML
     private void setOverview(ActionEvent event) throws IOException {

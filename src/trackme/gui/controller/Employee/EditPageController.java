@@ -13,12 +13,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
-
 import java.time.LocalDateTime;
 import java.util.List;
-
 import java.time.LocalTime;
-
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -71,23 +68,12 @@ public class EditPageController implements Initializable{
     private Button logoutbtn;
     @FXML
     private JFXButton editbtn;
-    
-    private final String LoginScene = "/trackme/gui/view/Login.fxml";
-    private final String OverviewScene = "/trackme/gui/view/UserOverview.fxml";
     @FXML
     private JFXComboBox<Project> editprojectcombobox;
     @FXML
     private JFXComboBox<Task> taskbox;
     @FXML
     private DatePicker date;
-    private Task task;
-    private User user;
-    private Project project;
-    private BLLManager bllManager;
-    private UserModel userModel;
-    private TaskModel taskModel;
-    private ProjectModel projectModel;
-    private TextField endtime;
     @FXML
     private JFXTimePicker startTimePicker;
     @FXML
@@ -97,6 +83,18 @@ public class EditPageController implements Initializable{
     @FXML
     private Label errorlbl;
     
+    private Task task;
+    private User user;
+    private Project project;
+    private BLLManager bllManager;
+    private UserModel userModel;
+    private TaskModel taskModel;
+    private ProjectModel projectModel;
+    private TextField endtime;
+    
+    
+    private final String LoginScene = "/trackme/gui/view/Login.fxml";
+    private final String OverviewScene = "/trackme/gui/view/UserOverview.fxml";
     
             
       @Override
@@ -105,7 +103,7 @@ public class EditPageController implements Initializable{
         user = userModel.getLoggedInUser();
         usrnamelbl.setText(user.getName());
         this.bllManager = new BLLManager();
-         //}
+         
         try {
             setProjects(user);
             //setTaskTableView(project);
@@ -116,11 +114,111 @@ public class EditPageController implements Initializable{
         }
 
     }
+    
+    
+    /**
+     * Project ComboBox setup
+     * @param user
+     * @throws SQLServerException
+     * @throws SQLException 
+     */
+     public void setProjects(User user)throws SQLServerException, SQLException{
+     ObservableList<Project> projectList = FXCollections.observableArrayList(bllManager.getProjectsForUser(user));
+        editprojectcombobox.getItems().clear();
+        editprojectcombobox.getItems().addAll(projectList);
+        editprojectcombobox.getSelectionModel().select(editprojectcombobox.getValue());
+    }
+    
+    /**
+     * Method for setting Tasks in combo box  
+     * @param event
+     * @throws SQLServerException 
+     */
+    @FXML
+    private void setProjectCombobox(ActionEvent event)throws SQLServerException {
+         project = editprojectcombobox.getSelectionModel().getSelectedItem();
+         setTaskCombobox(project);
+    }
+
+    /**
+     * Method for setting up task combo box
+     * @param project
+     * @throws SQLServerException 
+     */
+    
+   private void setTaskCombobox(Project project) throws SQLServerException {
+        ObservableList<Task> taskList = FXCollections.observableArrayList(bllManager.getTasksForProject(project));
+        taskbox.getItems().clear();
+        taskbox.getItems().addAll(taskList);
+        taskbox.getSelectionModel().select(taskbox.getValue());
+    
+   }
+   
+  /**
+   * Updating Data /Date, task, project, time/
+   * @param event
+   * @throws SQLServerException 
+   */
+   
+
+    @FXML
+    private void clickEditButton(ActionEvent event) throws SQLServerException {
+        
+        
+        if(date.getValue()!=null && startTimePicker.getValue()!=null && endTimePicker.getValue()!=null){
+        LocalDate value = date.getValue();
+
+        LocalTime startTime = startTimePicker.getValue();
+        LocalTime endTime = endTimePicker.getValue();
+        List<LocalDateTime> timeList = bllManager.calculateTime(startTime, endTime, value);
+        LocalDateTime newStartTime = timeList.get(0);
+        LocalDateTime newEndTime = timeList.get(1);
+        System.out.println(newStartTime);
+        System.out.println(newEndTime);
+        
+        bllManager.editTimeLog(user, project, task, newStartTime, newEndTime);
+        completelbl.setVisible(true);
+        errorlbl.setVisible(false);
+        }
+        else{
+           errorlbl.setVisible(true);
+           completelbl.setVisible(false);
+        }
+
+    }
+    
+    /**
+     * Method that gets the selected task 
+     * @param event 
+     */
+
+    @FXML
+    private void setSelectedTask(ActionEvent event) {
+        
+        task = taskbox.getSelectionModel().getSelectedItem();
+        
+    }
+    
+    /**
+     * Menu bar functionality methods
+     * @param event 
+     */
+    @FXML
+    private void setCloseMenubar(MouseEvent event) {
+        usrmenubar.setVisible(false);
+    }
+
     @FXML
     private void setMenuPopUp(MouseEvent event) {   
         usrmenubar.setVisible(true); 
     }
 
+    
+    /**
+     * Opening scenes methods
+     * @param event
+     * @throws IOException 
+     */
     @FXML
     private void setOverview(ActionEvent event) throws IOException {
         FXMLLoader fxloader = new FXMLLoader(getClass().getResource(OverviewScene));
@@ -154,11 +252,6 @@ public class EditPageController implements Initializable{
         Stage closePreviousScene;
         closePreviousScene = (Stage) trackerbtn.getScene().getWindow();
         closePreviousScene.close();
-    }
-
-    @FXML
-    private void setCloseMenubar(MouseEvent event) {
-        usrmenubar.setVisible(false);
     }
 
     @FXML
@@ -197,61 +290,4 @@ public class EditPageController implements Initializable{
         closePreviousScene.close();
     }
 
-    public void setProjects(User user)throws SQLServerException, SQLException{
-     ObservableList<Project> projectList = FXCollections.observableArrayList(bllManager.getProjectsForUser(user));
-        editprojectcombobox.getItems().clear();
-        editprojectcombobox.getItems().addAll(projectList);
-        editprojectcombobox.getSelectionModel().select(editprojectcombobox.getValue());
-    }
-    
-    
-    @FXML
-    private void setProjectCombobox(ActionEvent event)throws SQLServerException {
-         project = editprojectcombobox.getSelectionModel().getSelectedItem();
-         setTaskCombobox(project);
-    }
-
-   private void setTaskCombobox(Project project) throws SQLServerException {
-        ObservableList<Task> taskList = FXCollections.observableArrayList(bllManager.getTasksForProject(project));
-        taskbox.getItems().clear();
-        taskbox.getItems().addAll(taskList);
-        taskbox.getSelectionModel().select(taskbox.getValue());
-    
-   }
-   
-  
-   
-
-    @FXML
-    private void clickEditButton(ActionEvent event) throws SQLServerException {
-        
-        
-        if(date.getValue()!=null && startTimePicker.getValue()!=null && endTimePicker.getValue()!=null){
-        LocalDate value = date.getValue();
-
-        LocalTime startTime = startTimePicker.getValue();
-        LocalTime endTime = endTimePicker.getValue();
-        List<LocalDateTime> timeList = bllManager.calculateTime(startTime, endTime, value);
-        LocalDateTime newStartTime = timeList.get(0);
-        LocalDateTime newEndTime = timeList.get(1);
-        System.out.println(newStartTime);
-        System.out.println(newEndTime);
-        
-        bllManager.editTimeLog(user, project, task, newStartTime, newEndTime);
-        completelbl.setVisible(true);
-        errorlbl.setVisible(false);
-        }
-        else{
-           errorlbl.setVisible(true);
-           completelbl.setVisible(false);
-        }
-
-    }
-
-    @FXML
-    private void setSelectedTask(ActionEvent event) {
-        
-        task = taskbox.getSelectionModel().getSelectedItem();
-        
-    }
 }

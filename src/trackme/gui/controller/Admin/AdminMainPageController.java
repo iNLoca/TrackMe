@@ -106,10 +106,10 @@ public class AdminMainPageController implements Initializable {
     private BLLManager bllManager;
     private Project project;
     private Task task;
-    private Label tasknamelbl;
-    private Label descriptionlbl;
-    private Label introtasklbl;   //<- Those are not used at all ? 
-    private Label introdeslbl;
+   // private Label tasknamelbl;
+   // private Label descriptionlbl;
+   // private Label introtasklbl;   //<- Those are not used at all ? 
+   // private Label introdeslbl;
     private String initialName;
     private String initialDescription;
 
@@ -170,24 +170,6 @@ public class AdminMainPageController implements Initializable {
         refreshTable();
     }
     
-    private Callback<TableColumn<Task, Integer>, TableCell<Task, Integer>> getCustomCellFactory() {
-        return (TableColumn<Task, Integer> param)
-                -> {
-            return new TableCell<Task, Integer>() {
-                @Override
-                public void updateItem(final Integer item, boolean empty) {
-                    if (item != null) {
-                        if (item == 0) {
-                            //this.getChildren().clear();
-                            this.getChildren().add(newimageview);
-                        } else {
-                            this.getChildren().add(newimageview);
-                        }
-                    }
-                }
-            };
-        };
-    }
 
     /**
      * Method for table functionality
@@ -200,13 +182,8 @@ public class AdminMainPageController implements Initializable {
         this.taskList = FXCollections.observableArrayList(bllManager.getTasksForProject(project));
         taskcolmn.setCellValueFactory(new PropertyValueFactory<>("name"));
         desccolm.setCellValueFactory(new PropertyValueFactory<>("description"));
-
-
-        // moneycolmn.setCellValueFactory(new PropertyValueFactory<>("toPay")); //not finnished 
-        moneycolmn.setCellValueFactory(new PropertyValueFactory<>("toPayImage")); //not finnished 
-        //moneycolmn.setCellFactory(getCustomCellFactory());
-
-     
+       
+        moneycolmn.setCellValueFactory(new PropertyValueFactory<>("toPayImage")); 
 
 
         tasktableview.setItems(taskList);
@@ -246,22 +223,22 @@ public class AdminMainPageController implements Initializable {
                         });
 
                     }
-                    String ImageSource = "/trackme/gui/icons/play.png";
-                    ImageView imageview = new ImageView(ImageSource);
+                   // String ImageSource = "/trackme/gui/icons/play.png";
+                   // ImageView imageview = new ImageView(ImageSource);
 
                     @Override
                     public void updateItem(Void item, boolean empty) {
-                        // btn.getStyleClass().add("btn");
+                       
 
-                        imageview.setFitHeight(30);
-                        imageview.setFitWidth(30);
+                       // imageview.setFitHeight(30);
+                       // imageview.setFitWidth(30);
 
                         super.updateItem(item, empty);
                         if (empty) {
                             setGraphic(null);
-                            imageview.setImage(new Image(ImageSource));
+                           // imageview.setImage(new Image(ImageSource));
                         } else {
-                            setGraphic(imageview);
+                          //  setGraphic(imageview);
                             setGraphic(btn);
 
                         }
@@ -292,17 +269,6 @@ public class AdminMainPageController implements Initializable {
 
         startTracker();
 
-  // Gives nullpointers because those shouldnt be emppty and here
-        try {
-            tasknamelbl.setText(tasktableview.getSelectionModel().getSelectedItem().getName());
-        } catch (NullPointerException e) {
-            System.out.println("taskname cannot be null");
-        }
-        try {
-            descriptionlbl.setText(tasktableview.getSelectionModel().getSelectedItem().getDescription());
-        } catch (NullPointerException e) {
-            System.out.println("description Cannot be null");
-        }
     }
 
     /**
@@ -367,8 +333,6 @@ public class AdminMainPageController implements Initializable {
                     Descriplbl.clear();
                     tasktableview.refresh();
 
-                    //   moneycolmn.setCellFactory((Callback<TableColumn<Task, Integer>, TableCell<Task, Integer>>) newimageview);
-                    // moneycolmn.getColumn().add(newimageview);
                     startTracker();
 
                 } else if (!checkmoney.isSelected() && addTask != null) {
@@ -381,19 +345,14 @@ public class AdminMainPageController implements Initializable {
                     insertTasklbl.clear();
                     Descriplbl.clear();
                     tasktableview.refresh();
-
-                    // moneycolmn.setGraphic(newimageview2);
+                   
                     startTracker();
                 }
             }
         }
 
     }
-
-    
-   
-
-        
+       
     /**
      * Methods for accessing menu bar
      *

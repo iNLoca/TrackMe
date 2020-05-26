@@ -8,11 +8,7 @@
     <update check="always"/>
     <resources>
         <j2se version="9.0.4+" href="http://java.sun.com/products/autodl/j2se"/>
-
-        <jar href="TrackMe.jar" size="379650" download="eager"/>
-        <jar href="lib\jfoenix-9.0.8.jar" size="2419463" download="eager"/>
-        <jar href="lib\mssql-jdbc-6.4.0.jre9.jar" size="1123080" download="eager"/>
-        <jar href="TrackMe.jar" size="378027" download="eager"/>
+        <jar href="TrackMe.jar" size="382695" download="eager"/>
         <jar href="lib/jfoenix-9.0.8.jar" size="2419463" download="eager"/>
         <jar href="lib/mssql-jdbc-6.4.0.jre9.jar" size="1123080" download="eager"/>
     </resources>
