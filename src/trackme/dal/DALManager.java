@@ -129,4 +129,10 @@ public class DALManager implements IDALFacade {
     public void createProject(String name, String clientName, String cost) throws SQLServerException {
         projectDAO.createProject(name, clientName, cost);
     }
+
+    @Override
+    public void getAllTimeLogsForTask(Task task) throws SQLServerException {
+        timeLoggerDAO.getAllTimeLogsForTask(task);
+        
+    }
 }

@@ -228,7 +228,7 @@ public class AdminOverviewController implements Initializable {
             for (Task task : allTaskLogs) {
                 bllManager.getTotalTimeForTask(task);
                 task.setDate(task.getTaskTime().get(0).getTime().toLocalDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
-                task.setTotalTime(convertSecondsToHourMinuteSecond(task));
+                task.setTotalTime(bllManager.convertSecondsToHourMinuteSecond(task));
             }
             ObservableList<Task> taskList = FXCollections.observableArrayList(allTaskLogs);
             tasks.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -240,7 +240,7 @@ public class AdminOverviewController implements Initializable {
             for (Task task : allTaskLogs) {
                 bllManager.getTotalTimeForTask(task);
                 task.setDate(task.getTaskTime().get(0).getTime().toLocalDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
-                task.setTotalTime(convertSecondsToHourMinuteSecond(task));
+                task.setTotalTime(bllManager.convertSecondsToHourMinuteSecond(task));
             }
             ObservableList<Task> taskList = FXCollections.observableArrayList(allTaskLogs);
             tasks.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -250,23 +250,7 @@ public class AdminOverviewController implements Initializable {
         }
     }
 
-    /**
-     * Converter Method
-     *
-     * @param task
-     * @return
-     */
-    private String convertSecondsToHourMinuteSecond(Task task) {
-        String time = "";
-        int p1 = (int) task.getTotalTimeInSeconds() / 3600;
-        int remainder = (int) task.getTotalTimeInSeconds() - p1 * 3600;
-        int p2 = remainder / 60;
-        remainder = remainder - p2 * 60;
-        int p3 = remainder;
-        time = p1 + ":" + p2 + ":" + p3;
-        return time;
-    }
-
+   
     /**
      * BarChart Setup for selected project method
      *

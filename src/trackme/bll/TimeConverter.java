@@ -96,4 +96,14 @@ public class TimeConverter {
     return newTimes;
     }
     
+    public String convertSecondsToHourMinuteSecond(Task task) {
+        String time = "";
+        int p1 = (int) task.getTotalTimeInSeconds() / 3600;
+        int remainder = (int) task.getTotalTimeInSeconds() - p1 * 3600;
+        int p2 = remainder / 60;
+        remainder = remainder - p2 * 60;
+        int p3 = remainder;
+        time = p1 + ":" + p2 + ":" + p3;
+        return time;
+    }
 }

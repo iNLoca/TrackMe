@@ -139,4 +139,14 @@ public class BLLManager implements IBLLFacade {
     public void createProject(String name, String clientName, String cost) throws SQLServerException {
         dalManager.createProject(name, clientName, cost);
     }
+
+    @Override
+    public void getAllTimeLogsForTask(Task task) throws SQLServerException {
+        dalManager.getAllTimeLogsForTask(task);
+    }
+
+    @Override
+    public String convertSecondsToHourMinuteSecond(Task task) {
+        return timeConverter.convertSecondsToHourMinuteSecond(task);
+    }
 }

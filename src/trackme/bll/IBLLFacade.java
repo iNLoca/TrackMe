@@ -44,5 +44,7 @@ public interface IBLLFacade {
 
     public List<Project> getAllProjects() throws SQLServerException;
     public void createProject(String name, String clientName, String cost) throws SQLServerException;
+    public void getAllTimeLogsForTask(Task task) throws SQLServerException;
+    public String convertSecondsToHourMinuteSecond(Task task);
 
 }

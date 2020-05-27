@@ -13,6 +13,9 @@ import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -88,7 +91,7 @@ public class AdminMainPageController implements Initializable {
     @FXML
     TableColumn<Task, Void> colBtn;
     @FXML
-    private TableColumn<?, ?> totaltimespentcolmn;
+    private TableColumn<Task, String> totaltimespentcolmn;
 
     @FXML
     private ImageView showup; //Whats that? 
@@ -178,11 +181,17 @@ public class AdminMainPageController implements Initializable {
      * @throws SQLServerException
      */
     private void setTaskTableView(Project project) throws SQLServerException {
+        List<Task> tempTask = bllManager.getTasksForProject(project);
+        for (Task task1 : tempTask) {
+            bllManager.getAllTimeLogsForTask(task1);
+            bllManager.getTotalTimeForTask(task1);
+            task1.setTotalTime(bllManager.convertSecondsToHourMinuteSecond(task1));
+        }
 
-        this.taskList = FXCollections.observableArrayList(bllManager.getTasksForProject(project));
+        this.taskList = FXCollections.observableArrayList(tempTask);
         taskcolmn.setCellValueFactory(new PropertyValueFactory<>("name"));
         desccolm.setCellValueFactory(new PropertyValueFactory<>("description"));
-       
+        totaltimespentcolmn.setCellValueFactory(new PropertyValueFactory<>("totalTime")); 
         moneycolmn.setCellValueFactory(new PropertyValueFactory<>("toPayImage")); 
 
 

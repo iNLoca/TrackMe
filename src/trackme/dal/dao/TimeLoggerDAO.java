@@ -198,4 +198,32 @@ public class TimeLoggerDAO {
         }
         return null;
     }
+    
+    public void getAllTimeLogsForTask(Task task) throws SQLServerException{
+    String sql = "SELECT * FROM TimeLog WHERE taskId = ? ORDER BY taskId, userId";
+    try(Connection con = connection.getConnection()){
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        pstmt.setInt(1, task.getId());
+        ResultSet rs = pstmt.executeQuery();
+                        
+        while(rs.next()){
+            int typeOfTime = rs.getInt("typeOfTime");
+            LocalDateTime time = rs.getTimestamp("time").toLocalDateTime();
+            switch (typeOfTime) {
+                    case 1:
+                        task.addTime(new TimeLog(TimeLog.TimeType.PLAY, time));
+                        break;
+                    case 2:
+                        task.addTime(new TimeLog(TimeLog.TimeType.STOP, time));
+                        break;
+                }
+        }
+        
+    }   catch (SQLException ex) {
+            Logger.getLogger(TimeLoggerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+    }
+    
+    
 }

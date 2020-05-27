@@ -36,5 +36,5 @@ public interface IDALFacade {
     public void editTimeLog(User user, Project project, Task task, LocalDateTime startTime, LocalDateTime endTime) throws SQLServerException;
     public List<Project> getAllProjects() throws SQLServerException;
     public void createProject(String name, String clientName, String cost) throws SQLServerException;
-   
+    public void getAllTimeLogsForTask(Task task) throws SQLServerException;
 }
