@@ -35,17 +35,10 @@ public class Task {
 
     }
 
-    public ImageView getToPayImage() {
-        String ImageURL = "/trackme/gui/icons/yesmoney.png";
-
-        if (toPay == 1) {
-            ImageURL = "/trackme/gui/icons/nomoney.png";
-        }
-
-        ImageView newimageview = new ImageView(ImageURL);
-        return newimageview;
+    public StringProperty totalTimeProperty(){
+        return totalTime;
     }
-
+    
     public String getTotalTime() {
         return totalTime.get();
     }
