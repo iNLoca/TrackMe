@@ -170,7 +170,6 @@ public class UserOverviewController implements Initializable {
         List<Task> allTaskLogs = bllManager.getAllTaskLogsForProject(user, project);
 
         if (fromDatePicker.getValue() == null && toDatePicker.getValue() == null) {
-            System.out.println("shit dont works");
             for (Task task : allTaskLogs) {
                 bllManager.getTotalTimeForTask(task);
                 task.setDate(task.getTaskTime().get(0).getTime().toLocalDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
@@ -182,7 +181,6 @@ public class UserOverviewController implements Initializable {
             tamespent.setCellValueFactory(new PropertyValueFactory<>("totalTime"));
             tasksOverviewTable.setItems(taskList);
         } else {
-            System.out.println("shit works");
             bllManager.filterList(fromDatePicker.getValue(), toDatePicker.getValue(), allTaskLogs);
             for (Task task : allTaskLogs) {
                 bllManager.getTotalTimeForTask(task);

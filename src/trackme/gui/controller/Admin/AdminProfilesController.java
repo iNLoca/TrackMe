@@ -318,6 +318,7 @@ public class AdminProfilesController implements Initializable {
 
     @FXML
     private void setDeleteUser(ActionEvent event) throws SQLServerException {
+        
         selectedUser = usrtableview.getSelectionModel().getSelectedItem();
 
         bllManager.deleteUser(selectedUser);
