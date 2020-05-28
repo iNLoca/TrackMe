@@ -15,11 +15,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="userfrontPane" prefHeight="514.0" prefWidth="462.0" style="-fx-background-color: #6f80b1#6f80b1 #6f80b1#6f80b1;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trackme.gui.controller.Employee.EditPageController">
+<AnchorPane id="AnchorPane" fx:id="userfrontPane" prefHeight="514.0" prefWidth="462.0" style="-fx-background-color: #6f80b1#6f80b1 #6f80b1#6f80b1;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trackme.gui.controller.Employee.EditPageController">
    <children>
 
       <JFXComboBox fx:id="editprojectcombobox" layoutX="46.0" layoutY="115.0" onAction="#setProjectCombobox" prefHeight="27.0" prefWidth="120.0" promptText="Projects" />
-      <JFXButton fx:id="addeditbtn" buttonType="RAISED" layoutX="202.0" layoutY="403.0" onAction="#clickEditButton" prefHeight="33.0" prefWidth="81.0" ripplerFill="#4387c5cc" style="-fx-border-color: black;" text="Update" />
+      <JFXButton fx:id="addeditbtn" buttonType="RAISED" layoutX="186.0" layoutY="404.0" onAction="#clickEditButton" prefHeight="33.0" prefWidth="81.0" ripplerFill="#4387c5cc" style="-fx-border-color: black;" text="Update" />
 
       <ImageView fitHeight="43.0" fitWidth="147.0" layoutX="-1.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -49,12 +49,12 @@
       </ImageView>
       <DatePicker fx:id="date" layoutX="138.0" layoutY="199.0" />
       <Label layoutX="70.0" layoutY="204.0" prefHeight="17.0" prefWidth="48.0" text="Date:" />
-      <Label fx:id="completelbl" layoutX="163.0" layoutY="460.0" prefHeight="20.0" prefWidth="147.0" text="Update Completed !" textFill="#41eb63" visible="false">
+      <Label fx:id="completelbl" layoutX="167.0" layoutY="457.0" prefHeight="20.0" prefWidth="147.0" text="Update Completed !" textFill="#41eb63" visible="false">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="errorlbl" layoutX="176.0" layoutY="374.0" prefHeight="17.0" prefWidth="120.0" text="Error: Invalid Fields" textFill="#9e0b0b" visible="false" />
+      <Label fx:id="errorlbl" layoutX="166.0" layoutY="373.0" prefHeight="17.0" prefWidth="120.0" text="Error: Invalid Fields" textFill="#9e0b0b" visible="false" />
       <JFXTimePicker fx:id="endTimePicker" defaultColor="BLACK" layoutX="146.0" layoutY="327.0" />
       <JFXTimePicker fx:id="startTimePicker" defaultColor="BLACK" layoutX="146.0" layoutY="270.0" />
       <Label layoutX="406.0" layoutY="8.0" prefHeight="28.0" prefWidth="48.0" text="Edit">

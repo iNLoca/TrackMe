@@ -267,7 +267,7 @@ public class AdminMainPageController implements Initializable {
     }
 
     /**
-     * Method for starting task tracker after selection  ///NEEDS CHANGES
+     * Method for starting task tracker after selection
      *
      * @param event
      * @throws SQLServerException
@@ -359,7 +359,7 @@ public class AdminMainPageController implements Initializable {
                 }
             }
         }
-
+         
     }
        
     /**
