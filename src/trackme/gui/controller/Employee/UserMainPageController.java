@@ -45,8 +45,6 @@ import trackme.be.Project;
 import trackme.be.Task;
 import trackme.be.User;
 import trackme.bll.BLLManager;
-import trackme.gui.model.ProjectModel;
-import trackme.gui.model.TaskModel;
 import trackme.gui.model.UserModel;
 
 /**
@@ -102,8 +100,6 @@ public class UserMainPageController implements Initializable {
     private JFXButton addtask;
 
     private UserModel userModel;
-    private TaskModel taskModel;
-    private ProjectModel projectModel;
     private User user;
     private Project project;
     private Task task;
