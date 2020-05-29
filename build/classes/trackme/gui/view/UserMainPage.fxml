@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="userfrontPane" prefHeight="514.0" prefWidth="469.0" style="-fx-background-color: #6f80b1#6f80b1 #6f80b1#6f80b1;" styleClass="createTbv" stylesheets="@../css.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trackme.gui.controller.Employee.UserMainPageController">
+<AnchorPane fx:id="userfrontPane" prefHeight="514.0" prefWidth="469.0" style="-fx-background-color: #6f80b1#6f80b1 #6f80b1#6f80b1;" styleClass="createTbv" stylesheets="@../css.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trackme.gui.controller.Employee.UserMainPageController">
    <children>
       <Label fx:id="timecountlbl" alignment="CENTER_RIGHT" layoutX="215.0" layoutY="29.0" prefHeight="23.0" prefWidth="97.0">
          <font>
@@ -44,13 +44,13 @@
             <Image url="@../icons/next-arrow-icon-18.png" />
          </image>
       </ImageView>
-      <TableView fx:id="tasktableview" fixedCellSize="0.0" layoutX="33.0" layoutY="158.0" onMouseClicked="#setSelectTask" prefHeight="303.0" prefWidth="404.0" style="-fx-selection-bar: black;" styleClass="createTbv" stylesheets="@../css.css">
+      <TableView fx:id="tasktableview" fixedCellSize="0.0" layoutX="33.0" layoutY="158.0" onMouseClicked="#setSelectTask" prefHeight="303.0" prefWidth="422.0" style="-fx-selection-bar: black; -fx-border-color: black;" styleClass="createTbv" stylesheets="@../css.css">
         <columns>
-          <TableColumn fx:id="taskcolmn" prefWidth="102.0" styleClass="tableRowCell" text="Tasks" />
-            <TableColumn fx:id="desccolm" prefWidth="136.0" styleClass="tableRowCell" text="Description" />
-            <TableColumn fx:id="moneycolmn" prefWidth="84.0" styleClass="tableRowCell" text="Payable" />
-            <TableColumn fx:id="totaltimecolmn" prefWidth="75.0" styleClass="tableRowCell" text="Total Time" />
-            <TableColumn fx:id="colBtn" prefWidth="75.0" styleClass="tableRowCell" text="Stop Time" />
+          <TableColumn fx:id="taskcolmn" prefWidth="58.0" styleClass="tableRowCell" text="Tasks" />
+            <TableColumn fx:id="desccolm" prefWidth="113.0" styleClass="tableRowCell" text="Description" />
+            <TableColumn fx:id="moneycolmn" prefWidth="67.0" styleClass="tableRowCell" text="Payable" />
+            <TableColumn fx:id="totaltimecolmn" prefWidth="90.0" styleClass="tableRowCell" text="Total Time" />
+            <TableColumn fx:id="colBtn" prefWidth="91.0" styleClass="tableRowCell" text="Stop Time" />
         </columns>
          <effect>
             <InnerShadow color="#0000007c" />

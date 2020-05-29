@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="adminfrontPane" prefHeight="514.0" prefWidth="469.0" style="-fx-background-color: #6f80b1;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trackme.gui.controller.Admin.AdminMainPageController">
+<AnchorPane id="AnchorPane" fx:id="adminfrontPane" prefHeight="514.0" prefWidth="469.0" style="-fx-background-color: #6f80b1;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trackme.gui.controller.Admin.AdminMainPageController">
    <children>
       <Label fx:id="timecountlbl" alignment="CENTER_RIGHT" layoutX="207.0" layoutY="29.0" prefHeight="23.0" prefWidth="104.0">
          <font>
@@ -44,10 +44,10 @@
             <Image url="@../icons/next-arrow-icon-18.png" />
          </image>
       </ImageView>
-      <TableView fx:id="tasktableview" fixedCellSize="0.0" layoutX="33.0" layoutY="165.0" onMouseClicked="#setSelectTask" prefHeight="306.0" prefWidth="426.0" style="-fx-border-color: black; -fx-selection-bar: black;" styleClass="createTbv" stylesheets="@../css.css">
+      <TableView fx:id="tasktableview" fixedCellSize="0.0" layoutX="33.0" layoutY="158.0" onMouseClicked="#setSelectTask" prefHeight="306.0" prefWidth="426.0" style="-fx-border-color: black; -fx-selection-bar: black;" styleClass="createTbv" stylesheets="@../css.css">
         <columns>
-          <TableColumn fx:id="taskcolmn" prefWidth="109.0" styleClass="tableRowCell" text="Tasks" />
-            <TableColumn fx:id="desccolm" prefWidth="81.0" styleClass="tableRowCell" text="Description" />
+          <TableColumn fx:id="taskcolmn" prefWidth="68.0" styleClass="tableRowCell" text="Tasks" />
+            <TableColumn fx:id="desccolm" prefWidth="108.0" styleClass="tableRowCell" text="Description" />
             <TableColumn fx:id="moneycolmn" minWidth="0.0" prefWidth="76.0" styleClass="tableRowCell" text="Payable" />
             <TableColumn fx:id="totaltimespentcolmn" prefWidth="105.0" styleClass="tableRowCell" text="Total Time" />
             <TableColumn fx:id="colBtn" minWidth="0.0" prefWidth="71.0" styleClass="tableRowCell" text="Stop Time" />

@@ -23,6 +23,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -189,11 +190,28 @@ public class AdminMainPageController implements Initializable {
         }
 
         this.taskList = FXCollections.observableArrayList(tempTask);
-        taskcolmn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        desccolm.setCellValueFactory(new PropertyValueFactory<>("description"));
-        totaltimespentcolmn.setCellValueFactory(new PropertyValueFactory<>("totalTime")); 
-        moneycolmn.setCellValueFactory(new PropertyValueFactory<>("toPayImage")); 
+        taskcolmn.setCellValueFactory((cell) -> {
+            return cell.getValue().nameProperty();
+        });
+        
+        desccolm.setCellValueFactory((cell) -> {
+            return cell.getValue().descriptionProperty(); //To change body of generated lambdas, choose Tools | Templates.
+        });
+        
+        totaltimespentcolmn.setCellValueFactory((cell) -> {
+            return cell.getValue().totalTimeProperty(); //To change body of generated lambdas, choose Tools | Templates.
+        }); 
 
+        moneycolmn.setCellValueFactory((cell) -> { // cell is the cells properties (CellDataFeatures)
+                String imageString = "/trackme/gui/icons/yesmoney.png";
+
+        if (cell.getValue().getToPay() == 1) {
+            imageString = "/trackme/gui/icons/nomoney.png";
+        }
+            
+            //Image img = new Image(imageString, 50, 50, true, true); // Resize the image to fit 50x50 max
+            return new SimpleObjectProperty<>(new ImageView(imageString)); // Translate the ImageView to an Observable<ImageView>
+        });
 
         tasktableview.setItems(taskList);
 
