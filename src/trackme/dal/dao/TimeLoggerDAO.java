@@ -41,6 +41,7 @@ public class TimeLoggerDAO {
         String sql = "INSERT INTO [TimeLog] (userId, projectId, taskId, time, typeOfTime)VALUES (?,?,?,CURRENT_TIMESTAMP,?)";
 
         try ( Connection con = connection.getConnection()) {
+            System.out.println(user +""+ project +""+task +""+timeType);
             PreparedStatement pstmt = con.prepareStatement(sql);
             pstmt.setInt(1, user.getId());
             pstmt.setInt(2, project.getId());

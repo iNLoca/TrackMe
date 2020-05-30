@@ -20,6 +20,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -86,7 +87,7 @@ public class UserMainPageController implements Initializable {
     @FXML
     private TableColumn<Task, String> desccolm;
     @FXML
-    private TableColumn<Task, Integer> moneycolmn;
+    private TableColumn<Task, ImageView> moneycolmn;
     @FXML
     private TableColumn<Task, Void> colBtn;
     @FXML
@@ -118,6 +119,14 @@ public class UserMainPageController implements Initializable {
 
     private final String LoginScene = "/trackme/gui/view/Login.fxml";
     private final String OverviewScene = "/trackme/gui/view/UserOverview.fxml";
+  private String ImageURL = "/trackme/gui/icons/yesmoney.png";
+    ImageView newimageview = new ImageView(ImageURL);
+
+    private String ImageURL2 = "/trackme/gui/icons/nomoney.png";
+    ImageView newimageview2 = new ImageView(ImageURL2);
+
+
+    ObservableList<Task> taskList;
 
     
     
@@ -174,12 +183,37 @@ public class UserMainPageController implements Initializable {
             task1.setTotalTime(bllManager.convertSecondsToHourMinuteSecond(task1));
         }
         
+        this.taskList = FXCollections.observableArrayList(tempTask);
+        taskcolmn.setCellValueFactory((cell) -> {
+            return cell.getValue().nameProperty();
+        });
+        
+        desccolm.setCellValueFactory((cell) -> {
+            return cell.getValue().descriptionProperty(); //To change body of generated lambdas, choose Tools | Templates.
+        });
+        
+        totaltimecolmn.setCellValueFactory((cell) -> {
+            return cell.getValue().totalTimeProperty(); //To change body of generated lambdas, choose Tools | Templates.
+        }); 
+
+        moneycolmn.setCellValueFactory((cell) -> { // cell is the cells properties (CellDataFeatures)
+                String imageString = "/trackme/gui/icons/yesmoney.png";
+
+        if (cell.getValue().getToPay() == 1) {
+            imageString = "/trackme/gui/icons/nomoney.png";
+        }
+            
+            //Image img = new Image(imageString, 50, 50, true, true); // Resize the image to fit 50x50 max
+            return new SimpleObjectProperty<>(new ImageView(imageString)); // Translate the ImageView to an Observable<ImageView>
+        });
+
+        /*
         ObservableList<Task> taskList = FXCollections.observableArrayList(tempTask);
         taskcolmn.setCellValueFactory(new PropertyValueFactory<>("name"));
         desccolm.setCellValueFactory(new PropertyValueFactory<>("description"));
         totaltimecolmn.setCellValueFactory(new PropertyValueFactory<>("totalTime")); 
         moneycolmn.setCellValueFactory(new PropertyValueFactory<>("toPayImage"));
-
+*/
         tasktableview.setItems(taskList);
 
         stopButton();
@@ -240,6 +274,7 @@ public class UserMainPageController implements Initializable {
 
     @FXML
     private void setSelectTask(MouseEvent event) throws SQLServerException {
+   
         startTracker();
 
     }
@@ -249,7 +284,16 @@ public class UserMainPageController implements Initializable {
    * @throws SQLServerException 
    */
     private void startTracker()throws SQLServerException  {
-
+             System.out.println("Set");
+        int index = tasktableview.getSelectionModel().getSelectedIndex();
+          System.out.println(index);
+        task = tasktableview.getItems().get(index);
+  try {
+            bllManager.insertTimeLog(user, project, task, 1);
+        } catch (SQLServerException ex) {
+            System.out.println(ex);
+            Logger.getLogger(UserMainPageController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         long startTime = System.currentTimeMillis();
         ThreadExecutor = Executors.newSingleThreadScheduledExecutor();
         ThreadExecutor.scheduleAtFixedRate(() -> {
@@ -262,13 +306,7 @@ public class UserMainPageController implements Initializable {
 
                 timecountlbl.setText(elapsedHours + " : " + elapsedMinutes + " : " + elapsedSeconds);
             });
-        }, 1, 1, TimeUnit.SECONDS);
-
-        try {
-            bllManager.insertTimeLog(user, project, task, 1);
-        } catch (SQLServerException ex) {
-            Logger.getLogger(UserMainPageController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }, 0, 1, TimeUnit.SECONDS);
 
     }
 

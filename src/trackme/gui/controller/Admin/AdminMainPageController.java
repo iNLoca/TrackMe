@@ -242,7 +242,7 @@ public class AdminMainPageController implements Initializable {
                 
                             ThreadExecutor.shutdown();
                             try {
-                                bllManager.insertTimeLog(user, project, task, 2);
+                                bllManager.insertTimeLog(user, project, task, 2); // maybe add , time ? - its in db
                             } catch (SQLServerException ex) {
                                 Logger.getLogger(AdminMainPageController.class.getName()).log(Level.SEVERE, null, ex);
                             }
@@ -293,7 +293,7 @@ public class AdminMainPageController implements Initializable {
      */
     @FXML
     private void setSelectTask(MouseEvent event) throws SQLServerException {
-
+        
         startTracker();
 
     }
@@ -304,7 +304,8 @@ public class AdminMainPageController implements Initializable {
      * @throws SQLServerException
      */
     private void startTracker() throws SQLServerException {
-
+        int index = tasktableview.getSelectionModel().getSelectedIndex();
+        task = tasktableview.getItems().get(index);
         // LOl = true;
         long startTime = System.currentTimeMillis();
         ThreadExecutor = Executors.newSingleThreadScheduledExecutor();
@@ -316,7 +317,7 @@ public class AdminMainPageController implements Initializable {
                 long elapsedHours = (((elapsedTime / 1000) / 60) / 60) % 24;
                 timecountlbl.setText(elapsedHours + " : " + elapsedMinutes + " : " + elapsedSeconds);
             });
-        }, 1, 1, TimeUnit.SECONDS);
+        }, 0, 1, TimeUnit.SECONDS);
 
         try {
             bllManager.insertTimeLog(user, project, task, 1);
