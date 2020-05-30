@@ -30,28 +30,6 @@ public class ProjectDAO {
         connection = new DBConnectionProvider();
     }
     
-    public List<Project> getProjectsForUser(User user) throws SQLException{
-    String sql = "SELECT * FROM [UserAssignedProject] JOIN Projects ON UserAssignedProject.projectId = Projects.id WHERE userId = ?";
-    List<Project> projects = new ArrayList<>();
-    
-    try(Connection con = connection.getConnection()){
-        PreparedStatement pstmt = con.prepareStatement(sql);
-        pstmt.setInt(1, user.getId());
-        
-        ResultSet rs = pstmt.executeQuery();
-        while(rs.next()){
-        int id = rs.getInt("id");
-        String name = rs.getString("name");
-        String client = rs.getString("clientName");
-        int cost = rs.getInt("cost");
-        
-        projects.add(new Project(id, name, client, cost));
-        
-        }     
-    }
-        return projects;
-    }
-
 
     public List<Project> getAllProjects() throws SQLServerException{
         List<Project> allProjects = new ArrayList();

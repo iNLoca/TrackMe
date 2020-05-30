@@ -129,7 +129,7 @@ public class UserMainPageController implements Initializable {
         this.bllManager = new BLLManager();
 
         try {
-            setProjectsInCombobox(user);
+            setProjectsInCombobox();
             // setTaskTableView(project);
         } catch (SQLServerException ex) {
             Logger.getLogger(UserMainPageController.class.getName()).log(Level.SEVERE, null, ex);
@@ -146,8 +146,8 @@ public class UserMainPageController implements Initializable {
      * @throws SQLServerException
      * @throws SQLException 
      */
-    private void setProjectsInCombobox(User user) throws SQLServerException, SQLException {
-        ObservableList<Project> projectList = FXCollections.observableArrayList(bllManager.getProjectsForUser(user));
+    private void setProjectsInCombobox() throws SQLServerException, SQLException {
+        ObservableList<Project> projectList = FXCollections.observableArrayList(bllManager.getAllProjects());
         projectbox.getItems().clear();
         projectbox.getItems().addAll(projectList);
         projectbox.getSelectionModel().select(projectbox.getValue());

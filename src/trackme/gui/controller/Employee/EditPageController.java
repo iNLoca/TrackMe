@@ -101,7 +101,7 @@ public class EditPageController implements Initializable{
         this.bllManager = new BLLManager();
          
         try {
-            setProjects(user);
+            setProjects();
     }   catch (SQLException ex) {
            Logger.getLogger(EditPageController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -115,8 +115,8 @@ public class EditPageController implements Initializable{
      * @throws SQLServerException
      * @throws SQLException 
      */
-     public void setProjects(User user)throws SQLServerException, SQLException{
-     ObservableList<Project> projectList = FXCollections.observableArrayList(bllManager.getProjectsForUser(user));
+     public void setProjects()throws SQLServerException, SQLException{
+     ObservableList<Project> projectList = FXCollections.observableArrayList(bllManager.getAllProjects());
         editprojectcombobox.getItems().clear();
         editprojectcombobox.getItems().addAll(projectList);
         editprojectcombobox.getSelectionModel().select(editprojectcombobox.getValue());

@@ -134,7 +134,7 @@ public class AdminOverviewController implements Initializable {
         bllManager.getTotalTimeForEachProject(projects);
         projectBarChart.getData().clear();
         setBarChartForSelectedProject(projects);
-        setTaskInComboBox(user);
+        setTaskInComboBox();
         tasksOverviewTable.getItems().clear();
     }
 
@@ -145,8 +145,8 @@ public class AdminOverviewController implements Initializable {
      * @throws SQLServerException
      * @throws SQLException
      */
-    private void setTaskInComboBox(User user) throws SQLServerException, SQLException {
-        ObservableList<Project> projectList = FXCollections.observableArrayList(bllManager.getProjectsForUser(user));
+    private void setTaskInComboBox() throws SQLServerException, SQLException {
+        ObservableList<Project> projectList = FXCollections.observableArrayList(bllManager.getAllProjects());
         sortcombobox.getItems().clear();
         sortcombobox.getItems().addAll(projectList);
         sortcombobox.getSelectionModel().select(sortcombobox.getValue());

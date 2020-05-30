@@ -104,7 +104,7 @@ public class UserOverviewController implements Initializable {
         try {
             projects = bllManager.getUserProjectTime(user);
             bllManager.getTotalTimeForEachProject(projects);
-            setTaskInComboBox(user);
+            setTaskInComboBox();
         } catch (SQLServerException ex) {
             Logger.getLogger(UserOverviewController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
@@ -120,8 +120,8 @@ public class UserOverviewController implements Initializable {
      * @throws SQLServerException
      * @throws SQLException
      */
-    private void setTaskInComboBox(User user) throws SQLServerException, SQLException {
-        ObservableList<Project> projectList = FXCollections.observableArrayList(bllManager.getProjectsForUser(user));
+    private void setTaskInComboBox() throws SQLServerException, SQLException {
+        ObservableList<Project> projectList = FXCollections.observableArrayList(bllManager.getAllProjects());
         sortcombobox.getItems().clear();
         sortcombobox.getItems().addAll(projectList);
         sortcombobox.getSelectionModel().select(sortcombobox.getValue());

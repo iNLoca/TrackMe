@@ -68,10 +68,6 @@ public class DALManager implements IDALFacade {
         return timeLoggerDAO.getUserProjectTime(user);
     }
 
-    @Override
-    public List<Project> getProjectsForUser(User user) throws SQLException {
-        return projectDAO.getProjectsForUser(user);
-    }
 
     @Override
     public void insertTaskForProject(Project project, String name, String description, int toPay) throws SQLServerException {
