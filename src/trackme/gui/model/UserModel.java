@@ -12,13 +12,16 @@ import trackme.bll.BLLManager;
  *
  * @author mac
  */
-public class UserModel {
+public class UserModel{
 
     private static UserModel single_instance = null;
     
     private User loggedInUser;
 
-    // static method to create instance of Singleton class 
+    /**
+     * Static method to create instance of Singleton class 
+     * @return 
+     */
     public static UserModel getInstance() {
         if (single_instance == null) {
             single_instance = new UserModel();

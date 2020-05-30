@@ -40,8 +40,6 @@ import trackme.be.Project;
 import trackme.be.Task;
 import trackme.be.User;
 import trackme.bll.BLLManager;
-import trackme.gui.model.ProjectModel;
-import trackme.gui.model.TaskModel;
 import trackme.gui.model.UserModel;
 
 /**
@@ -88,8 +86,6 @@ public class EditPageController implements Initializable{
     private Project project;
     private BLLManager bllManager;
     private UserModel userModel;
-    private TaskModel taskModel;
-    private ProjectModel projectModel;
     private TextField endtime;
     
     
@@ -106,11 +102,8 @@ public class EditPageController implements Initializable{
          
         try {
             setProjects(user);
-            //setTaskTableView(project);
-        } catch (SQLServerException ex) {
-            Logger.getLogger(UserMainPageController.class.getName()).log(Level.SEVERE, null, ex);
     }   catch (SQLException ex) {
-            Logger.getLogger(EditPageController.class.getName()).log(Level.SEVERE, null, ex);
+           Logger.getLogger(EditPageController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
