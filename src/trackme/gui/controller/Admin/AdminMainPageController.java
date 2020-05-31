@@ -141,15 +141,7 @@ public class AdminMainPageController implements Initializable {
         this.user = userModel.getLoggedInUser();
         usrnamelbl.setText(user.getName());
         this.bllManager = new BLLManager();
-
-        try {
-            setProjectsInCombobox();
-        } catch (SQLServerException ex) {
-            Logger.getLogger(UserMainPageController.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("not working");
-        } catch (SQLException ex) {
-            Logger.getLogger(UserMainPageController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        setProjectsInCombobox();
 
     }
 
@@ -160,7 +152,7 @@ public class AdminMainPageController implements Initializable {
      * @throws SQLServerException
      * @throws SQLException
      */
-    private void setProjectsInCombobox() throws SQLServerException, SQLException {
+    private void setProjectsInCombobox() {
         ObservableList<Project> projectList = FXCollections.observableArrayList(bllManager.getAllProjects());
         projectbox.getItems().clear();
         projectbox.getItems().addAll(projectList);
@@ -168,7 +160,7 @@ public class AdminMainPageController implements Initializable {
     }
 
     @FXML
-    private void setSelectedProjects(ActionEvent event) throws SQLServerException {
+    private void setSelectedProjects(ActionEvent event) {
         project = projectbox.getSelectionModel().getSelectedItem();
         setTaskTableView(project);
         refreshTable();
@@ -181,7 +173,7 @@ public class AdminMainPageController implements Initializable {
      * @param project
      * @throws SQLServerException
      */
-    private void setTaskTableView(Project project) throws SQLServerException {
+    private void setTaskTableView(Project project) {
         List<Task> tempTask = bllManager.getTasksForProject(project);
         for (Task task1 : tempTask) {
             bllManager.getAllTimeLogsForTask(task1);
@@ -225,7 +217,7 @@ public class AdminMainPageController implements Initializable {
      *
      * @throws SQLServerException
      */
-    private void stopButton() throws SQLServerException {
+    private void stopButton(){
 
 
         Callback<TableColumn<Task, Void>, TableCell<Task, Void>> cellFactory = new Callback<TableColumn<Task, Void>, TableCell<Task, Void>>() {
@@ -241,11 +233,7 @@ public class AdminMainPageController implements Initializable {
 
                 
                             ThreadExecutor.shutdown();
-                            try {
-                                bllManager.insertTimeLog(user, project, task, 2); // maybe add , time ? - its in db
-                            } catch (SQLServerException ex) {
-                                Logger.getLogger(AdminMainPageController.class.getName()).log(Level.SEVERE, null, ex);
-                            }
+                            bllManager.insertTimeLog(user, project, task, 2); // maybe add , time ? - its in db
 
                         });
 
@@ -292,7 +280,7 @@ public class AdminMainPageController implements Initializable {
      * @exception NullPointerException
      */
     @FXML
-    private void setSelectTask(MouseEvent event) throws SQLServerException {
+    private void setSelectTask(MouseEvent event)  {
         
         startTracker();
 
@@ -303,7 +291,7 @@ public class AdminMainPageController implements Initializable {
      *
      * @throws SQLServerException
      */
-    private void startTracker() throws SQLServerException {
+    private void startTracker() {
         int index = tasktableview.getSelectionModel().getSelectedIndex();
         task = tasktableview.getItems().get(index);
         // LOl = true;
@@ -319,11 +307,7 @@ public class AdminMainPageController implements Initializable {
             });
         }, 0, 1, TimeUnit.SECONDS);
 
-        try {
-            bllManager.insertTimeLog(user, project, task, 1);
-        } catch (SQLServerException ex) {
-            Logger.getLogger(UserMainPageController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        bllManager.insertTimeLog(user, project, task, 1);
 
     }
 
@@ -332,7 +316,7 @@ public class AdminMainPageController implements Initializable {
      *
      * @throws SQLServerException
      */
-    public void refreshTable() throws SQLServerException {
+    public void refreshTable()  {
         tasktableview.getItems().removeAll(taskList);
         setTaskTableView(project);
     }
@@ -344,7 +328,7 @@ public class AdminMainPageController implements Initializable {
      * @throws SQLServerException
      */
     @FXML
-    private void setAddTask(ActionEvent event) throws SQLServerException {
+    private void setAddTask(ActionEvent event)  {
  if (project != null) {
             if (insertTasklbl.getText().equals(initialName) && Descriplbl.getText().equals(initialDescription)) {
 

@@ -37,7 +37,7 @@ public class TimeLoggerDAO {
         connection = new DBConnectionProvider();
     }
 
-    public void insertTimeLog(User user, Project project, Task task, int timeType) throws SQLServerException {
+    public void insertTimeLog(User user, Project project, Task task, int timeType) {
         String sql = "INSERT INTO [TimeLog] (userId, projectId, taskId, time, typeOfTime)VALUES (?,?,?,CURRENT_TIMESTAMP,?)";
 
         try ( Connection con = connection.getConnection()) {
@@ -66,7 +66,7 @@ public class TimeLoggerDAO {
         }
     }
     
-    public void editTimeLog(User user, Project project, Task task, LocalDateTime startTime, LocalDateTime endTime) throws SQLServerException{
+    public void editTimeLog(User user, Project project, Task task, LocalDateTime startTime, LocalDateTime endTime){
     String sql = "INSERT INTO [TimeLog] (userId, projectId, taskId, time, typeOfTime) VALUES (?,?,?,?,?),(?,?,?,?,?)";
     
     try(Connection con = connection.getConnection()){
@@ -90,7 +90,7 @@ public class TimeLoggerDAO {
     
     }
 
-    public void getTimeForTask(User user, Task task) throws SQLServerException{
+    public void getTimeForTask(User user, Task task){
     String sql = "SELECT * FROM TimeLog WHERE userId = ? AND taskId = ? ";
     
     try(Connection con = connection.getConnection()){
@@ -116,7 +116,7 @@ public class TimeLoggerDAO {
     
     }
     
-    public List<Task> getAllTaskLogsForProject(User user, Project project) throws SQLServerException{
+    public List<Task> getAllTaskLogsForProject(User user, Project project){
         List<Task> tasks = new ArrayList<>();
         String sql = "SELECT * FROM TimeLog JOIN Task on TimeLog.taskId = Task.id WHERE projectId = ? AND userId = ? ORDER BY taskId, userId";
         int i =0;
@@ -154,7 +154,7 @@ public class TimeLoggerDAO {
         return tasks;
     }
     
-    public List<Project> getUserProjectTime(User user) throws SQLServerException {
+    public List<Project> getUserProjectTime(User user) {
         List<Project> projects = new ArrayList<>();
         String sql = "SELECT * FROM TimeLog JOIN Projects ON Projects.id = TimeLog.projectId JOIN Task ON Task.id = TimeLog.taskId WHERE userId = ?";
 
@@ -200,7 +200,7 @@ public class TimeLoggerDAO {
         return null;
     }
     
-    public void getAllTimeLogsForTask(Task task) throws SQLServerException{
+    public void getAllTimeLogsForTask(Task task){
     String sql = "SELECT * FROM TimeLog WHERE taskId = ? ORDER BY taskId, userId";
     try(Connection con = connection.getConnection()){
         PreparedStatement pstmt = con.prepareStatement(sql);

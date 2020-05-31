@@ -31,7 +31,7 @@ public class ProjectDAO {
     }
     
 
-    public List<Project> getAllProjects() throws SQLServerException{
+    public List<Project> getAllProjects(){
         List<Project> allProjects = new ArrayList();
         String sql = "SELECT * FROM [Projects]";
         try(Connection con = connection.getConnection()){
@@ -52,7 +52,7 @@ public class ProjectDAO {
     return allProjects;
     }
     
-    public void createProject(String name, String clientName, String cost) throws SQLServerException{
+    public void createProject(String name, String clientName, String cost){
     String sql = "INSERT INTO [Projects] (name, clientName, cost) VALUES (?,?,?)";
 
     try(Connection con = connection.getConnection()){

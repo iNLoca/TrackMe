@@ -101,15 +101,9 @@ public class UserOverviewController implements Initializable {
         usrnamelbl.setText(user.getName());
         bllManager = new BLLManager();
 
-        try {
-            projects = bllManager.getUserProjectTime(user);
-            bllManager.getTotalTimeForEachProject(projects);
-            setTaskInComboBox();
-        } catch (SQLServerException ex) {
-            Logger.getLogger(UserOverviewController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(UserOverviewController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        projects = bllManager.getUserProjectTime(user);
+        bllManager.getTotalTimeForEachProject(projects);
+        setTaskInComboBox();
         setBarChartForSelectedProject(projects);
     }
 
@@ -120,7 +114,7 @@ public class UserOverviewController implements Initializable {
      * @throws SQLServerException
      * @throws SQLException
      */
-    private void setTaskInComboBox() throws SQLServerException, SQLException {
+    private void setTaskInComboBox(){
         ObservableList<Project> projectList = FXCollections.observableArrayList(bllManager.getAllProjects());
         sortcombobox.getItems().clear();
         sortcombobox.getItems().addAll(projectList);
@@ -135,7 +129,7 @@ public class UserOverviewController implements Initializable {
      * @throws ParseException
      */
     @FXML
-    private void setSortComboBox(ActionEvent event) throws SQLServerException, ParseException {
+    private void setSortComboBox(ActionEvent event) {
         project = sortcombobox.getSelectionModel().getSelectedItem();
         setTaskOverview(user, project);
     }
@@ -166,7 +160,7 @@ public class UserOverviewController implements Initializable {
      * @throws SQLServerException
      * @throws ParseException
      */
-    private void setTaskOverview(User user, Project project) throws SQLServerException, ParseException {
+    private void setTaskOverview(User user, Project project){
         List<Task> allTaskLogs = bllManager.getAllTaskLogsForProject(user, project);
 
         if (fromDatePicker.getValue() == null && toDatePicker.getValue() == null) {
@@ -219,7 +213,7 @@ public class UserOverviewController implements Initializable {
      * @throws ParseException
      */
     @FXML
-    private void setSelectedFromDate(ActionEvent event) throws SQLServerException, ParseException {
+    private void setSelectedFromDate(ActionEvent event) {
         if (toDatePicker.getValue() == null) {
 
         } else {
@@ -234,7 +228,7 @@ public class UserOverviewController implements Initializable {
      * @throws ParseException
      */
     @FXML
-    private void setSelectedTODATE(ActionEvent event) throws SQLServerException, ParseException {
+    private void setSelectedTODATE(ActionEvent event)  {
         if (fromDatePicker.getValue() == null) {
             //DO NOTHING YOU NERD
         } else {

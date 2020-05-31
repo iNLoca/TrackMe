@@ -120,12 +120,8 @@ public class AdminProfilesController implements Initializable {
         user = userModel.getLoggedInUser();
         usrnamelbl.setText(user.getName());
         this.bllManager = new BLLManager();
-        try {
-            setUserTableView();
-        } catch (SQLServerException ex) {
-            Logger.getLogger(AdminProfilesController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-             addUser.setVisible(true);
+        setUserTableView();
+        addUser.setVisible(true);
 
     }
 
@@ -135,7 +131,7 @@ public class AdminProfilesController implements Initializable {
      * @throws SQLServerException 
      */
     
-    public void setUserTableView() throws SQLServerException {
+    public void setUserTableView(){
         
         ObservableList<User> userList = FXCollections.observableArrayList(bllManager.getAllUsers());
         usrname.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -151,7 +147,7 @@ public class AdminProfilesController implements Initializable {
      * @throws SQLServerException 
      */
     @FXML
-    private void selectUser(MouseEvent event) throws SQLServerException {
+    private void selectUser(MouseEvent event){
         addUser.setVisible(false);
         deletebtn.setVisible(true);
         editusr.setVisible(true);
@@ -192,7 +188,7 @@ public class AdminProfilesController implements Initializable {
      * @throws SQLServerException 
      */
     @FXML
-    private void setAddUser(ActionEvent event) throws SQLServerException {
+    private void setAddUser(ActionEvent event){
 
         if (user != null && (emailfield != null && passfield != null && namefield != null && (admincheck.isSelected() || employeecheck.isSelected()))) {
 
@@ -211,7 +207,7 @@ public class AdminProfilesController implements Initializable {
      * Saves the Data inserted by user 
      * @throws SQLServerException 
      */
-    public void saveData() throws SQLServerException {
+    public void saveData() {
 
         userName = namefield.getText();
         userPassword = passfield.getText();
@@ -243,7 +239,7 @@ public class AdminProfilesController implements Initializable {
      * @throws SQLServerException 
      */
 
-    public void editData() throws SQLServerException {
+    public void editData() {
 
         userName = namefield.getText();
         userPassword = passfield.getText();
@@ -317,7 +313,7 @@ public class AdminProfilesController implements Initializable {
      */
 
     @FXML
-    private void setDeleteUser(ActionEvent event) throws SQLServerException {
+    private void setDeleteUser(ActionEvent event){
         
         selectedUser = usrtableview.getSelectionModel().getSelectedItem();
 
@@ -338,7 +334,7 @@ public class AdminProfilesController implements Initializable {
      * @throws SQLServerException 
      */
     @FXML
-    private void setEditUser(ActionEvent event) throws SQLServerException {
+    private void setEditUser(ActionEvent event){
          
         selectedUser = usrtableview.getSelectionModel().getSelectedItem();
         editData();

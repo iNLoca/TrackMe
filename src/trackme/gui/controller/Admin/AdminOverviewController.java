@@ -110,14 +110,7 @@ public class AdminOverviewController implements Initializable {
         currentUser = userModel.getLoggedInUser();
         usrnamelbl.setText(currentUser.getName());
         this.bllManager = new BLLManager();
-
-        try {
-            setUsersInEmployeeBox();
-        } catch (SQLServerException ex) {
-            Logger.getLogger(UserOverviewController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(AdminOverviewController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        setUsersInEmployeeBox();
 
     }
 
@@ -128,7 +121,7 @@ public class AdminOverviewController implements Initializable {
      * @throws SQLException
      */
     @FXML
-    private void setEmployeeComboBox(ActionEvent event) throws SQLException {
+    private void setEmployeeComboBox(ActionEvent event) {
         user = employeecombobox.getSelectionModel().getSelectedItem();
         projects = bllManager.getUserProjectTime(user);
         bllManager.getTotalTimeForEachProject(projects);
@@ -145,7 +138,7 @@ public class AdminOverviewController implements Initializable {
      * @throws SQLServerException
      * @throws SQLException
      */
-    private void setTaskInComboBox() throws SQLServerException, SQLException {
+    private void setTaskInComboBox()  {
         ObservableList<Project> projectList = FXCollections.observableArrayList(bllManager.getAllProjects());
         sortcombobox.getItems().clear();
         sortcombobox.getItems().addAll(projectList);
@@ -158,7 +151,7 @@ public class AdminOverviewController implements Initializable {
      * @throws SQLServerException
      * @throws SQLException
      */
-    private void setUsersInEmployeeBox() throws SQLServerException, SQLException {
+    private void setUsersInEmployeeBox() {
         ObservableList<User> userList = FXCollections.observableArrayList(bllManager.getAllUsers());
         for (int i = 0; i < userList.size(); i++) {
             userList.get(i).setEmail("");
@@ -177,7 +170,7 @@ public class AdminOverviewController implements Initializable {
      * @throws ParseException
      */
     @FXML
-    private void setSortComboBox(ActionEvent event) throws SQLServerException, ParseException {
+    private void setSortComboBox(ActionEvent event){
         project = sortcombobox.getSelectionModel().getSelectedItem();
         setTaskOverview(user, project);
     }
@@ -190,7 +183,7 @@ public class AdminOverviewController implements Initializable {
      * @throws ParseException
      */
     @FXML
-    private void setSelectedFromDate(ActionEvent event) throws SQLServerException, ParseException {
+    private void setSelectedFromDate(ActionEvent event){
         if (toDatePicker.getValue() == null) {
 
         } else {
@@ -206,7 +199,7 @@ public class AdminOverviewController implements Initializable {
      * @throws ParseException
      */
     @FXML
-    private void setSelectedToDate(ActionEvent event) throws SQLServerException, ParseException {
+    private void setSelectedToDate(ActionEvent event){
         if (fromDatePicker.getValue() == null) {
         } else {
             setTaskOverview(user, project);
@@ -221,7 +214,7 @@ public class AdminOverviewController implements Initializable {
      * @throws SQLServerException
      * @throws ParseException
      */
-    private void setTaskOverview(User user, Project project) throws SQLServerException, ParseException {
+    private void setTaskOverview(User user, Project project){
         List<Task> allTaskLogs = bllManager.getAllTaskLogsForProject(user, project);
 
         if (fromDatePicker.getValue() == null && toDatePicker.getValue() == null) {

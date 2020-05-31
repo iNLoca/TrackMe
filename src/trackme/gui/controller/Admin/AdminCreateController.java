@@ -102,12 +102,7 @@ public class AdminCreateController implements Initializable {
         user = userModel.getLoggedInUser();
         usrnamelbl.setText(user.getName());
         this.bllManager = new BLLManager();
-        
-        try {
-            setTableView();
-        } catch (SQLException ex) {
-            Logger.getLogger(AdminCreateController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        setTableView();
         
     }    
 
@@ -117,16 +112,14 @@ public class AdminCreateController implements Initializable {
      * @throws SQLException 
      */
     
-      public void setTableView() throws SQLException{
+      public void setTableView(){
     
     
         ObservableList<Project> projectList = FXCollections.observableArrayList(bllManager.getAllProjects());
         projectcolmn.setCellValueFactory(new PropertyValueFactory<>("name"));
         clientcolumn.setCellValueFactory(new PropertyValueFactory<>("client"));
         feecolmn.setCellValueFactory(new PropertyValueFactory<>("cost"));
-
         createtableview.setItems(projectList);
-       
     
     }
       
@@ -136,7 +129,7 @@ public class AdminCreateController implements Initializable {
        * @throws SQLException 
        */
       
-     public void saveNewData() throws SQLException{
+     public void saveNewData(){
     
                     clientnm = clientname.getText();
                     projectps = peojectname.getText();
@@ -162,7 +155,7 @@ public class AdminCreateController implements Initializable {
   */        
          
     @FXML
-    private void setAddCreate(ActionEvent event) throws SQLException {
+    private void setAddCreate(ActionEvent event){
         
          if(user!=null && (!clientname.getText().isEmpty() && !peojectname.getText().isEmpty() && !hfeelbl.getText().isEmpty())){
           

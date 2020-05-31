@@ -24,26 +24,24 @@ public interface IBLLFacade {
 
     public User loginUser(String username, String password);
     
-    public List<User> getAllUsers() throws SQLServerException;
-    public List<Task> getTasksForProject(Project project)throws SQLServerException;
-    public List<Project> getUserProjectTime(User user) throws SQLServerException;
-    public void insertTaskForProject(Project project, String name, String description, int toPay) throws SQLServerException;
-    public void insertTimeLog(User user, Project project, Task task, int timeType) throws SQLServerException;
-    public void getTimeForTask(User user, Task task) throws SQLServerException;
-    public void getTotalTimeForTask(Task task) throws SQLServerException;
+    public List<User> getAllUsers();
+    public List<Task> getTasksForProject(Project project);
+    public List<Project> getUserProjectTime(User user);
+    public void insertTaskForProject(Project project, String name, String description, int toPay);
+    public void insertTimeLog(User user, Project project, Task task, int timeType);
+    public void getTimeForTask(User user, Task task);
+    public void getTotalTimeForTask(Task task);
     public void  getTotalTimeForEachProject(List<Project> projects);
-    public List<Task> getAllTaskLogsForProject(User user, Project project) throws SQLServerException;
-    public void createNewUser(String name, String password, String email, int isAdmin) throws SQLServerException;
+    public List<Task> getAllTaskLogsForProject(User user, Project project);
+    public void createNewUser(String name, String password, String email, int isAdmin);
     public void addEditUser(User user, String name, String email, String password, int isAdmin);
-    public void deleteUser(User user) throws SQLServerException;
-
-    public List<Task> filterList(LocalDate fromTime, LocalDate toTime, List<Task> tasks) throws ParseException;
+    public void deleteUser(User user);
+    public List<Task> filterList(LocalDate fromTime, LocalDate toTime, List<Task> tasks);
     public List<LocalDateTime> calculateTime(LocalTime startTime, LocalTime endTime, LocalDate date);
-    public void editTimeLog(User user, Project project, Task task, LocalDateTime startTime, LocalDateTime endTime) throws SQLServerException;
-
-    public List<Project> getAllProjects() throws SQLServerException;
-    public void createProject(String name, String clientName, String cost) throws SQLServerException;
-    public void getAllTimeLogsForTask(Task task) throws SQLServerException;
+    public void editTimeLog(User user, Project project, Task task, LocalDateTime startTime, LocalDateTime endTime) ;
+    public List<Project> getAllProjects();
+    public void createProject(String name, String clientName, String cost);
+    public void getAllTimeLogsForTask(Task task);
     public String convertSecondsToHourMinuteSecond(Task task);
 
 }

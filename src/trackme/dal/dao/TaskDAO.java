@@ -32,7 +32,7 @@ public class TaskDAO {
     }
     
     
-    public void insertTask(Project project, String name, String description, int toPay) throws SQLServerException{
+    public void insertTask(Project project, String name, String description, int toPay){
     String sql = "INSERT INTO [Task] (taskName, description, toPay) VALUES (?,?,?)";
     
     try(Connection con = connection.getConnection();
@@ -55,7 +55,7 @@ public class TaskDAO {
   
 
     
-    private void insertTaskForProject(int taskId, int projectId) throws SQLServerException {
+    private void insertTaskForProject(int taskId, int projectId){
         String sql = "INSERT INTO [TaskForProject] (taskId, projectId) VALUES (?,?)";
         
          try(Connection con = connection.getConnection();
@@ -72,7 +72,7 @@ public class TaskDAO {
     
     
     
-    public List<Task> getTasksForProject(Project project) throws SQLServerException{
+    public List<Task> getTasksForProject(Project project){
     String sql = "SELECT * FROM [Task] JOIN TaskForProject ON TaskForProject.taskId = Task.id WHERE projectId = ?";
     List<Task> tasks = new ArrayList<>();
     

@@ -19,7 +19,7 @@ import trackme.be.Task;
  */
 public class Filter {
     
-    public List<Task> filterList(LocalDate fromTime, LocalDate toTime, List<Task> tasks) throws ParseException{
+    public List<Task> filterList(LocalDate fromTime, LocalDate toTime, List<Task> tasks){
         
         Date startTime = Date.from(fromTime.atStartOfDay(ZoneId.systemDefault()).toInstant()); 
         Date endTime = Date.from(toTime.atStartOfDay(ZoneId.systemDefault()).toInstant()); 

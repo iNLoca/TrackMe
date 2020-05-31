@@ -99,12 +99,7 @@ public class EditPageController implements Initializable{
         user = userModel.getLoggedInUser();
         usrnamelbl.setText(user.getName());
         this.bllManager = new BLLManager();
-         
-        try {
-            setProjects();
-    }   catch (SQLException ex) {
-           Logger.getLogger(EditPageController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        setProjects();
 
     }
     
@@ -115,7 +110,7 @@ public class EditPageController implements Initializable{
      * @throws SQLServerException
      * @throws SQLException 
      */
-     public void setProjects()throws SQLServerException, SQLException{
+     public void setProjects(){
      ObservableList<Project> projectList = FXCollections.observableArrayList(bllManager.getAllProjects());
         editprojectcombobox.getItems().clear();
         editprojectcombobox.getItems().addAll(projectList);
@@ -128,7 +123,7 @@ public class EditPageController implements Initializable{
      * @throws SQLServerException 
      */
     @FXML
-    private void setProjectCombobox(ActionEvent event)throws SQLServerException {
+    private void setProjectCombobox(ActionEvent event){
          project = editprojectcombobox.getSelectionModel().getSelectedItem();
          setTaskCombobox(project);
     }
@@ -139,7 +134,7 @@ public class EditPageController implements Initializable{
      * @throws SQLServerException 
      */
     
-   private void setTaskCombobox(Project project) throws SQLServerException {
+   private void setTaskCombobox(Project project){
         ObservableList<Task> taskList = FXCollections.observableArrayList(bllManager.getTasksForProject(project));
         taskbox.getItems().clear();
         taskbox.getItems().addAll(taskList);
@@ -155,7 +150,7 @@ public class EditPageController implements Initializable{
    
 
     @FXML
-    private void clickEditButton(ActionEvent event) throws SQLServerException {
+    private void clickEditButton(ActionEvent event){
         
         
         if(date.getValue()!=null && startTimePicker.getValue()!=null && endTimePicker.getValue()!=null){

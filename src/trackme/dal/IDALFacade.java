@@ -21,19 +21,18 @@ public interface IDALFacade {
     
     User getUser(String email, String password);
 
-    public List<User> getAllUsers() throws SQLServerException;
-    public List<Project> getUserProjectTime();
-    public List<Task> getTasksForProject(Project project) throws SQLServerException;
-    public List<Project> getUserProjectTime(User user) throws SQLServerException;
-    public void insertTaskForProject(Project project, String name, String description, int toPay) throws SQLServerException;
-    public void insertTimeLog(User user, Project project, Task task, int timeType) throws SQLServerException;
-    public void getTimeForTask(User user, Task task) throws SQLServerException;
-    public List<Task> getAllTaskLogsForProject(User user, Project project) throws SQLServerException;
-    public void createNewUser(String name, String password, String email, int isAdmin) throws SQLServerException;
+    public List<User> getAllUsers();
+    public List<Task> getTasksForProject(Project project);
+    public List<Project> getUserProjectTime(User user) ;
+    public void insertTaskForProject(Project project, String name, String description, int toPay);
+    public void insertTimeLog(User user, Project project, Task task, int timeType);
+    public void getTimeForTask(User user, Task task) ;
+    public List<Task> getAllTaskLogsForProject(User user, Project project) ;
+    public void createNewUser(String name, String password, String email, int isAdmin);
     public void addEditUser(User user, String name, String email, String password, int isAdmin);
-    public void deleteUser(User user) throws SQLServerException;
-    public void editTimeLog(User user, Project project, Task task, LocalDateTime startTime, LocalDateTime endTime) throws SQLServerException;
-    public List<Project> getAllProjects() throws SQLServerException;
-    public void createProject(String name, String clientName, String cost) throws SQLServerException;
-    public void getAllTimeLogsForTask(Task task) throws SQLServerException;
+    public void deleteUser(User user);
+    public void editTimeLog(User user, Project project, Task task, LocalDateTime startTime, LocalDateTime endTime);
+    public List<Project> getAllProjects();
+    public void createProject(String name, String clientName, String cost);
+    public void getAllTimeLogsForTask(Task task);
 }

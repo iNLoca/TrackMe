@@ -37,13 +37,9 @@ public class TimeConverter {
 
         getTotalTimeForEachProject(projects);
 
-        for (Project project : projects) {
-            System.out.println("Project :" + project.getName() + " Lol " + project.getTotalTimeInSeconds());
-        }
-//        find time spent on task in one update?
     }
 
-    public void getTotalTimeForTask(Task task) throws SQLServerException {
+    public void getTotalTimeForTask(Task task) {
         List<TimeLog> variable1 = task.getTaskTime();
         long variable2 = 0;
         long variableToDelete = 0;

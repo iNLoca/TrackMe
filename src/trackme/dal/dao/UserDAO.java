@@ -30,7 +30,7 @@ public class UserDAO {
         connection = new DBConnectionProvider();
     }
     
-    public void createNewUser(String name, String password, String email, int isAdmin) throws SQLServerException{
+    public void createNewUser(String name, String password, String email, int isAdmin){
     String sql = "INSERT INTO [User](name, email, isAdmin, password) VALUES (?,?,?,?)";
     
     try(Connection con = connection.getConnection()){
@@ -46,7 +46,7 @@ public class UserDAO {
         }
     }
     
-    public User getUser(String email, String password) throws SQLException{
+    public User getUser(String email, String password){
        
         String sql = "SELECT * FROM [User] WHERE email = ? AND password = ?";
 
@@ -70,12 +70,14 @@ public class UserDAO {
 
         } catch (SQLServerException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        } catch (SQLException ex) { 
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return null;
         
     }
     
-    public List<User> getAllUsers() throws SQLServerException{
+    public List<User> getAllUsers(){
         List<User> users = new ArrayList<>();
 
         String sql = "SELECT * FROM [User]";
@@ -133,7 +135,7 @@ public class UserDAO {
 
     }
 
-        public void deleteUser(User user) throws SQLServerException{
+        public void deleteUser(User user){
         String sql = "DELETE  FROM [User] WHERE id=?";
         
         try(Connection con = connection.getConnection()){

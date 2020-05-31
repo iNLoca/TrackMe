@@ -39,65 +39,49 @@ public class DALManager implements IDALFacade {
     
     @Override
     public User getUser(String email, String password) {
-        try {
-            return userDAO.getUser(email, password);
-        } catch (SQLException ex) {
-            Logger.getLogger(DALManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
+        return userDAO.getUser(email, password);
+      
     }
 
     @Override
-    public List<Project> getUserProjectTime() {
-        try {
-            User us = userDAO.getUser("martinwobbe@email.com", "password");;
-            return timeLoggerDAO.getUserProjectTime(us);
-                    } catch (SQLException ex) {
-            Logger.getLogger(DALManager.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
+    public List<Project> getUserProjectTime(User user) {
+        return timeLoggerDAO.getUserProjectTime(user);
     }
     
-    public List<Task> getTasksForProject(Project project) throws SQLServerException{
+    public List<Task> getTasksForProject(Project project){
             return taskDAO.getTasksForProject(project);
         
     }
 
     @Override
-    public List<Project> getUserProjectTime(User user) throws SQLServerException {
-        return timeLoggerDAO.getUserProjectTime(user);
-    }
-
-
-    @Override
-    public void insertTaskForProject(Project project, String name, String description, int toPay) throws SQLServerException {
+    public void insertTaskForProject(Project project, String name, String description, int toPay){
         taskDAO.insertTask(project, name, description, toPay);
     }
 
     @Override
-    public void insertTimeLog(User user, Project project, Task task, int timeType) throws SQLServerException {
+    public void insertTimeLog(User user, Project project, Task task, int timeType){
         timeLoggerDAO.insertTimeLog(user, project, task, timeType);
     }
 
     @Override
-    public void getTimeForTask(User user, Task task) throws SQLServerException {
+    public void getTimeForTask(User user, Task task){
         timeLoggerDAO.getTimeForTask(user, task);
     }
 
     @Override
 
-    public List<User> getAllUsers() throws SQLServerException {
+    public List<User> getAllUsers(){
          return userDAO.getAllUsers();
     }
 
     @Override
-    public List<Task> getAllTaskLogsForProject(User user, Project project) throws SQLServerException {
+    public List<Task> getAllTaskLogsForProject(User user, Project project) {
         return timeLoggerDAO.getAllTaskLogsForProject(user, project);
 
     }
 
     @Override
-    public void createNewUser(String name, String password, String email, int isAdmin) throws SQLServerException {
+    public void createNewUser(String name, String password, String email, int isAdmin) {
          userDAO.createNewUser(name, password, email, isAdmin);
     }
 
@@ -107,28 +91,29 @@ public class DALManager implements IDALFacade {
     }
 
     @Override
-    public void deleteUser(User user) throws SQLServerException {
+    public void deleteUser(User user){
         userDAO.deleteUser(user);
     }
 
     @Override
-    public void editTimeLog(User user, Project project, Task task, LocalDateTime startTime, LocalDateTime endTime) throws SQLServerException {
+    public void editTimeLog(User user, Project project, Task task, LocalDateTime startTime, LocalDateTime endTime) {
         timeLoggerDAO.editTimeLog(user, project, task, startTime, endTime);
     }
 
     @Override
-    public List<Project> getAllProjects() throws SQLServerException {
+    public List<Project> getAllProjects() {
         return projectDAO.getAllProjects();
     }
 
     @Override
-    public void createProject(String name, String clientName, String cost) throws SQLServerException {
+    public void createProject(String name, String clientName, String cost){
         projectDAO.createProject(name, clientName, cost);
     }
 
     @Override
-    public void getAllTimeLogsForTask(Task task) throws SQLServerException {
+    public void getAllTimeLogsForTask(Task task){
         timeLoggerDAO.getAllTimeLogsForTask(task);
         
     }
+
 }
