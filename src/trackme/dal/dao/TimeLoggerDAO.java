@@ -47,15 +47,6 @@ public class TimeLoggerDAO {
             pstmt.setInt(2, project.getId());
             pstmt.setInt(3, task.getId());
             pstmt.setInt(4, timeType);
-
-//            if (timeLog.getType() == TimeLog.TimeType.PLAY) {
-//                pstmt.setInt(4, 1);
-//            } else if (timeLog.getType() == TimeLog.TimeType.STOP) {
-//                pstmt.setInt(4, 2);
-//            } else {
-//                pstmt.setInt(4, 3);
-//            }
-
             pstmt.executeUpdate();
 
         } catch (SQLException ex) {

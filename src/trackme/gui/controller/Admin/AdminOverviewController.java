@@ -216,33 +216,26 @@ public class AdminOverviewController implements Initializable {
      */
     private void setTaskOverview(User user, Project project){
         List<Task> allTaskLogs = bllManager.getAllTaskLogsForProject(user, project);
-
         if (fromDatePicker.getValue() == null && toDatePicker.getValue() == null) {
-            for (Task task : allTaskLogs) {
-                bllManager.getTotalTimeForTask(task);
-                task.setDate(task.getTaskTime().get(0).getTime().toLocalDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
-                task.setTotalTime(bllManager.convertSecondsToHourMinuteSecond(task));
-            }
-            ObservableList<Task> taskList = FXCollections.observableArrayList(allTaskLogs);
-            tasks.setCellValueFactory(new PropertyValueFactory<>("name"));
-            date.setCellValueFactory(new PropertyValueFactory<>("date"));
-            tamespent.setCellValueFactory(new PropertyValueFactory<>("totalTime"));
-            tasksOverviewTable.setItems(taskList);
+           setTaskOverviewUtil(allTaskLogs);
         } else {
             bllManager.filterList(fromDatePicker.getValue(), toDatePicker.getValue(), allTaskLogs);
-            for (Task task : allTaskLogs) {
-                bllManager.getTotalTimeForTask(task);
-                task.setDate(task.getTaskTime().get(0).getTime().toLocalDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
-                task.setTotalTime(bllManager.convertSecondsToHourMinuteSecond(task));
-            }
-            ObservableList<Task> taskList = FXCollections.observableArrayList(allTaskLogs);
-            tasks.setCellValueFactory(new PropertyValueFactory<>("name"));
-            date.setCellValueFactory(new PropertyValueFactory<>("date"));
-            tamespent.setCellValueFactory(new PropertyValueFactory<>("totalTime"));
-            tasksOverviewTable.setItems(taskList);
+            setTaskOverviewUtil(allTaskLogs);
         }
     }
 
+    private void setTaskOverviewUtil(List<Task> allTaskLogs){
+    for (Task task : allTaskLogs) {
+                bllManager.getTotalTimeForTask(task);
+                task.setDate(task.getTaskTime().get(0).getTime().toLocalDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
+                task.setTotalTime(bllManager.convertSecondsToHourMinuteSecond(task));
+            }
+            ObservableList<Task> taskList = FXCollections.observableArrayList(allTaskLogs);
+            tasks.setCellValueFactory(new PropertyValueFactory<>("name"));
+            date.setCellValueFactory(new PropertyValueFactory<>("date"));
+            tamespent.setCellValueFactory(new PropertyValueFactory<>("totalTime"));
+            tasksOverviewTable.setItems(taskList);
+    }
    
     /**
      * BarChart Setup for selected project method
