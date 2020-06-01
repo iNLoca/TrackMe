@@ -5,7 +5,6 @@
  */
 package trackme.bll;
 
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;

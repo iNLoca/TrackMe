@@ -17,8 +17,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -43,7 +41,6 @@ import trackme.be.Project;
 import trackme.be.Task;
 import trackme.be.User;
 import trackme.bll.BLLManager;
-import trackme.gui.controller.Employee.UserOverviewController;
 import trackme.gui.model.UserModel;
 
 /**
@@ -163,10 +160,10 @@ public class AdminOverviewController implements Initializable {
     }
 
     /**
-     * Combo box sorting??? //MARTIN
+     * Combo box sorting method
      *
      * @param event
-     * @throws SQLServerException
+     * 
      * @throws ParseException
      */
     @FXML
@@ -179,7 +176,7 @@ public class AdminOverviewController implements Initializable {
      * Date Picker selection From Date Method
      *
      * @param event
-     * @throws SQLServerException
+     * 
      * @throws ParseException
      */
     @FXML
@@ -195,7 +192,7 @@ public class AdminOverviewController implements Initializable {
      * Date Picker To Date method
      *
      * @param event
-     * @throws SQLServerException
+     * 
      * @throws ParseException
      */
     @FXML
@@ -211,7 +208,7 @@ public class AdminOverviewController implements Initializable {
      *
      * @param user
      * @param project
-     * @throws SQLServerException
+     * 
      * @throws ParseException
      */
     private void setTaskOverview(User user, Project project){

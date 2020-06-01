@@ -5,12 +5,10 @@
  */
 package trackme.be;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.scene.image.ImageView;
 
 /**
  *
@@ -24,7 +22,7 @@ public class Task {
     private final StringProperty name = new SimpleStringProperty();
     private final StringProperty date = new SimpleStringProperty();
     private final StringProperty totalTime = new SimpleStringProperty();
-    private int toPay; //0 = to be paid, 1 = to not be paid
+    private int toPay;
     private long totalTimeInSeconds;
 
     public Task(int id, String name, String description, int toPay) {
