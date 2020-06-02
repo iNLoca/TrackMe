@@ -396,9 +396,11 @@ public class UserMainPageController implements Initializable {
 
     @FXML
     private void setLogOutusr(ActionEvent event) throws IOException {
-        taskModel.setThread(0);
-        ThreadExecutor.shutdown();
-        bllManager.insertTimeLog(user, project, task, 2); 
+         if (ThreadExecutor != null && !ThreadExecutor.isShutdown()) {
+            taskModel.setThread(0);
+            ThreadExecutor.shutdown();
+             bllManager.insertTimeLog(user, project, task, 2);
+        }
         Stage logOutUser;
         logOutUser = (Stage) logoutbtn.getScene().getWindow();
         logOutUser.close();

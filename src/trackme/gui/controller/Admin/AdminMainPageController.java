@@ -175,7 +175,7 @@ public class AdminMainPageController implements Initializable {
         });
 
         desccolm.setCellValueFactory((cell) -> {
-            return cell.getValue().descriptionProperty(); 
+            return cell.getValue().descriptionProperty();
         });
 
         totaltimespentcolmn.setCellValueFactory((cell) -> {
@@ -196,12 +196,12 @@ public class AdminMainPageController implements Initializable {
         tasktableview.setItems(taskList);
 
         stopButton();
-        
+
     }
 
     /**
-     * Method for stopping the time tracking on a task from
-     * the created table cell
+     * Method for stopping the time tracking on a task from the created table
+     * cell
      *
      * @throws SQLServerException
      */
@@ -219,7 +219,7 @@ public class AdminMainPageController implements Initializable {
                             taskModel.setThread(0);
                             ThreadExecutor.shutdown();
                             bllManager.insertTimeLog(user, project, task, 2);
-                            
+
                         });
 
                     }
@@ -239,7 +239,7 @@ public class AdminMainPageController implements Initializable {
         };
 
         colBtn.setCellFactory(cellFactory);
-            
+
     }
 
     /**
@@ -282,9 +282,7 @@ public class AdminMainPageController implements Initializable {
                 timecountlbl.setText(elapsedHours + " : " + elapsedMinutes + " : " + elapsedSeconds);
             });
         }, 0, 1, TimeUnit.SECONDS);
-
         bllManager.insertTimeLog(user, project, task, 1);
-
     }
 
     /**
@@ -404,9 +402,11 @@ public class AdminMainPageController implements Initializable {
 
     @FXML
     private void setLogOutusr(ActionEvent event) throws IOException {
-        taskModel.setThread(0);
-        ThreadExecutor.shutdown();
-        bllManager.insertTimeLog(user, project, task, 2); 
+        if (ThreadExecutor != null && !ThreadExecutor.isShutdown()) {
+            taskModel.setThread(0);
+            ThreadExecutor.shutdown();
+             bllManager.insertTimeLog(user, project, task, 2);
+        }
         Stage logOutUser;
         logOutUser = (Stage) logoutbtn.getScene().getWindow();
         logOutUser.close();
