@@ -404,10 +404,9 @@ public class AdminMainPageController implements Initializable {
 
     @FXML
     private void setLogOutusr(ActionEvent event) throws IOException {
-//shutdown thread
         taskModel.setThread(0);
         ThreadExecutor.shutdown();
-        bllManager.insertTimeLog(user, project, task, 2); // maybe add , time ? - its in db
+        bllManager.insertTimeLog(user, project, task, 2); 
         Stage logOutUser;
         logOutUser = (Stage) logoutbtn.getScene().getWindow();
         logOutUser.close();

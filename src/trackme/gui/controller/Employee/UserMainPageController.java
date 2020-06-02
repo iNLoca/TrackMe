@@ -43,6 +43,7 @@ import trackme.be.Project;
 import trackme.be.Task;
 import trackme.be.User;
 import trackme.bll.BLLManager;
+import trackme.gui.model.TaskModel;
 import trackme.gui.model.UserModel;
 
 /**
@@ -98,6 +99,7 @@ public class UserMainPageController implements Initializable {
     private JFXButton addtask;
 
     private UserModel userModel;
+    private TaskModel taskModel;
     private User user;
     private Project project;
     private Task task;
@@ -116,31 +118,35 @@ public class UserMainPageController implements Initializable {
 
     private final String LoginScene = "/trackme/gui/view/Login.fxml";
     private final String OverviewScene = "/trackme/gui/view/UserOverview.fxml";
-  private String ImageURL = "/trackme/gui/icons/yesmoney.png";
+    private String ImageURL = "/trackme/gui/icons/yesmoney.png";
     ImageView newimageview = new ImageView(ImageURL);
 
     private String ImageURL2 = "/trackme/gui/icons/nomoney.png";
     ImageView newimageview2 = new ImageView(ImageURL2);
 
-
     ObservableList<Task> taskList;
 
-    
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         userModel = UserModel.getInstance();
         user = userModel.getLoggedInUser();
+        taskModel = TaskModel.getInstance();
+        taskModel.getAllProjects();
         usrnamelbl.setText(user.getName());
         this.bllManager = new BLLManager();
         setProjectsInCombobox();
+
+        if (taskModel.getThread() != 0) {
+            startTracker();
+        }
     }
 
     /**
-     * Project Combo box setup method 
+     * Project Combo box setup method
+     *
      * @param user
      * @throws SQLServerException
-     * @throws SQLException 
+     * @throws SQLException
      */
     private void setProjectsInCombobox() {
         ObservableList<Project> projectList = FXCollections.observableArrayList(bllManager.getAllProjects());
@@ -149,7 +155,7 @@ public class UserMainPageController implements Initializable {
         projectbox.getSelectionModel().select(projectbox.getValue());
 
     }
-    
+
     @FXML
     private void setSelectedProjects(ActionEvent event) {
         project = projectbox.getSelectionModel().getSelectedItem();
@@ -159,71 +165,70 @@ public class UserMainPageController implements Initializable {
 
     /**
      * Setup Table Method
+     *
      * @param project
-     * @throws SQLServerException 
+     * @throws SQLServerException
      */
     private void setTaskTableView(Project project) {
-         List<Task> tempTask = bllManager.getTasksForProject(project);
+        List<Task> tempTask = project.getTasks();
         for (Task task1 : tempTask) {
-            bllManager.getAllTimeLogsForTask(task1);
             bllManager.getTotalTimeForTask(task1);
             task1.setTotalTime(bllManager.convertSecondsToHourMinuteSecond(task1));
         }
-        
+
         this.taskList = FXCollections.observableArrayList(tempTask);
         taskcolmn.setCellValueFactory((cell) -> {
             return cell.getValue().nameProperty();
         });
-        
+
         desccolm.setCellValueFactory((cell) -> {
-            return cell.getValue().descriptionProperty(); 
+            return cell.getValue().descriptionProperty();
         });
-        
+
         totaltimecolmn.setCellValueFactory((cell) -> {
-            return cell.getValue().totalTimeProperty(); 
-        }); 
+            return cell.getValue().totalTimeProperty();
+        });
 
-        moneycolmn.setCellValueFactory((cell) -> { 
-                String imageString = "/trackme/gui/icons/yesmoney.png";
+        moneycolmn.setCellValueFactory((cell) -> {
+            String imageString = "/trackme/gui/icons/yesmoney.png";
 
-        if (cell.getValue().getToPay() == 1) {
-            imageString = "/trackme/gui/icons/nomoney.png";
-        }
-            
-           
+            if (cell.getValue().getToPay() == 1) {
+                imageString = "/trackme/gui/icons/nomoney.png";
+            }
+
             return new SimpleObjectProperty<>(new ImageView(imageString));
         });
 
-       
         tasktableview.setItems(taskList);
 
         stopButton();
 
     }
-    
-    
+
     /**
      * Stop Time countdown Method
-     * @throws SQLServerException 
+     *
+     * @throws SQLServerException
      */
     private void stopButton() {
 
         Callback<TableColumn<Task, Void>, TableCell<Task, Void>> cellFactory = (TableColumn<Task, Void> param) -> {
             final TableCell<Task, Void> cell = new TableCell<Task, Void>() {
-                
+
                 private final Button btn = new Button("Stop");
-                
+
                 {
                     btn.setOnAction((ActionEvent event) -> {
                         task = getTableView().getItems().get(getIndex());
-                        
+                        task = getTableView().getItems().get(getIndex());
+                        taskModel.setThread(0);
                         ThreadExecutor.shutdown();
-                        
+
                         bllManager.insertTimeLog(user, project, task, 2);
                     });
-                    
+
                 }
-                
+
                 @Override
                 public void updateItem(Void item, boolean empty) {
                     btn.getStyleClass().add("btn");
@@ -233,7 +238,7 @@ public class UserMainPageController implements Initializable {
                     } else {
                         setGraphic(btn);
                     }
-                    
+
                 }
             };
             return cell;
@@ -242,31 +247,33 @@ public class UserMainPageController implements Initializable {
         colBtn.setCellFactory(cellFactory);
 
     }
-    
+
     /**
      * Selected task method
-     * @param event 
+     *
+     * @param event
      * @exception SQLServerException
      */
-
     @FXML
-    private void setSelectTask(MouseEvent event){
-   
+    private void setSelectTask(MouseEvent event) {
+        int index = tasktableview.getSelectionModel().getSelectedIndex();
+        task = tasktableview.getItems().get(index);
         startTracker();
 
     }
-
-  /**
-   *  A Method used for counting the time on a task
-   * @throws SQLServerException 
-   */
-    private void startTracker(){
-             System.out.println("Set");
-        int index = tasktableview.getSelectionModel().getSelectedIndex();
-          System.out.println(index);
-        task = tasktableview.getItems().get(index);
-        bllManager.insertTimeLog(user, project, task, 1);
-        long startTime = System.currentTimeMillis();
+    long startTime = 0;
+    /**
+     * A Method used for counting the time on a task
+     *
+     * @throws SQLServerException
+     */
+    private void startTracker() {
+        if (taskModel.getThread() == 0) {
+            startTime = System.currentTimeMillis();
+        } else {
+            task = taskModel.getCurrentTask();
+            startTime = taskModel.getThread();
+        }
         ThreadExecutor = Executors.newSingleThreadScheduledExecutor();
         ThreadExecutor.scheduleAtFixedRate(() -> {
             Platform.runLater(() -> {
@@ -289,7 +296,7 @@ public class UserMainPageController implements Initializable {
      * @throws SQLServerException
      */
     @FXML
-    private void setAddTask(ActionEvent event){
+    private void setAddTask(ActionEvent event) {
 
         if (project != null) {
             if (insertTasklbl.getText().equals(initialName) && Descriplbl.getText().equals(initialDescription)) {
@@ -350,7 +357,8 @@ public class UserMainPageController implements Initializable {
      */
     @FXML
     private void setOverview(ActionEvent event) throws IOException {
-
+        taskModel.setThread(startTime);
+        taskModel.setCurrentTask(task);
         FXMLLoader fxloader = new FXMLLoader(getClass().getResource(OverviewScene));
         Parent root = fxloader.load();
 
@@ -368,7 +376,8 @@ public class UserMainPageController implements Initializable {
 
     @FXML
     private void setFrontPage(ActionEvent event) throws IOException {
-
+        taskModel.setThread(startTime);
+        taskModel.setCurrentTask(task);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/trackme/gui/view/UserMainPage.fxml"));
         Parent root = loader.load();
         UserMainPageController ctrl = loader.getController();
@@ -387,7 +396,9 @@ public class UserMainPageController implements Initializable {
 
     @FXML
     private void setLogOutusr(ActionEvent event) throws IOException {
-
+        taskModel.setThread(0);
+        ThreadExecutor.shutdown();
+        bllManager.insertTimeLog(user, project, task, 2); 
         Stage logOutUser;
         logOutUser = (Stage) logoutbtn.getScene().getWindow();
         logOutUser.close();
@@ -405,7 +416,8 @@ public class UserMainPageController implements Initializable {
 
     @FXML
     private void setEdit(ActionEvent event) throws IOException {
-
+        taskModel.setThread(startTime);
+        taskModel.setCurrentTask(task);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/trackme/gui/view/EditPage.fxml"));
         Parent root = loader.load();
         EditPageController ctrl = loader.getController();
