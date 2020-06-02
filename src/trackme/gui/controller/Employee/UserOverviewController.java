@@ -17,8 +17,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -230,7 +228,7 @@ public class UserOverviewController implements Initializable {
     @FXML
     private void setSelectedTODATE(ActionEvent event)  {
         if (fromDatePicker.getValue() == null) {
-            //DO NOTHING YOU NERD
+            
         } else {
             setTaskOverview(user, project);
         }

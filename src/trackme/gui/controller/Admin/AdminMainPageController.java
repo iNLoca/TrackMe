@@ -197,7 +197,7 @@ public class AdminMainPageController implements Initializable {
         tasktableview.setItems(taskList);
 
         stopButton();
-
+        
     }
 
     /**
@@ -218,17 +218,16 @@ public class AdminMainPageController implements Initializable {
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
-                            task = getTableView().getItems().get(getIndex());
+                           // task = getTableView().getItems().get(getIndex()); I think we need this...
 
                 
                             ThreadExecutor.shutdown();
-                            bllManager.insertTimeLog(user, project, task, 2); 
-
+                            bllManager.insertTimeLog(user, project, task, 2);
+                            
                         });
 
                     }
                   
-
                     @Override
                     public void updateItem(Void item, boolean empty) {
                                         
@@ -253,7 +252,7 @@ public class AdminMainPageController implements Initializable {
         };
 
         colBtn.setCellFactory(cellFactory);
-
+            
     }
 
     /**
@@ -276,8 +275,6 @@ public class AdminMainPageController implements Initializable {
      * @throws SQLServerException
      */
     private void startTracker() {
-        int index = tasktableview.getSelectionModel().getSelectedIndex();
-        task = tasktableview.getItems().get(index);
         
         long startTime = System.currentTimeMillis();
         ThreadExecutor = Executors.newSingleThreadScheduledExecutor();

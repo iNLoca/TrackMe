@@ -122,9 +122,6 @@ public class LoginController implements Initializable {
             User us = userModel.loginUser(username, password);
             loadUpNextView(us);
         } else if (checkifDataIsInserted(username, password) == false) {
-
-            System.out.println("Enter pressed: email Check");
-
         }
 
     }
