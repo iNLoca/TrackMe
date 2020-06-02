@@ -25,8 +25,9 @@ import trackme.dal.DBConnectionProvider;
 public class ProjectDAO {
     
     private final DBConnectionProvider connection;
-    
+    private TaskDAO taskDAO;
     public ProjectDAO(){
+        taskDAO = new TaskDAO();
         connection = new DBConnectionProvider();
     }
     
@@ -43,7 +44,9 @@ public class ProjectDAO {
         String name = rs.getString("name");
         String client = rs.getString("clientName");
         int cost = rs.getInt("cost");
-        allProjects.add(new Project(id, name, client, cost));
+        Project proj  = new Project(id, name, client, cost);
+        proj.setTaskForProject(taskDAO.getTasksForProject(proj)); 
+        allProjects.add(proj);
         }
 
     }   catch (SQLException ex) {

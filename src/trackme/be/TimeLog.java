@@ -15,7 +15,15 @@ public class TimeLog {
 
     private TimeType type; //from db 1 is start, 2 is stop
     private LocalDateTime time;
-    
+    private int taskID;
+
+    public int getTaskID() {
+        return taskID;
+    }
+
+    public void setTaskID(int taskID) {
+        this.taskID = taskID;
+    }
 
     public TimeLog(TimeType type, LocalDateTime time) {
         this.type = type;

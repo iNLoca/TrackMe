@@ -81,10 +81,6 @@ public class Project {
         this.projectTime = projectTime;
     }
 
-    public List<Task> getTaskForProject() {
-        return tasksForProject;
-    }
-
     public void setTaskForProject(List<Task> tasksForProject) {
         this.tasksForProject = tasksForProject;
     }

@@ -50,6 +50,7 @@ import trackme.be.Project;
 import trackme.be.Task;
 import trackme.be.User;
 import trackme.bll.BLLManager;
+import trackme.gui.model.TaskModel;
 import trackme.gui.model.UserModel;
 
 /**
@@ -107,16 +108,16 @@ public class AdminMainPageController implements Initializable {
 
     private User user;
     private UserModel userModel;
+    private TaskModel taskModel;
     private BLLManager bllManager;
     private Project project;
     private Task task;
-   // private Label tasknamelbl;
-   // private Label descriptionlbl;
-   // private Label introtasklbl;   //<- Those are not used at all ? 
-   // private Label introdeslbl;
+    // private Label tasknamelbl;
+    // private Label descriptionlbl;
+    // private Label introtasklbl;   //<- Those are not used at all ? 
+    // private Label introdeslbl;
     private String initialName;
     private String initialDescription;
-
 
     private String ImageURL = "/trackme/gui/icons/yesmoney.png";
     ImageView newimageview = new ImageView(ImageURL);
@@ -124,25 +125,26 @@ public class AdminMainPageController implements Initializable {
     private String ImageURL2 = "/trackme/gui/icons/nomoney.png";
     ImageView newimageview2 = new ImageView(ImageURL2);
 
-
     ObservableList<Task> taskList;
 
     private ScheduledExecutorService ThreadExecutor;
 
-   
     private final String LoginScene = "/trackme/gui/view/Login.fxml";
     private final String OverviewScene = "/trackme/gui/view/AdminOverview.fxml";
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
         userModel = UserModel.getInstance();
         this.user = userModel.getLoggedInUser();
+        taskModel = TaskModel.getInstance();
+        taskModel.getAllProjects();
         usrnamelbl.setText(user.getName());
         this.bllManager = new BLLManager();
         setProjectsInCombobox();
-
+        if (taskModel.getThread() != 0) {
+            startTracker();
+        }
     }
 
     /**
@@ -153,7 +155,7 @@ public class AdminMainPageController implements Initializable {
      * @throws SQLException
      */
     private void setProjectsInCombobox() {
-        ObservableList<Project> projectList = FXCollections.observableArrayList(bllManager.getAllProjects());
+        ObservableList<Project> projectList = FXCollections.observableArrayList(taskModel.getAllCProjects());
         projectbox.getItems().clear();
         projectbox.getItems().addAll(projectList);
         projectbox.getSelectionModel().select(projectbox.getValue());
@@ -165,7 +167,6 @@ public class AdminMainPageController implements Initializable {
         setTaskTableView(project);
         refreshTable();
     }
-    
 
     /**
      * Method for table functionality
@@ -174,33 +175,31 @@ public class AdminMainPageController implements Initializable {
      * @throws SQLServerException
      */
     private void setTaskTableView(Project project) {
-        List<Task> tempTask = bllManager.getTasksForProject(project);
+        List<Task> tempTask = project.getTasks();
         for (Task task1 : tempTask) {
-            bllManager.getAllTimeLogsForTask(task1);
             bllManager.getTotalTimeForTask(task1);
             task1.setTotalTime(bllManager.convertSecondsToHourMinuteSecond(task1));
         }
-
         this.taskList = FXCollections.observableArrayList(tempTask);
         taskcolmn.setCellValueFactory((cell) -> {
             return cell.getValue().nameProperty();
         });
-        
+
         desccolm.setCellValueFactory((cell) -> {
             return cell.getValue().descriptionProperty(); //To change body of generated lambdas, choose Tools | Templates.
         });
-        
+
         totaltimespentcolmn.setCellValueFactory((cell) -> {
             return cell.getValue().totalTimeProperty(); //To change body of generated lambdas, choose Tools | Templates.
-        }); 
+        });
 
         moneycolmn.setCellValueFactory((cell) -> { // cell is the cells properties (CellDataFeatures)
-                String imageString = "/trackme/gui/icons/yesmoney.png";
+            String imageString = "/trackme/gui/icons/yesmoney.png";
 
-        if (cell.getValue().getToPay() == 1) {
-            imageString = "/trackme/gui/icons/nomoney.png";
-        }
-            
+            if (cell.getValue().getToPay() == 1) {
+                imageString = "/trackme/gui/icons/nomoney.png";
+            }
+
             //Image img = new Image(imageString, 50, 50, true, true); // Resize the image to fit 50x50 max
             return new SimpleObjectProperty<>(new ImageView(imageString)); // Translate the ImageView to an Observable<ImageView>
         });
@@ -217,9 +216,7 @@ public class AdminMainPageController implements Initializable {
      *
      * @throws SQLServerException
      */
-    private void stopButton(){
-
-
+    private void stopButton() {
         Callback<TableColumn<Task, Void>, TableCell<Task, Void>> cellFactory = new Callback<TableColumn<Task, Void>, TableCell<Task, Void>>() {
             @Override
             public TableCell<Task, Void> call(TableColumn<Task, Void> param) {
@@ -230,42 +227,26 @@ public class AdminMainPageController implements Initializable {
                     {
                         btn.setOnAction((ActionEvent event) -> {
                             task = getTableView().getItems().get(getIndex());
-
-                
+                            taskModel.setThread(0);
                             ThreadExecutor.shutdown();
                             bllManager.insertTimeLog(user, project, task, 2); // maybe add , time ? - its in db
 
                         });
 
                     }
-                   // String ImageSource = "/trackme/gui/icons/play.png";
-                   // ImageView imageview = new ImageView(ImageSource);
 
                     @Override
                     public void updateItem(Void item, boolean empty) {
-                       
-
-                       // imageview.setFitHeight(30);
-                       // imageview.setFitWidth(30);
-
                         super.updateItem(item, empty);
                         if (empty) {
                             setGraphic(null);
-                           // imageview.setImage(new Image(ImageSource));
                         } else {
-                          //  setGraphic(imageview);
                             setGraphic(btn);
-
                         }
-
                     }
-
                 };
-
                 return cell;
-
             }
-
         };
 
         colBtn.setCellFactory(cellFactory);
@@ -280,11 +261,15 @@ public class AdminMainPageController implements Initializable {
      * @exception NullPointerException
      */
     @FXML
-    private void setSelectTask(MouseEvent event)  {
-        
+    private void setSelectTask(MouseEvent event) {
+
+        int index = tasktableview.getSelectionModel().getSelectedIndex();
+        task = tasktableview.getItems().get(index);
         startTracker();
 
     }
+
+    long startTime = 0;
 
     /**
      * A Method used for counting the time on a task
@@ -292,10 +277,14 @@ public class AdminMainPageController implements Initializable {
      * @throws SQLServerException
      */
     private void startTracker() {
-        int index = tasktableview.getSelectionModel().getSelectedIndex();
-        task = tasktableview.getItems().get(index);
         // LOl = true;
-        long startTime = System.currentTimeMillis();
+
+        if (taskModel.getThread() == 0) {
+            startTime = System.currentTimeMillis();
+        } else {
+            task = taskModel.getCurrentTask();
+            startTime = taskModel.getThread();
+        }
         ThreadExecutor = Executors.newSingleThreadScheduledExecutor();
         ThreadExecutor.scheduleAtFixedRate(() -> {
             Platform.runLater(() -> {
@@ -316,7 +305,7 @@ public class AdminMainPageController implements Initializable {
      *
      * @throws SQLServerException
      */
-    public void refreshTable()  {
+    public void refreshTable() {
         tasktableview.getItems().removeAll(taskList);
         setTaskTableView(project);
     }
@@ -328,8 +317,8 @@ public class AdminMainPageController implements Initializable {
      * @throws SQLServerException
      */
     @FXML
-    private void setAddTask(ActionEvent event)  {
- if (project != null) {
+    private void setAddTask(ActionEvent event) {
+        if (project != null) {
             if (insertTasklbl.getText().equals(initialName) && Descriplbl.getText().equals(initialDescription)) {
 
             } else {
@@ -357,21 +346,20 @@ public class AdminMainPageController implements Initializable {
                     insertTasklbl.clear();
                     Descriplbl.clear();
                     tasktableview.refresh();
-                   
+
                     startTracker();
                 }
             }
         }
-         
+
     }
-       
+
     /**
      * Methods for accessing menu bar
      *
      * @param event
      *
      */
-
     @FXML
     private void setMenuPopUp(MouseEvent event) {
         usrmenubar.setVisible(true);
@@ -391,6 +379,8 @@ public class AdminMainPageController implements Initializable {
      */
     @FXML
     private void setOverview(ActionEvent event) throws IOException {
+        taskModel.setThread(startTime);
+        taskModel.setCurrentTask(task);
         FXMLLoader fxloader = new FXMLLoader(getClass().getResource(OverviewScene));
         Parent root = fxloader.load();
 
@@ -407,6 +397,8 @@ public class AdminMainPageController implements Initializable {
 
     @FXML
     private void setFrontPage(ActionEvent event) throws IOException {
+        taskModel.setThread(startTime);
+        taskModel.setCurrentTask(task);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/trackme/gui/view/AdminMainPage.fxml"));
         Parent root = loader.load();
         AdminMainPageController ctrl = loader.getController();
@@ -425,7 +417,10 @@ public class AdminMainPageController implements Initializable {
 
     @FXML
     private void setLogOutusr(ActionEvent event) throws IOException {
-
+//shutdown thread
+        taskModel.setThread(0);
+        ThreadExecutor.shutdown();
+        bllManager.insertTimeLog(user, project, task, 2); // maybe add , time ? - its in db
         Stage logOutUser;
         logOutUser = (Stage) logoutbtn.getScene().getWindow();
         logOutUser.close();
@@ -442,7 +437,8 @@ public class AdminMainPageController implements Initializable {
 
     @FXML
     private void setCreate(ActionEvent event) throws IOException {
-
+        taskModel.setThread(startTime);
+        taskModel.setCurrentTask(task);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/trackme/gui/view/AdminCreate.fxml"));
         Parent root = loader.load();
         AdminCreateController ctrl = loader.getController();
@@ -461,6 +457,8 @@ public class AdminMainPageController implements Initializable {
 
     @FXML
     private void setProfiles(ActionEvent event) throws IOException {
+        taskModel.setThread(startTime);
+        taskModel.setCurrentTask(task);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/trackme/gui/view/AdminProfiles.fxml"));
         Parent root = loader.load();
         AdminProfilesController ctrl = loader.getController();
@@ -477,6 +475,4 @@ public class AdminMainPageController implements Initializable {
         closePreviousScene.close();
     }
 
-
-  
 }
