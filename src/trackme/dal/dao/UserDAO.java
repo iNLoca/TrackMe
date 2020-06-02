@@ -113,7 +113,7 @@ public class UserDAO {
     }
 
 
-     // Edit DAO METHOD ??
+    
         public void addEditUser(User user, String name, String email, String password, int isAdmin) {
         String sql = "UPDATE [User] SET name = ?, email = ?, isAdmin = ?, password = ? WHERE id = ? ";
         

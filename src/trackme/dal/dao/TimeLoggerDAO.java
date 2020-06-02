@@ -6,7 +6,6 @@
 package trackme.dal.dao;
 
 import trackme.be.Project;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -40,8 +39,9 @@ public class TimeLoggerDAO {
     public void insertTimeLog(User user, Project project, Task task, int timeType) {
         String sql = "INSERT INTO [TimeLog] (userId, projectId, taskId, time, typeOfTime)VALUES (?,?,?,CURRENT_TIMESTAMP,?)";
 
-        try ( Connection con = connection.getConnection()) {
-            System.out.println(user + "" + project + "" + task + "" + timeType);
+
+        try (Connection con = connection.getConnection()) {
+
             PreparedStatement pstmt = con.prepareStatement(sql);
             pstmt.setInt(1, user.getId());
             pstmt.setInt(2, project.getId());
@@ -52,7 +52,6 @@ public class TimeLoggerDAO {
         } catch (SQLException ex) {
             Logger.getLogger(TimeLoggerDAO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NullPointerException ea) {
-            System.out.println("cant be null");
 
         }
     }
@@ -60,7 +59,9 @@ public class TimeLoggerDAO {
     public void editTimeLog(User user, Project project, Task task, LocalDateTime startTime, LocalDateTime endTime) {
         String sql = "INSERT INTO [TimeLog] (userId, projectId, taskId, time, typeOfTime) VALUES (?,?,?,?,?),(?,?,?,?,?)";
 
+
         try ( Connection con = connection.getConnection()) {
+
             PreparedStatement pstmt = con.prepareStatement(sql);
             pstmt.setInt(1, user.getId());
             pstmt.setInt(2, project.getId());
@@ -84,7 +85,9 @@ public class TimeLoggerDAO {
     public void getTimeForTask(User user, Task task) {
         String sql = "SELECT * FROM TimeLog WHERE userId = ? AND taskId = ? ";
 
+
         try ( Connection con = connection.getConnection()) {
+
             PreparedStatement pstmt = con.prepareStatement(sql);
             pstmt.setInt(1, user.getId());
             pstmt.setInt(2, task.getId());
@@ -112,7 +115,9 @@ public class TimeLoggerDAO {
         String sql = "SELECT * FROM TimeLog JOIN Task on TimeLog.taskId = Task.id WHERE projectId = ? AND userId = ? ORDER BY taskId, userId";
         int i = 0;
 
+
         try ( Connection con = connection.getConnection()) {
+
             PreparedStatement pstmt = con.prepareStatement(sql);
             pstmt.setInt(1, project.getId());
             pstmt.setInt(2, user.getId());
@@ -147,7 +152,7 @@ public class TimeLoggerDAO {
         List<Project> projects = new ArrayList<>();
         String sql = "SELECT * FROM TimeLog JOIN Projects ON Projects.id = TimeLog.projectId JOIN Task ON Task.id = TimeLog.taskId WHERE userId = ?";
 
-        try ( Connection con = connection.getConnection()) {
+        try (Connection con = connection.getConnection()) {
             PreparedStatement pstmt = con.prepareStatement(sql);
             pstmt.setInt(1, user.getId());
             ResultSet rs = pstmt.executeQuery();
@@ -189,18 +194,22 @@ public class TimeLoggerDAO {
         return null;
     }
 
+
     public List<TimeLog> getAllTimeLogsForTask() {
         List<TimeLog> timeLogList = new ArrayList();
         String sql = "SELECT * FROM TimeLog ORDER BY taskId, userId";
         try ( Connection con = connection.getConnection()) {
             PreparedStatement pstmt = con.prepareStatement(sql);
+
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
                 int typeOfTime = rs.getInt("typeOfTime");
+
                 int taskId = rs.getInt("taskId");
                 LocalDateTime time = rs.getTimestamp("time").toLocalDateTime();
                 TimeLog newTimeLog = null;
+
                 switch (typeOfTime) {
                     case 1:
                         newTimeLog = new TimeLog(TimeLog.TimeType.PLAY, time);
@@ -209,14 +218,18 @@ public class TimeLoggerDAO {
                         newTimeLog = new TimeLog(TimeLog.TimeType.STOP, time);
                         break;
                 }
+
                 newTimeLog.setTaskID(taskId);
                 timeLogList.add(newTimeLog);
+
             }
 
         } catch (SQLException ex) {
             Logger.getLogger(TimeLoggerDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         return timeLogList;
+
     }
 
 }

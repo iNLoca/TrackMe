@@ -5,8 +5,6 @@
  */
 package trackme.dal;
 
-import com.microsoft.sqlserver.jdbc.SQLServerException;
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
 import trackme.be.Project;

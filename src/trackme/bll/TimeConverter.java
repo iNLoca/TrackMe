@@ -5,7 +5,6 @@
  */
 package trackme.bll;
 
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;

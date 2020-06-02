@@ -5,9 +5,6 @@
  */
 package trackme.bll;
 
-import com.microsoft.sqlserver.jdbc.SQLServerException;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -22,7 +19,7 @@ import trackme.dal.DALManager;
  * @author mac
  */
 public class BLLManager implements IBLLFacade {
-    
+
     private final Filter filter;
     private DALManager dalManager;
     private final TimeConverter timeConverter;
@@ -32,9 +29,7 @@ public class BLLManager implements IBLLFacade {
         timeConverter = new TimeConverter();
 
         filter = new Filter();
-//        List<Project> pros = dalManager.getAllProjects();
-//        List<Project> pros = dalManager.getUserProjectTime();
-
+      
 
     }
 
@@ -44,36 +39,32 @@ public class BLLManager implements IBLLFacade {
     }
 
     @Override
-    public List<Task> getTasksForProject(Project project){
+    public List<Task> getTasksForProject(Project project) {
         return dalManager.getTasksForProject(project);
     }
 
     @Override
-    public List<Project> getUserProjectTime(User user){
+    public List<Project> getUserProjectTime(User user) {
         return dalManager.getUserProjectTime(user);
     }
 
-
     @Override
-    public void insertTaskForProject(Project project, String name, String description, int toPay){
+    public void insertTaskForProject(Project project, String name, String description, int toPay) {
         dalManager.insertTaskForProject(project, name, description, toPay);
-    
-
-    
     }
 
     @Override
-    public void insertTimeLog(User user, Project project, Task task, int timeType){
+    public void insertTimeLog(User user, Project project, Task task, int timeType) {
         dalManager.insertTimeLog(user, project, task, timeType);
     }
 
     @Override
-    public void getTimeForTask(User user, Task task){
+    public void getTimeForTask(User user, Task task) {
         dalManager.getTimeForTask(user, task);
     }
 
     @Override
-    public void getTotalTimeForTask(Task task){
+    public void getTotalTimeForTask(Task task) {
         timeConverter.getTotalTimeForTask(task);
     }
 
@@ -84,20 +75,20 @@ public class BLLManager implements IBLLFacade {
 
     @Override
 
-    public List<User> getAllUsers(){
-       return dalManager.getAllUsers();
+    public List<User> getAllUsers() {
+        return dalManager.getAllUsers();
 
     }
-    
+
     @Override
-    public List<Task> getAllTaskLogsForProject(User user, Project project){
+    public List<Task> getAllTaskLogsForProject(User user, Project project) {
         return dalManager.getAllTaskLogsForProject(user, project);
 
     }
 
     @Override
-    public void createNewUser(String name, String password, String email, int isAdmin){
-         dalManager.createNewUser(name, password, email, isAdmin);
+    public void createNewUser(String name, String password, String email, int isAdmin) {
+        dalManager.createNewUser(name, password, email, isAdmin);
     }
 
     @Override
@@ -106,13 +97,13 @@ public class BLLManager implements IBLLFacade {
     }
 
     @Override
-    public void deleteUser(User user){
+    public void deleteUser(User user) {
         dalManager.deleteUser(user);
     }
 
     @Override
 
-    public List<Task> filterList(LocalDate fromTime, LocalDate toTime, List<Task> tasks){
+    public List<Task> filterList(LocalDate fromTime, LocalDate toTime, List<Task> tasks) {
         return filter.filterList(fromTime, toTime, tasks);
     }
 
@@ -122,13 +113,13 @@ public class BLLManager implements IBLLFacade {
     }
 
     @Override
-    public void editTimeLog(User user, Project project, Task task, LocalDateTime startTime, LocalDateTime endTime){
+    public void editTimeLog(User user, Project project, Task task, LocalDateTime startTime, LocalDateTime endTime) {
         dalManager.editTimeLog(user, project, task, startTime, endTime);
     }
 
     @Override
     public List<Project> getAllProjects() {
-        return   dalManager.getAllProjects();
+        return dalManager.getAllProjects();
     }
 
     @Override
@@ -137,7 +128,7 @@ public class BLLManager implements IBLLFacade {
     }
 
     @Override
-    public void getAllTimeLogsForTask(Task task){
+    public void getAllTimeLogsForTask(Task task) {
         dalManager.getAllTimeLogsForTask(task);
     }
 

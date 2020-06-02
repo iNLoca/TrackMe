@@ -34,7 +34,6 @@ public class Project {
     public String toString() {
         return name;
     }
-
     
     
     public int getId() {

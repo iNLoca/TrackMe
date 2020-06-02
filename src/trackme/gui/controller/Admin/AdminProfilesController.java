@@ -13,8 +13,6 @@ import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -112,6 +110,8 @@ public class AdminProfilesController implements Initializable {
     
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -127,8 +127,7 @@ public class AdminProfilesController implements Initializable {
 
     
     /**
-     * User table setup method
-     * @throws SQLServerException 
+     * User table setup method 
      */
     
     public void setUserTableView(){
@@ -205,7 +204,6 @@ public class AdminProfilesController implements Initializable {
 
     /**
      * Saves the Data inserted by user 
-     * @throws SQLServerException 
      */
     public void saveData() {
 
@@ -235,8 +233,7 @@ public class AdminProfilesController implements Initializable {
     }
     
     /**
-     * Method for updating the newly created data
-     * @throws SQLServerException 
+     * Method for updating the newly created data 
      */
 
     public void editData() {

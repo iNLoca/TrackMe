@@ -4,13 +4,8 @@
  * and open the template in the editor.
  */
 package trackme.dal;
-
-import com.microsoft.sqlserver.jdbc.SQLServerException;
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import trackme.be.Project;
 import trackme.be.Task;
 import trackme.be.TimeLog;
@@ -49,9 +44,9 @@ public class DALManager implements IDALFacade {
         return timeLoggerDAO.getUserProjectTime(user);
     }
 
+
     public List<Task> getTasksForProject(Project project) {
         return taskDAO.getTasksForProject(project);
-
     }
 
     @Override

@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
  */
 public class TimeLog {
 
-    private TimeType type; //from db 1 is start, 2 is stop
+    private TimeType type;
     private LocalDateTime time;
     private int taskID;
 

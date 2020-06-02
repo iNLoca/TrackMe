@@ -17,8 +17,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -106,9 +104,6 @@ public class EditPageController implements Initializable{
     
     /**
      * Project ComboBox setup
-     * @param user
-     * @throws SQLServerException
-     * @throws SQLException 
      */
      public void setProjects(){
      ObservableList<Project> projectList = FXCollections.observableArrayList(bllManager.getAllProjects());

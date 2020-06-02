@@ -5,7 +5,6 @@
  */
 package trackme.gui.controller.Admin;
 
-import trackme.gui.controller.Employee.UserMainPageController;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
@@ -13,15 +12,11 @@ import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -38,8 +33,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -96,7 +89,7 @@ public class AdminMainPageController implements Initializable {
     private TableColumn<Task, String> totaltimespentcolmn;
 
     @FXML
-    private ImageView showup; //Whats that? 
+    private ImageView showup;
     @FXML
     private CheckBox checkmoney;
     @FXML
@@ -112,10 +105,6 @@ public class AdminMainPageController implements Initializable {
     private BLLManager bllManager;
     private Project project;
     private Task task;
-    // private Label tasknamelbl;
-    // private Label descriptionlbl;
-    // private Label introtasklbl;   //<- Those are not used at all ? 
-    // private Label introdeslbl;
     private String initialName;
     private String initialDescription;
 
@@ -186,7 +175,7 @@ public class AdminMainPageController implements Initializable {
         });
 
         desccolm.setCellValueFactory((cell) -> {
-            return cell.getValue().descriptionProperty(); //To change body of generated lambdas, choose Tools | Templates.
+            return cell.getValue().descriptionProperty(); 
         });
 
         totaltimespentcolmn.setCellValueFactory((cell) -> {
@@ -207,11 +196,11 @@ public class AdminMainPageController implements Initializable {
         tasktableview.setItems(taskList);
 
         stopButton();
-
+        
     }
 
     /**
-     * Method for stopping the time tracking on a task from // NEEDS REFACTORING
+     * Method for stopping the time tracking on a task from
      * the created table cell
      *
      * @throws SQLServerException
@@ -229,8 +218,8 @@ public class AdminMainPageController implements Initializable {
                             task = getTableView().getItems().get(getIndex());
                             taskModel.setThread(0);
                             ThreadExecutor.shutdown();
-                            bllManager.insertTimeLog(user, project, task, 2); // maybe add , time ? - its in db
-
+                            bllManager.insertTimeLog(user, project, task, 2);
+                            
                         });
 
                     }
@@ -250,7 +239,7 @@ public class AdminMainPageController implements Initializable {
         };
 
         colBtn.setCellFactory(cellFactory);
-
+            
     }
 
     /**
@@ -277,8 +266,6 @@ public class AdminMainPageController implements Initializable {
      * @throws SQLServerException
      */
     private void startTracker() {
-        // LOl = true;
-
         if (taskModel.getThread() == 0) {
             startTime = System.currentTimeMillis();
         } else {
@@ -301,9 +288,9 @@ public class AdminMainPageController implements Initializable {
     }
 
     /**
-     * Refreshing table
+     * Refreshing table method
      *
-     * @throws SQLServerException
+     *
      */
     public void refreshTable() {
         tasktableview.getItems().removeAll(taskList);
@@ -311,7 +298,7 @@ public class AdminMainPageController implements Initializable {
     }
 
     /**
-     * Method for creating a new task /NEEDS PICTURE!!!!
+     * Method for creating a new task
      *
      * @param event
      * @throws SQLServerException
