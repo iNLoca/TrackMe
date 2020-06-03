@@ -216,8 +216,8 @@ public class AdminOverviewController implements Initializable {
         if (fromDatePicker.getValue() == null && toDatePicker.getValue() == null) {
            setTaskOverviewUtil(allTaskLogs);
         } else {
-            bllManager.filterList(fromDatePicker.getValue(), toDatePicker.getValue(), allTaskLogs);
-            setTaskOverviewUtil(allTaskLogs);
+            List<Task> filteredList = bllManager.filterList(fromDatePicker.getValue(), toDatePicker.getValue(), allTaskLogs);
+            setTaskOverviewUtil(filteredList);
         }
     }
 
