@@ -173,13 +173,13 @@ public class UserOverviewController implements Initializable {
             tamespent.setCellValueFactory(new PropertyValueFactory<>("totalTime"));
             tasksOverviewTable.setItems(taskList);
         } else {
-            bllManager.filterList(fromDatePicker.getValue(), toDatePicker.getValue(), allTaskLogs);
-            for (Task task : allTaskLogs) {
+            List<Task> filteredList = bllManager.filterList(fromDatePicker.getValue(), toDatePicker.getValue(), allTaskLogs);
+            for (Task task : filteredList) {
                 bllManager.getTotalTimeForTask(task);
                 task.setDate(task.getTaskTime().get(0).getTime().toLocalDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
                 task.setTotalTime(convertSecondsToHourMinuteSecond(task));
             }
-            ObservableList<Task> taskList = FXCollections.observableArrayList(allTaskLogs);
+            ObservableList<Task> taskList = FXCollections.observableArrayList(filteredList);
             tasks.setCellValueFactory(new PropertyValueFactory<>("name"));
             date.setCellValueFactory(new PropertyValueFactory<>("date"));
             tamespent.setCellValueFactory(new PropertyValueFactory<>("totalTime"));
