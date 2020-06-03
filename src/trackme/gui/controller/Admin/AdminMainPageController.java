@@ -219,7 +219,7 @@ public class AdminMainPageController implements Initializable {
                             taskModel.setThread(0);
                             ThreadExecutor.shutdown();
                             bllManager.insertTimeLog(user, project, task, 2);
-
+                            
                         });
 
                     }

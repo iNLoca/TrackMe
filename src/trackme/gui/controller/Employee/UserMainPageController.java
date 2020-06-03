@@ -286,7 +286,7 @@ public class UserMainPageController implements Initializable {
                 timecountlbl.setText(elapsedHours + " : " + elapsedMinutes + " : " + elapsedSeconds);
             });
         }, 0, 1, TimeUnit.SECONDS);
-
+        bllManager.insertTimeLog(user, project, task, 1);
     }
 
     /**
